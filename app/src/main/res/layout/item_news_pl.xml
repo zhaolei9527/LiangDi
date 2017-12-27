@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fl_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/SimpleDraweeView"
+            android:layout_width="@dimen/x38"
+            android:layout_height="@dimen/x38"
+            android:layout_marginBottom="@dimen/x10"
+            android:layout_marginLeft="@dimen/x8"
+            android:layout_marginTop="@dimen/x5"
+            fresco:placeholderImage="@drawable/imgloading"
+            fresco:roundAsCircle="true" />
+
+        <TextView
+            android:id="@+id/tv_pl_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/x5"
+            android:layout_marginTop="@dimen/x5"
+            android:layout_toRightOf="@id/SimpleDraweeView"
+            android:text="username" />
+
+        <TextView
+            android:id="@+id/tv_pl_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/x5"
+            android:layout_marginTop="@dimen/x5"
+            android:text="username" />
+
+        <TextView
+            android:id="@+id/tv_pl_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_pl_name"
+            android:layout_marginBottom="@dimen/x10"
+            android:layout_marginLeft="@dimen/x5"
+            android:layout_marginTop="@dimen/x5"
+            android:layout_toRightOf="@id/SimpleDraweeView"
+            android:text="content" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_alignParentBottom="true"
+            android:background="#cccccc"></View>
+    </RelativeLayout>
+
+</FrameLayout>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#fff"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y85">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/SimpleDraweeView"
+            android:layout_width="@dimen/x69"
+            android:layout_height="@dimen/x69"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/x8"
+            fresco:placeholderImage="@drawable/imgloading" />
+
+        <TextView
+            android:id="@+id/tv_servive_order_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/x10"
+            android:layout_marginTop="@dimen/y15"
+            android:layout_toRightOf="@id/SimpleDraweeView"
+            android:text="订单号：5751587515544232"
+            android:textColor="#888"
+            android:textSize="@dimen/x10" />
+
+        <TextView
+            android:id="@+id/tv_service_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_servive_order_number"
+            android:layout_marginLeft="@dimen/x10"
+            android:layout_marginTop="@dimen/x10"
+            android:layout_toRightOf="@id/SimpleDraweeView"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="美容美颜及美体SPA"
+            android:textColor="#333" />
+
+        <TextView
+            android:id="@+id/tv_service_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_service_name"
+            android:layout_marginLeft="@dimen/x10"
+            android:layout_marginTop="@dimen/x10"
+            android:layout_toRightOf="@id/SimpleDraweeView"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="￥456"
+            android:textColor="#F0667F" />
+
+        <TextView
+            android:id="@+id/tv_service_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/tv_service_name"
+            android:layout_marginRight="@dimen/x10"
+            android:layout_marginTop="@dimen/x10"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="2017-09-10 10:10"
+            android:textColor="#999999"
+            android:textSize="@dimen/x10" />
+
+        <TextView
+            android:id="@+id/tv_servive_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/x10"
+            android:layout_marginTop="@dimen/y15"
+            android:text="未消费"
+            android:textColor="#F0667F" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="17px"
+            android:layout_alignParentBottom="true"
+            android:background="#efefef"></View>
+    </RelativeLayout>
+
+</FrameLayout>

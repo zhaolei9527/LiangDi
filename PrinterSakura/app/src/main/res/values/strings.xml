@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">聚宝盆</string>
+
+
+    <string name="welcomes">Welcome</string>
+    <string name="search">搜索蓝牙</string>
+    <!-- xxxactivity.java -->
+    <string name="toast_success">连接成功</string>
+    <string name="toast_fail">连接失败</string>
+    <string name="toast_notconnect">请先连接打印机</string>
+</resources>

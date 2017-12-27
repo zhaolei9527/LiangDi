@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y120"
+        android:background="@drawable/mybaner">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/sdv_touxiang"
+            android:layout_width="@dimen/x47"
+            android:layout_height="@dimen/x47"
+            android:layout_marginLeft="@dimen/x85"
+            android:layout_marginTop="@dimen/x25"
+            fresco:placeholderImage="@drawable/imgloading"
+            fresco:roundAsCircle="true" />
+
+        <ImageView
+            android:id="@+id/img_dengji"
+            android:layout_width="@dimen/x16"
+            android:layout_height="@dimen/x16"
+            android:layout_marginLeft="@dimen/x120"
+            android:layout_marginTop="@dimen/x25"
+            android:background="@mipmap/myv1" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/x144"
+            android:layout_marginTop="@dimen/x25"
+            android:text=""
+            android:textColor="#fff" />
+
+        <TextView
+            android:id="@+id/tv_jieduan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_name"
+            android:layout_marginLeft="@dimen/x144"
+            android:layout_marginTop="@dimen/x3"
+            android:text="人生阶段：只记经期"
+            android:textColor="#fff" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/x56"
+            android:layout_marginTop="@dimen/y78">
+
+            <ImageView
+                android:layout_width="@dimen/x18"
+                android:layout_height="@dimen/y20"
+                android:src="@mipmap/jifen" />
+
+            <TextView
+                android:id="@+id/tv_jifen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/x5"
+                android:maxWidth="@dimen/x100"
+                android:text=""
+                android:textColor="#fff" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/x188"
+            android:layout_marginTop="@dimen/y78">
+
+            <ImageView
+                android:layout_width="@dimen/x18"
+                android:layout_height="@dimen/y20"
+                android:background="@mipmap/yue" />
+
+            <TextView
+                android:id="@+id/tv_yue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/x5"
+                android:text=""
+                android:textColor="#fff" />
+
+        </LinearLayout>
+    </RelativeLayout>
+
+
+</LinearLayout>

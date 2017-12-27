@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x42"
+            android:background="#fbfbfb"
+            android:visibility="visible">
+
+            <FrameLayout
+                android:id="@+id/rl_back"
+                android:layout_width="@dimen/x30"
+                android:layout_height="@dimen/x30"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/x10">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:background="@mipmap/fanhui" />
+
+            </FrameLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="员工中心"
+                android:textColor="#333333"
+                android:textSize="@dimen/x16" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y150"
+            android:background="@drawable/employess_bg">
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/SimpleDraweeView"
+                android:layout_width="@dimen/x56"
+                android:layout_height="@dimen/x56"
+                android:layout_centerInParent="true"
+                fresco:roundAsCircle="true" />
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/SimpleDraweeView"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/x10"
+                android:textColor="@color/white"
+                android:textSize="@dimen/x16" />
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y5"
+            android:background="#efefef"></View>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_xiaofei"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/y40"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/x10"
+                android:text="会员消费"
+                android:textColor="@color/text333"
+                android:textSize="@dimen/x16" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/x16"
+                android:background="@mipmap/xia" />
+
+        </RelativeLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y1"
+            android:background="#efefef"></View>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_xiaofeiguanli"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/y40"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/x10"
+                android:text="消费管理"
+                android:textColor="@color/text333"
+                android:textSize="@dimen/x16" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/x16"
+                android:background="@mipmap/xia" />
+
+        </RelativeLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y1"
+            android:background="#efefef"></View>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_yuangong"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/y40"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/x10"
+                android:text="员工管理"
+                android:textColor="@color/text333"
+                android:textSize="@dimen/x16" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/x16"
+                android:background="@mipmap/xia" />
+
+        </RelativeLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y1"
+            android:background="#efefef"></View>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_shezhi"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/y40"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/x10"
+                android:text="基本设置"
+                android:textColor="@color/text333"
+                android:textSize="@dimen/x16" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/x16"
+                android:background="@mipmap/xia" />
+
+        </RelativeLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y1"
+            android:background="#efefef"></View>
+
+    </LinearLayout>
+</LinearLayout>

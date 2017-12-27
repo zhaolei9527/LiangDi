@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#eee">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x42"
+            android:background="#fbfbfb"
+            android:visibility="visible">
+
+            <FrameLayout
+                android:id="@+id/rl_back"
+                android:layout_width="@dimen/x30"
+                android:layout_height="@dimen/x30"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/x10">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:background="@mipmap/fanhui" />
+
+            </FrameLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="人生阶段"
+                android:textColor="#333333"
+                android:textSize="@dimen/x16" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_jiedaun"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y34"
+            android:layout_marginLeft="@dimen/x10"
+            android:background="#EEEEEE"
+            android:gravity="center_vertical"
+            android:text="人生阶段：只记经期"
+            android:textColor="#333"
+            android:textSize="@dimen/x13" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y41"
+            android:background="#fff">
+
+            <ImageView
+                android:id="@+id/img_jingqi"
+                android:layout_width="@dimen/x16"
+                android:layout_height="@dimen/x16"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/x10"
+                android:src="@mipmap/jingqi" />
+
+            <TextView
+                android:id="@+id/tv_jingqi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/x10"
+                android:layout_marginTop="@dimen/x8"
+                android:layout_toRightOf="@id/img_jingqi"
+                android:text="只记经期"
+                android:textColor="#333"
+                android:textSize="@dimen/x13" />
+
+            <TextView
+                android:id="@+id/tv_jingqi_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_jingqi"
+                android:layout_marginLeft="@dimen/x10"
+                android:layout_marginTop="@dimen/x5"
+                android:layout_toRightOf="@id/img_jingqi"
+                android:textColor="#999"
+                android:textSize="@dimen/x10" />
+
+            <CheckBox
+                android:id="@+id/Choosed_jingqi"
+                android:layout_width="@dimen/x18"
+                android:layout_height="@dimen/x18"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/x5"
+                android:layout_marginRight="@dimen/x15"
+                android:background="@drawable/rb_selector"
+                android:button="@null" />
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="#ccc"></View>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y41"
+            android:background="#fff">
+
+            <ImageView
+                android:id="@+id/img_beiyun"
+                android:layout_width="@dimen/x16"
+                android:layout_height="@dimen/x16"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/x10"
+                android:src="@mipmap/beiyun" />
+
+            <TextView
+                android:id="@+id/tv_beiyun"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/x10"
+                android:layout_marginTop="@dimen/x8"
+                android:layout_toRightOf="@id/img_beiyun"
+                android:text="我在备孕"
+                android:textColor="#333"
+                android:textSize="@dimen/x13" />
+
+            <TextView
+                android:id="@+id/tv_beiyun_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_beiyun"
+                android:layout_marginLeft="@dimen/x10"
+                android:layout_marginTop="@dimen/x5"
+                android:layout_toRightOf="@id/img_beiyun"
+                android:textColor="#999"
+                android:textSize="@dimen/x10" />
+
+            <CheckBox
+                android:id="@+id/Choosed_beiyun"
+                android:layout_width="@dimen/x18"
+                android:layout_height="@dimen/x18"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/x5"
+                android:layout_marginRight="@dimen/x15"
+                android:background="@drawable/rb_selector"
+                android:button="@null" />
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="#ccc"></View>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y41"
+            android:background="#fff">
+
+            <ImageView
+                android:id="@+id/img_huanyun"
+                android:layout_width="@dimen/x16"
+                android:layout_height="@dimen/x16"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/x10"
+                android:src="@mipmap/huanyun" />
+
+            <TextView
+                android:id="@+id/tv_huanyun"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/x10"
+                android:layout_marginTop="@dimen/x8"
+                android:layout_toRightOf="@id/img_huanyun"
+                android:text="我怀孕了"
+                android:textColor="#333"
+                android:textSize="@dimen/x13" />
+
+            <TextView
+                android:id="@+id/tv_huaiyun_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_huanyun"
+                android:layout_marginLeft="@dimen/x10"
+                android:layout_marginTop="@dimen/x5"
+                android:layout_toRightOf="@id/img_huanyun"
+                android:textColor="#999"
+                android:textSize="@dimen/x10" />
+
+            <CheckBox
+                android:id="@+id/Choosed_huanyun"
+                android:layout_width="@dimen/x18"
+                android:layout_height="@dimen/x18"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/x5"
+                android:layout_marginRight="@dimen/x15"
+                android:background="@drawable/rb_selector"
+                android:button="@null" />
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="#ccc"></View>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y41"
+            android:background="#fff">
+
+            <ImageView
+                android:id="@+id/img_lama"
+                android:layout_width="@dimen/x16"
+                android:layout_height="@dimen/x16"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/x10"
+                android:src="@mipmap/lama" />
+
+            <TextView
+                android:id="@+id/tv_lama"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/x10"
+                android:layout_marginTop="@dimen/x8"
+                android:layout_toRightOf="@id/img_lama"
+                android:text="我是辣妈"
+                android:textColor="#333"
+                android:textSize="@dimen/x13" />
+
+            <TextView
+                android:id="@+id/tv_lama_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_lama"
+                android:layout_marginLeft="@dimen/x10"
+                android:layout_marginTop="@dimen/x5"
+                android:layout_toRightOf="@id/img_lama"
+                android:textColor="#999"
+                android:textSize="@dimen/x10" />
+
+            <CheckBox
+                android:id="@+id/Choosed_lama"
+                android:layout_width="@dimen/x18"
+                android:layout_height="@dimen/x18"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/x5"
+                android:layout_marginRight="@dimen/x15"
+                android:background="@drawable/rb_selector"
+                android:button="@null" />
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="#ccc"></View>
+
+    </LinearLayout>
+
+</RelativeLayout>

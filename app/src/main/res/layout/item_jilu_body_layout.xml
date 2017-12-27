@@ -1,0 +1,429 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ll_body"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:visibility="visible">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x1"
+        android:background="#efefef"></View>
+
+    <LinearLayout
+        android:id="@+id/ll_jingqi_start"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y36"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/x15"
+            android:layout_marginRight="@dimen/x5"
+            android:background="@mipmap/jing1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="经期开始"
+            android:textColor="@color/text333"
+            android:textSize="@dimen/x15" />
+
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+        </RelativeLayout>
+
+        <com.kyleduo.switchbutton.SwitchButton
+            android:id="@+id/sb_jingqi_start"
+            style="@style/SwitchButtonStyle"
+            android:layout_width="@dimen/x63"
+            android:layout_height="@dimen/y20"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:clickable="false"
+            android:enabled="true"
+            android:focusable="false"
+            android:textColor="#FFFFFF"
+            android:textSize="16dp"
+            app:kswFadeBack="false"
+            app:kswTextOff="Off"
+            app:kswTextOn="On" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x1"
+        android:background="#efefef"></View>
+
+    <LinearLayout
+        android:id="@+id/ll_jingqi_end"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y36"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/x15"
+            android:layout_marginRight="@dimen/x5"
+            android:background="@mipmap/jingjieshu" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="经期结束"
+            android:textColor="@color/text333"
+            android:textSize="@dimen/x15" />
+
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+
+        </RelativeLayout>
+
+        <com.kyleduo.switchbutton.SwitchButton
+            android:id="@+id/sb_jingqi_end"
+            style="@style/SwitchButtonStyle"
+            android:layout_width="@dimen/x63"
+            android:layout_height="@dimen/y20"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:clickable="false"
+            android:enabled="true"
+            android:focusable="false"
+            android:textColor="#FFFFFF"
+            android:textSize="16dp"
+            app:kswFadeBack="false"
+            app:kswTextOff="Off"
+            app:kswTextOn="On" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x1"
+        android:background="#efefef"></View>
+
+    <LinearLayout
+        android:id="@+id/ll_yuejingxiangqing"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y36"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/x15"
+            android:layout_marginRight="@dimen/x5"
+            android:background="@mipmap/xiangqing" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="月经详情"
+            android:textColor="@color/text333"
+            android:textSize="@dimen/x15" />
+
+        <TextView
+            android:id="@+id/tv_yuejingxiangqing"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="end"
+            android:paddingRight="@dimen/x5"
+            android:text="轻度 较少"
+            android:textColor="#666"
+            android:textSize="@dimen/x15" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/x15"
+            android:background="@mipmap/you" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x5"
+        android:background="#efefef"></View>
+
+    <LinearLayout
+        android:id="@+id/ll_aiai"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y36"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/x15"
+            android:layout_marginRight="@dimen/x5"
+            android:background="@mipmap/aiai" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="爱爱"
+            android:textColor="@color/text333"
+            android:textSize="@dimen/x15" />
+
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+
+        </RelativeLayout>
+
+        <com.kyleduo.switchbutton.SwitchButton
+            android:id="@+id/sb_aiai"
+            style="@style/SwitchButtonStyle"
+            android:layout_width="@dimen/x63"
+            android:layout_height="@dimen/y20"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:clickable="false"
+            android:enabled="true"
+            android:focusable="false"
+            android:textColor="#FFFFFF"
+            android:textSize="16dp"
+            app:kswFadeBack="false"
+            app:kswTextOff="无"
+            app:kswTextOn="有" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x1"
+        android:background="#efefef"></View>
+
+    <LinearLayout
+        android:id="@+id/ll_body_tiwen"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y36"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/x15"
+            android:layout_marginRight="@dimen/x5"
+            android:background="@mipmap/tiwen" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="体温"
+            android:textColor="@color/text333"
+            android:textSize="@dimen/x15" />
+
+        <TextView
+            android:id="@+id/tv_body_tiwen"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="end"
+            android:paddingRight="@dimen/x5"
+            android:text="36.5°c"
+            android:textColor="#666"
+            android:textSize="@dimen/x15" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/x15"
+            android:background="@mipmap/you" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x1"
+        android:background="#efefef"></View>
+
+    <LinearLayout
+        android:id="@+id/ll_body_tizhong"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y36"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/x15"
+            android:layout_marginRight="@dimen/x5"
+            android:background="@mipmap/tizhong" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="体重"
+            android:textColor="@color/text333"
+            android:textSize="@dimen/x15" />
+
+        <TextView
+            android:id="@+id/tv_body_tizhong"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="end"
+            android:paddingRight="@dimen/x5"
+            android:text="48.5Kg"
+            android:textColor="#666"
+            android:textSize="@dimen/x15" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/x15"
+            android:background="@mipmap/you" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x1"
+        android:background="#efefef"></View>
+
+    <LinearLayout
+        android:id="@+id/ll_body_xinqing"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y36"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/x15"
+            android:layout_marginRight="@dimen/x5"
+            android:background="@mipmap/xinqing" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="心情"
+            android:textColor="@color/text333"
+            android:textSize="@dimen/x15" />
+
+        <TextView
+            android:id="@+id/tv_body_xinqing"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="end"
+            android:paddingRight="@dimen/x5"
+            android:text="郁闷"
+            android:textColor="#666"
+            android:textSize="@dimen/x15" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/x15"
+            android:background="@mipmap/you" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x1"
+        android:background="#efefef"></View>
+
+    <LinearLayout
+        android:id="@+id/ll_body_zhengzhuang"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y36"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/x15"
+            android:layout_marginRight="@dimen/x5"
+            android:background="@mipmap/zhengzhuang" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="症状"
+            android:textColor="@color/text333"
+            android:textSize="@dimen/x15" />
+
+        <TextView
+            android:id="@+id/tv_body_zhengzhuang"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="end"
+            android:paddingRight="@dimen/x5"
+            android:text="头疼，身体酸痛..."
+            android:textColor="#666"
+            android:textSize="@dimen/x15" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/x15"
+            android:background="@mipmap/you" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x1"
+        android:background="#efefef"></View>
+
+    <LinearLayout
+        android:id="@+id/ll_body_riji"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y36"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/x15"
+            android:layout_marginRight="@dimen/x5"
+            android:background="@mipmap/riji" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="日记"
+            android:textColor="@color/text333"
+            android:textSize="@dimen/x15" />
+
+        <TextView
+            android:id="@+id/tv_body_riji"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="end"
+            android:paddingRight="@dimen/x5"
+            android:text="不乱于心， 不困于情 ，不…"
+            android:textColor="#666"
+            android:textSize="@dimen/x15" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/x15"
+            android:background="@mipmap/you" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x5"
+        android:background="#efefef"></View>
+
+
+</LinearLayout>

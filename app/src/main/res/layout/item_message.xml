@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fl_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y50">
+
+        <ImageView
+            android:id="@+id/img_xiaoxi"
+            android:layout_width="@dimen/y38"
+            android:layout_height="@dimen/y38"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/x8"
+            android:background="@mipmap/xiaoxi" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/x75"
+            android:layout_marginRight="@dimen/x10"
+            android:layout_marginTop="@dimen/y5"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:text="系统消息"
+            android:textColor="#333333"
+            android:textSize="@dimen/x15" />
+
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/x7"
+            android:layout_marginLeft="@dimen/x75"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="大姨妈如果结束了，要记得记录结束点哦结束点哦..."
+            android:textColor="#999999"
+            android:textSize="@dimen/x12" />
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/x10"
+            android:layout_marginTop="@dimen/y5"
+            android:text="2017-05-17"
+            android:textColor="#999999"
+            android:textSize="@dimen/x11" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_alignParentBottom="true"
+            android:background="#cccccc"></View>
+    </RelativeLayout>
+
+</FrameLayout>

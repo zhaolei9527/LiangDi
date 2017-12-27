@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:rvp="http://schemas.android.com/tools"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x42"
+            android:background="@color/white"
+            android:visibility="visible">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:background="@mipmap/logo" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_head"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/y119"
+                android:background="@mipmap/banner"
+                android:visibility="visible">
+
+                <LinearLayout
+                    android:id="@+id/banner_line1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/x30"
+                    android:layout_marginTop="@dimen/y25">
+
+                    <TextView
+                        android:id="@+id/tv_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="排卵期"
+                        android:textColor="#8A63A0"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" 第"
+                        android:textColor="#8A63A0"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_now_days"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="6"
+                        android:textColor="#8A63A0"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="天"
+                        android:textColor="#8A63A0"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_stu_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="(易孕)"
+                        android:textColor="#8A63A0"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_yun_lv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/x30"
+                    android:layout_marginTop="@dimen/y48"
+                    android:text="怀孕几率86%"
+                    android:textColor="#855F9F"
+                    android:textSize="@dimen/x14" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/x81"
+                    android:layout_marginTop="@dimen/y78"
+                    android:text="美丽相伴，关爱自己"
+                    android:textColor="#F16480"
+                    android:textSize="@dimen/x12"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/y35"
+                android:background="@color/white"
+                android:visibility="visible">
+
+                <ImageView
+                    android:id="@+id/img_jing"
+                    android:layout_width="@dimen/x18"
+                    android:layout_height="@dimen/y17"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/x14"
+                    android:background="@mipmap/jing1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/x7"
+                    android:layout_toRightOf="@id/img_jing"
+                    android:text="经期开始"
+                    android:textColor="#333333" />
+
+                <com.kyleduo.switchbutton.SwitchButton
+                    android:id="@+id/sb_nofade"
+                    style="@style/SwitchButtonStyle"
+                    android:layout_width="@dimen/x63"
+                    android:layout_height="@dimen/y20"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16dp"
+                    app:kswFadeBack="false"
+                    app:kswTextOff="Off"
+                    app:kswTextOn="On" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/y2"
+                android:background="#EEEEEE"></View>
+
+
+        </LinearLayout>
+
+        <com.astuetz.PagerSlidingTabStrip
+            android:background="@color/white"
+            android:id="@+id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y34"
+            android:layout_marginLeft="@dimen/x10"
+            app:pstsIndicatorColor="@color/pressedColor"
+            app:pstsTabTextColor="@drawable/pagerslidingtabtextcolor" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="#DDDDDD"></View>
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/VpNews_context"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/white" />
+
+
+    </LinearLayout>
+
+</FrameLayout>

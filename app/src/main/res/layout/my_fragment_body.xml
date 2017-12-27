@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y67"
+        android:orientation="horizontal"
+        android:weightSum="4">
+
+        <LinearLayout
+            android:id="@+id/ll_dingdan"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="@dimen/x23"
+                android:layout_height="@dimen/x23"
+                android:src="@mipmap/dingdan" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/x5"
+                android:text="订单"
+                android:textColor="#333"
+                android:textSize="@dimen/x10" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_shopcar"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="@dimen/x23"
+                android:layout_height="@dimen/x23"
+                android:src="@mipmap/mygouwuche" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/x5"
+                android:text="购物车"
+                android:textColor="#333"
+                android:textSize="@dimen/x10" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_shoucang"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="@dimen/x23"
+                android:layout_height="@dimen/x23"
+                android:src="@mipmap/myshoucang" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/x5"
+                android:text="收藏"
+                android:textColor="#333"
+                android:textSize="@dimen/x10" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_xiaoxi"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:layout_width="@dimen/x25"
+                android:layout_height="@dimen/x26">
+
+                <ImageView
+                    android:layout_width="@dimen/x23"
+                    android:layout_height="@dimen/x23"
+                    android:layout_gravity="center"
+                    android:src="@mipmap/myxiaoxi" />
+
+                <ImageView
+                    android:id="@+id/img_dot"
+                    android:layout_width="@dimen/x5"
+                    android:layout_height="@dimen/x5"
+                    android:layout_gravity="end"
+                    android:background="#f00"
+                    android:visibility="gone" />
+
+            </FrameLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/x5"
+                android:text="消息"
+                android:textColor="#333"
+                android:textSize="@dimen/x10" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_jilu_huaiyun"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:visibility="visible">
+
+    <LinearLayout
+        android:id="@+id/ll_huaiyun_xinqing"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y36"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/x15"
+            android:layout_marginRight="@dimen/x5"
+            android:background="@mipmap/xinqing" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="心情"
+            android:textColor="@color/text333"
+            android:textSize="@dimen/x15" />
+
+        <TextView
+            android:id="@+id/tv_huaiyun_xinqing"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="end"
+            android:paddingRight="@dimen/x5"
+            android:text="未记录"
+            android:textColor="#666"
+            android:textSize="@dimen/x15" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/x15"
+            android:background="@mipmap/you" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x1"
+        android:background="#efefef"></View>
+
+
+    <LinearLayout
+        android:id="@+id/ll_huaiyun_daduzhao"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y36"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/x15"
+            android:layout_marginRight="@dimen/x5"
+            android:background="@mipmap/daduzhao" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="大肚照"
+            android:textColor="@color/text333"
+            android:textSize="@dimen/x15" />
+
+        <TextView
+            android:id="@+id/tv_huaiyun_daduzhao"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="end"
+            android:paddingRight="@dimen/x5"
+            android:text="未记录"
+            android:textColor="#666"
+            android:textSize="@dimen/x15" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/x15"
+            android:background="@mipmap/you" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x1"
+        android:background="#efefef"></View>
+
+    <LinearLayout
+        android:id="@+id/ll_huaiyun_tizhong"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y36"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/x15"
+            android:layout_marginRight="@dimen/x5"
+            android:background="@mipmap/tizhong" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="体重"
+            android:textColor="@color/text333"
+            android:textSize="@dimen/x15" />
+
+        <TextView
+            android:id="@+id/tv_huaiyun_tizhong"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="end"
+            android:paddingRight="@dimen/x5"
+            android:text="未记录"
+            android:textColor="#666"
+            android:textSize="@dimen/x15" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/x15"
+            android:background="@mipmap/you" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x1"
+        android:background="#efefef"></View>
+
+    <LinearLayout
+        android:id="@+id/ll_huaiyun_zhengzhuang"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y36"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/x15"
+            android:layout_marginRight="@dimen/x5"
+            android:background="@mipmap/zhengzhuang" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="症状"
+            android:textColor="@color/text333"
+            android:textSize="@dimen/x15" />
+
+        <TextView
+            android:id="@+id/tv_huaiyun_zhengzhuang"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="end"
+            android:paddingRight="@dimen/x5"
+            android:text="未记录"
+            android:textColor="#666"
+            android:textSize="@dimen/x15" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/x15"
+            android:background="@mipmap/you" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x1"
+        android:background="#efefef"></View>
+
+    <LinearLayout
+        android:id="@+id/ll_huaiyun_taidong"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y36"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/x15"
+            android:layout_marginRight="@dimen/x5"
+            android:background="@mipmap/taidong" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="胎动"
+            android:textColor="@color/text333"
+            android:textSize="@dimen/x15" />
+
+        <TextView
+            android:id="@+id/tv_huaiyun_taidong"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="end"
+            android:paddingRight="@dimen/x5"
+            android:text="未记录"
+            android:textColor="#666"
+            android:textSize="@dimen/x15" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/x15"
+            android:background="@mipmap/you" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x1"
+        android:background="#efefef"></View>
+
+    <LinearLayout
+        android:id="@+id/ll_huaiyun_wenti"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y36"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/x15"
+            android:layout_marginRight="@dimen/x5"
+            android:background="@mipmap/wen" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="问题"
+            android:textColor="@color/text333"
+            android:textSize="@dimen/x15" />
+
+        <TextView
+            android:id="@+id/tv_huaiyun_wenti"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="end"
+            android:paddingRight="@dimen/x5"
+            android:text="未记录"
+            android:textColor="#666"
+            android:textSize="@dimen/x15" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/x15"
+            android:background="@mipmap/you" />
+    </LinearLayout>
+
+</LinearLayout>

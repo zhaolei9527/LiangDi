@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl_title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y35"
+        android:background="#fbfbfb"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/img_back"
+            android:layout_width="@dimen/x18"
+            android:layout_height="@dimen/y20"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/x13"
+            android:src="@mipmap/fanhui" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="评论"
+            android:textColor="#333333"
+            android:textSize="24sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x1"
+            android:layout_alignParentBottom="true"
+            android:background="#eee"></View>
+
+    </RelativeLayout>
+
+    <EditText
+        android:id="@+id/et_newsComments"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@null"
+        android:gravity="start"
+        android:hint="请写下你的评论..."
+        android:padding="@dimen/x5" />
+
+    <TextView
+        android:id="@+id/tv_newsComments_commit"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y39"
+        android:background="@color/colorAccent"
+        android:gravity="center"
+        android:text="发表评论"
+        android:textColor="@color/white"
+        android:textSize="@dimen/x18" />
+
+
+</LinearLayout>
