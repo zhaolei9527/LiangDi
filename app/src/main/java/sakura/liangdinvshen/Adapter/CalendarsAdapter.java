@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,11 +18,21 @@ import com.bigkoo.pickerview.OptionsPickerView;
 import com.google.gson.Gson;
 import com.kyleduo.switchbutton.SwitchButton;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import sakura.liangdinvshen.Activity.BabySymptomActivity;
+import sakura.liangdinvshen.Activity.BreastFeedActivity;
+import sakura.liangdinvshen.Activity.ChouChouActivity;
+import sakura.liangdinvshen.Activity.DiaryActivity;
 import sakura.liangdinvshen.Activity.RankingActivity;
+import sakura.liangdinvshen.Activity.SymptomActivity;
 import sakura.liangdinvshen.Activity.YJxiangqingActivity;
+import sakura.liangdinvshen.Bean.BankEvent;
 import sakura.liangdinvshen.Bean.StuBean;
 import sakura.liangdinvshen.Fragment.RecordFragment;
 import sakura.liangdinvshen.R;
@@ -48,6 +59,7 @@ public class CalendarsAdapter extends RecyclerView.Adapter<CalendarsAdapter.View
 
     private int maxwendu = 42;
     private int maxtizhong = 100;
+    private ViewHolder viewHolder;
 
     public CalendarsAdapter(Context context) {
         this.context = context;
@@ -81,7 +93,8 @@ public class CalendarsAdapter extends RecyclerView.Adapter<CalendarsAdapter.View
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(layoutInflater.inflate(R.layout.calendarsitem_1, parent, false));
+        viewHolder = new ViewHolder(layoutInflater.inflate(R.layout.calendarsitem_1, parent, false));
+        return viewHolder;
     }
 
     @Override
@@ -119,7 +132,6 @@ public class CalendarsAdapter extends RecyclerView.Adapter<CalendarsAdapter.View
             @Override
             public void onClick(View v) {
                 holder.sb_jingqi_end.setChecked(!holder.sb_jingqi_end.isChecked());
-                holder.sb_jingqi_start.setChecked(!holder.sb_jingqi_end.isChecked());
                 if (holder.sb_jingqi_end.isChecked()) {
                     lifePeriodEnd();
                 } else {
@@ -151,6 +163,8 @@ public class CalendarsAdapter extends RecyclerView.Adapter<CalendarsAdapter.View
             @Override
             public void onClick(View v) {
                 context.startActivity(new Intent(context, YJxiangqingActivity.class));
+                //注册EventBus
+                EventBus.getDefault().register(CalendarsAdapter.this);
             }
         });
 
@@ -204,6 +218,97 @@ public class CalendarsAdapter extends RecyclerView.Adapter<CalendarsAdapter.View
             }
         });
 
+
+        /**
+         * 身体症状
+         * */
+
+        holder.ll_body_zhengzhuang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                context.startActivity(new Intent(context, SymptomActivity.class));
+                //注册EventBus
+                if (!EventBus.getDefault().isRegistered(CalendarsAdapter.this)) {
+                    EventBus.getDefault().register(CalendarsAdapter.this);
+                }
+            }
+        });
+
+
+        /**
+         *怀孕身体症状
+         * */
+        holder.ll_huaiyun_zhengzhuang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                context.startActivity(new Intent(context, SymptomActivity.class));
+                //注册EventBus
+                if (!EventBus.getDefault().isRegistered(CalendarsAdapter.this)) {
+                    EventBus.getDefault().register(CalendarsAdapter.this);
+                }
+            }
+        });
+
+        /**
+         * 宝宝不舒服
+         * */
+        holder.ll_baby_bushufu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                context.startActivity(new Intent(context, BabySymptomActivity.class));
+                //注册EventBus
+                if (!EventBus.getDefault().isRegistered(CalendarsAdapter.this)) {
+                    EventBus.getDefault().register(CalendarsAdapter.this);
+                }
+            }
+        });
+
+
+        /**
+         * 哺乳记录
+         * */
+        holder.ll_baby_buru.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                context.startActivity(new Intent(context, BreastFeedActivity.class));
+                //注册EventBus
+                if (!EventBus.getDefault().isRegistered(CalendarsAdapter.this)) {
+                    EventBus.getDefault().register(CalendarsAdapter.this);
+                }
+            }
+        });
+
+
+        /**
+         * 日记
+         * */
+
+        holder.ll_body_riji.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                context.startActivity(new Intent(context, DiaryActivity.class));
+                //注册EventBus
+                if (!EventBus.getDefault().isRegistered(CalendarsAdapter.this)) {
+                    EventBus.getDefault().register(CalendarsAdapter.this);
+                }
+            }
+        });
+
+
+        /**
+         * 臭臭
+         * */
+
+        holder.ll_baby_chouchou.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                context.startActivity(new Intent(context, ChouChouActivity.class));
+                //注册EventBus
+                if (!EventBus.getDefault().isRegistered(CalendarsAdapter.this)) {
+                    EventBus.getDefault().register(CalendarsAdapter.this);
+                }
+            }
+        });
 
     }
 
@@ -546,6 +651,27 @@ public class CalendarsAdapter extends RecyclerView.Adapter<CalendarsAdapter.View
             pvOptions.setPicker(list);//三级选择器
             pvOptions.show();
         }
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventMainThread(BankEvent event) {
+        if (TextUtils.isEmpty(event.getmType())) {
+            viewHolder.tv_yuejingxiangqing.setText(event.getMsg());
+        } else if ("zhengzhuang".equals(event.getmType())) {
+            viewHolder.tv_body_zhengzhuang.setText(event.getMsg());
+            viewHolder.tv_huaiyun_zhengzhuang.setText(event.getMsg());
+        } else if ("babyzhengzhuang".equals(event.getmType())) {
+            viewHolder.tv_baby_bushufu.setText(event.getMsg());
+        } else if ("riji".equals(event.getmType())) {
+            viewHolder.tv_body_riji.setText(event.getMsg());
+        } else if ("buru".equals(event.getmType())) {
+            viewHolder.tv_baby_buru.setText(event.getMsg());
+        } else if ("chouchou".equals(event.getmType())) {
+            viewHolder.tv_baby_chouchou.setText(event.getMsg());
+        }
+        //反注册EventBus
+        EventBus.getDefault().unregister(CalendarsAdapter.this);
     }
 
 

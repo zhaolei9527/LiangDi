@@ -54,6 +54,7 @@ public class RecordFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.record_fragment_layout, container, false);
         initView(view);
+
         return view;
     }
 
@@ -79,6 +80,8 @@ public class RecordFragment extends Fragment {
                 refreshMonthPager();
             }
         }, 300);
+
+
     }
 
     public void getData() {
@@ -205,5 +208,9 @@ public class RecordFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
 
+    }
 }

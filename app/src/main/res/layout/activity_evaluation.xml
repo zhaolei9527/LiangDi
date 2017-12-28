@@ -69,7 +69,6 @@
         android:layout_height="@dimen/x4"
         android:background="#efefef"></View>
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">

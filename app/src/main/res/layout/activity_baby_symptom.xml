@@ -1,0 +1,688 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x42"
+        android:background="#fbfbfb"
+        android:visibility="visible">
+
+        <FrameLayout
+            android:id="@+id/rl_back"
+            android:layout_width="@dimen/x30"
+            android:layout_height="@dimen/x30"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/x10">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:background="@mipmap/fanhui" />
+
+        </FrameLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="身体症状"
+            android:textColor="#333333"
+            android:textSize="@dimen/x16" />
+
+        <TextView
+            android:id="@+id/tv_submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:layout_marginRight="@dimen/x15"
+            android:text="确定"
+            android:textColor="#333333"
+            android:textSize="@dimen/x16" />
+
+
+    </RelativeLayout>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/y28"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/x15"
+                android:gravity="center_vertical"
+                android:text="头部"
+                android:textSize="@dimen/x15" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/x5"
+                android:layout_marginLeft="@dimen/x30"
+                android:layout_marginRight="@dimen/x15"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <CheckBox
+                    android:id="@+id/btn_0"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/y24"
+                    android:layout_marginRight="@dimen/x15"
+                    android:layout_marginTop="@dimen/y2"
+                    android:layout_weight="1"
+                    android:background="@drawable/radio"
+                    android:button="@null"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:text="流鼻涕"
+                    android:textColor="@drawable/btn_text_radio_selector"
+                    android:textSize="17.0sp"></CheckBox>
+
+
+                <CheckBox
+                    android:id="@+id/btn_1"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/y24"
+                    android:layout_marginRight="@dimen/x15"
+                    android:layout_marginTop="@dimen/y2"
+                    android:layout_weight="1"
+                    android:background="@drawable/radio"
+                    android:button="@null"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:text="咳嗽"
+                    android:textColor="@drawable/btn_text_radio_selector"
+                    android:textSize="17.0sp"></CheckBox>
+
+                <CheckBox
+                    android:id="@+id/btn_2"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/y24"
+                    android:layout_marginRight="@dimen/x15"
+                    android:layout_marginTop="@dimen/y2"
+                    android:layout_weight="1"
+                    android:background="@drawable/radio"
+                    android:button="@null"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:text="吐奶"
+                    android:textColor="@drawable/btn_text_radio_selector"
+                    android:textSize="17.0sp"></CheckBox>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/x5"
+                android:layout_marginLeft="@dimen/x30"
+                android:layout_marginRight="@dimen/x15"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <CheckBox
+                    android:id="@+id/btn_3"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/y24"
+                    android:layout_marginRight="@dimen/x15"
+                    android:layout_marginTop="@dimen/y2"
+                    android:layout_weight="1"
+                    android:background="@drawable/radio"
+                    android:button="@null"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:text="枕秃"
+                    android:textColor="@drawable/btn_text_radio_selector"
+                    android:textSize="17.0sp"></CheckBox>
+
+
+                <CheckBox
+                    android:id="@+id/btn_4"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/y24"
+                    android:layout_marginRight="@dimen/x15"
+                    android:layout_marginTop="@dimen/y2"
+                    android:layout_weight="1"
+                    android:background="@drawable/radio"
+                    android:button="@null"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:text="磨牙"
+                    android:textColor="@drawable/btn_text_radio_selector"
+                    android:textSize="17.0sp"></CheckBox>
+
+                <CheckBox
+                    android:id="@+id/btn_5"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/y24"
+                    android:layout_marginRight="@dimen/x15"
+                    android:layout_marginTop="@dimen/y2"
+                    android:layout_weight="1"
+                    android:background="@drawable/radio"
+                    android:button="@null"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:text="流鼻血"
+                    android:textColor="@drawable/btn_text_radio_selector"
+                    android:textSize="17.0sp"></CheckBox>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/x5"
+                android:layout_marginLeft="@dimen/x30"
+                android:layout_marginRight="@dimen/x15"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <CheckBox
+                    android:id="@+id/btn_6"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/y24"
+                    android:layout_marginRight="@dimen/x15"
+                    android:layout_marginTop="@dimen/y2"
+                    android:layout_weight="1"
+                    android:background="@drawable/radio"
+                    android:button="@null"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:text="眼屎多"
+                    android:textColor="@drawable/btn_text_radio_selector"
+                    android:textSize="17.0sp"></CheckBox>
+
+
+                <CheckBox
+                    android:id="@+id/btn_7"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/y24"
+                    android:layout_marginRight="@dimen/x15"
+                    android:layout_marginTop="@dimen/y2"
+                    android:layout_weight="1"
+                    android:background="@drawable/radio"
+                    android:button="@null"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:text="流口水"
+                    android:textColor="@drawable/btn_text_radio_selector"
+                    android:textSize="17.0sp"></CheckBox>
+
+                <CheckBox
+                    android:id="@+id/btn_8"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/y24"
+                    android:layout_marginRight="@dimen/x15"
+                    android:layout_marginTop="@dimen/y2"
+                    android:layout_weight="1"
+                    android:background="@drawable/radio"
+                    android:button="@null"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:text="打鼾"
+                    android:textColor="@drawable/btn_text_radio_selector"
+                    android:textSize="17.0sp"></CheckBox>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/x5"
+                android:layout_marginLeft="@dimen/x30"
+                android:layout_marginRight="@dimen/x15"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <CheckBox
+                    android:id="@+id/btn_9"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/y24"
+                    android:layout_marginRight="@dimen/x15"
+                    android:layout_marginTop="@dimen/y2"
+                    android:layout_weight="1"
+                    android:background="@drawable/radio"
+                    android:button="@null"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:text="口臭"
+                    android:textColor="@drawable/btn_text_radio_selector"
+                    android:textSize="17.0sp"></CheckBox>
+
+
+                <CheckBox
+                    android:id="@+id/btn_10"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/y24"
+                    android:layout_marginRight="@dimen/x15"
+                    android:layout_marginTop="@dimen/y2"
+                    android:layout_weight="1"
+                    android:background="@drawable/radio"
+                    android:button="@null"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:text="面色苍白"
+                    android:textColor="@drawable/btn_text_radio_selector"
+                    android:textSize="17.0sp"
+                    android:visibility="invisible"></CheckBox>
+
+                <CheckBox
+                    android:id="@+id/btn_11"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/y24"
+                    android:layout_marginRight="@dimen/x15"
+                    android:layout_marginTop="@dimen/y2"
+                    android:layout_weight="1"
+                    android:background="@drawable/radio"
+                    android:button="@null"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:text="休克"
+                    android:textColor="@drawable/btn_text_radio_selector"
+                    android:textSize="17.0sp"
+                    android:visibility="invisible"></CheckBox>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/y28"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/x15"
+                android:gravity="center_vertical"
+                android:text="腹部"
+                android:textSize="@dimen/x15" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/x5"
+                android:layout_marginLeft="@dimen/x30"
+                android:layout_marginRight="@dimen/x15"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <CheckBox
+                    android:id="@+id/btn_12"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/y24"
+                    android:layout_marginRight="@dimen/x15"
+                    android:layout_marginTop="@dimen/y2"
+                    android:layout_weight="1"
+                    android:background="@drawable/radio"
+                    android:button="@null"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:text="肚子疼"
+                    android:textColor="@drawable/btn_text_radio_selector"
+                    android:textSize="17.0sp"></CheckBox>
+
+
+                <CheckBox
+                    android:id="@+id/btn_13"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/y24"
+                    android:layout_marginRight="@dimen/x15"
+                    android:layout_marginTop="@dimen/y2"
+                    android:layout_weight="1"
+                    android:background="@drawable/radio"
+                    android:button="@null"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:text="腹泻"
+                    android:textColor="@drawable/btn_text_radio_selector"
+                    android:textSize="17.0sp"></CheckBox>
+
+                <CheckBox
+                    android:id="@+id/btn_14"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/y24"
+                    android:layout_marginRight="@dimen/x15"
+                    android:layout_marginTop="@dimen/y2"
+                    android:layout_weight="1"
+                    android:background="@drawable/radio"
+                    android:button="@null"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:text="粉刺"
+                    android:textColor="@drawable/btn_text_radio_selector"
+                    android:textSize="17.0sp"
+                    android:visibility="invisible"></CheckBox>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/y28"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/x15"
+                android:gravity="center_vertical"
+                android:text="腰臀"
+                android:textSize="@dimen/x15" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/x5"
+                android:layout_marginLeft="@dimen/x30"
+                android:layout_marginRight="@dimen/x15"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <CheckBox
+                    android:id="@+id/btn_18"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/y24"
+                    android:layout_marginRight="@dimen/x15"
+                    android:layout_marginTop="@dimen/y2"
+                    android:layout_weight="1"
+                    android:background="@drawable/radio"
+                    android:button="@null"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:text="红屁股"
+                    android:textColor="@drawable/btn_text_radio_selector"
+                    android:textSize="17.0sp"></CheckBox>
+
+
+                <CheckBox
+                    android:id="@+id/btn_19"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/y24"
+                    android:layout_marginRight="@dimen/x15"
+                    android:layout_marginTop="@dimen/y2"
+                    android:layout_weight="1"
+                    android:background="@drawable/radio"
+                    android:button="@null"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:text="便秘"
+                    android:textColor="@drawable/btn_text_radio_selector"
+                    android:textSize="17.0sp"></CheckBox>
+
+                <CheckBox
+                    android:id="@+id/btn_20"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/y24"
+                    android:layout_marginRight="@dimen/x15"
+                    android:layout_marginTop="@dimen/y2"
+                    android:layout_weight="1"
+                    android:background="@drawable/radio"
+                    android:button="@null"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:text="尿频"
+                    android:textColor="@drawable/btn_text_radio_selector"
+                    android:textSize="17.0sp"></CheckBox>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/y28"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/x15"
+                android:gravity="center_vertical"
+                android:text="全身"
+                android:textSize="@dimen/x15" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/x5"
+                android:layout_marginLeft="@dimen/x30"
+                android:layout_marginRight="@dimen/x15"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <CheckBox
+                    android:id="@+id/btn_23"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/y24"
+                    android:layout_marginRight="@dimen/x15"
+                    android:layout_marginTop="@dimen/y2"
+                    android:layout_weight="1"
+                    android:background="@drawable/radio"
+                    android:button="@null"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:text="发热"
+                    android:textColor="@drawable/btn_text_radio_selector"
+                    android:textSize="17.0sp"></CheckBox>
+
+
+                <CheckBox
+                    android:id="@+id/btn_24"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/y24"
+                    android:layout_marginRight="@dimen/x15"
+                    android:layout_marginTop="@dimen/y2"
+                    android:layout_weight="1"
+                    android:background="@drawable/radio"
+                    android:button="@null"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:text="出疹子"
+                    android:textColor="@drawable/btn_text_radio_selector"
+                    android:textSize="17.0sp"></CheckBox>
+
+                <CheckBox
+                    android:id="@+id/btn_25"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/y24"
+                    android:layout_marginRight="@dimen/x15"
+                    android:layout_marginTop="@dimen/y2"
+                    android:layout_weight="1"
+                    android:background="@drawable/radio"
+                    android:button="@null"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:text="多汗"
+                    android:textColor="@drawable/btn_text_radio_selector"
+                    android:textSize="17.0sp"></CheckBox>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/x5"
+                android:layout_marginLeft="@dimen/x30"
+                android:layout_marginRight="@dimen/x15"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <CheckBox
+                    android:id="@+id/btn_26"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/y24"
+                    android:layout_marginRight="@dimen/x15"
+                    android:layout_marginTop="@dimen/y2"
+                    android:layout_weight="1"
+                    android:background="@drawable/radio"
+                    android:button="@null"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:text="抽搐"
+                    android:textColor="@drawable/btn_text_radio_selector"
+                    android:textSize="17.0sp"></CheckBox>
+
+
+                <CheckBox
+                    android:id="@+id/btn_27"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/y24"
+                    android:layout_marginRight="@dimen/x15"
+                    android:layout_marginTop="@dimen/y2"
+                    android:layout_weight="1"
+                    android:background="@drawable/radio"
+                    android:button="@null"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:text="身材矮小"
+                    android:textColor="@drawable/btn_text_radio_selector"
+                    android:textSize="17.0sp"></CheckBox>
+
+                <CheckBox
+                    android:id="@+id/btn_28"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/y24"
+                    android:layout_marginRight="@dimen/x15"
+                    android:layout_marginTop="@dimen/y2"
+                    android:layout_weight="1"
+                    android:background="@drawable/radio"
+                    android:button="@null"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:text="多汗"
+                    android:textColor="@drawable/btn_text_radio_selector"
+                    android:textSize="17.0sp"
+                    android:visibility="invisible"></CheckBox>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/y28"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/x15"
+                android:gravity="center_vertical"
+                android:text="其他"
+                android:textSize="@dimen/x15" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/x5"
+                android:layout_marginLeft="@dimen/x30"
+                android:layout_marginRight="@dimen/x15"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <CheckBox
+                    android:id="@+id/btn_29"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/y24"
+                    android:layout_marginRight="@dimen/x15"
+                    android:layout_marginTop="@dimen/y2"
+                    android:layout_weight="1"
+                    android:background="@drawable/radio"
+                    android:button="@null"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:text="无精打采"
+                    android:textColor="@drawable/btn_text_radio_selector"
+                    android:textSize="17.0sp"></CheckBox>
+
+
+                <CheckBox
+                    android:id="@+id/btn_30"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/y24"
+                    android:layout_marginRight="@dimen/x15"
+                    android:layout_marginTop="@dimen/y2"
+                    android:layout_weight="1"
+                    android:background="@drawable/radio"
+                    android:button="@null"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:text="情绪不稳定"
+                    android:textColor="@drawable/btn_text_radio_selector"
+                    android:textSize="17.0sp"></CheckBox>
+
+                <CheckBox
+                    android:id="@+id/btn_31"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/y24"
+                    android:layout_marginRight="@dimen/x15"
+                    android:layout_marginTop="@dimen/y2"
+                    android:layout_weight="1"
+                    android:background="@drawable/radio"
+                    android:button="@null"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:text="无食欲"
+                    android:textColor="@drawable/btn_text_radio_selector"
+                    android:textSize="17.0sp"></CheckBox>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/x5"
+                android:layout_marginLeft="@dimen/x30"
+                android:layout_marginRight="@dimen/x15"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <CheckBox
+                    android:id="@+id/btn_32"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/y24"
+                    android:layout_marginRight="@dimen/x15"
+                    android:layout_marginTop="@dimen/y2"
+                    android:layout_weight="1"
+                    android:background="@drawable/radio"
+                    android:button="@null"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:text="夜啼"
+                    android:textColor="@drawable/btn_text_radio_selector"
+                    android:textSize="17.0sp"></CheckBox>
+
+
+                <CheckBox
+                    android:id="@+id/btn_33"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/y24"
+                    android:layout_marginRight="@dimen/x15"
+                    android:layout_marginTop="@dimen/y2"
+                    android:layout_weight="1"
+                    android:background="@drawable/radio"
+                    android:button="@null"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:text="嗜睡"
+                    android:textColor="@drawable/btn_text_radio_selector"
+                    android:textSize="17.0sp"></CheckBox>
+
+                <CheckBox
+                    android:id="@+id/btn_34"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/y24"
+                    android:layout_marginRight="@dimen/x15"
+                    android:layout_marginTop="@dimen/y2"
+                    android:layout_weight="1"
+                    android:background="@drawable/radio"
+                    android:button="@null"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:text="块状"
+                    android:textColor="@drawable/btn_text_radio_selector"
+                    android:textSize="17.0sp"
+                    android:visibility="invisible"></CheckBox>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+
+</LinearLayout>

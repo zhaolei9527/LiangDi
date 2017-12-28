@@ -162,6 +162,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="end"
+            android:maxLines="1"
             android:paddingRight="@dimen/x5"
             android:text="未记录"
             android:textColor="#666"

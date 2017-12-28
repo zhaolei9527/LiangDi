@@ -142,7 +142,7 @@
             android:layout_weight="1"
             android:gravity="end"
             android:paddingRight="@dimen/x5"
-            android:text="轻度 较少"
+            android:text="未记录"
             android:textColor="#666"
             android:textSize="@dimen/x15" />
 
@@ -237,7 +237,7 @@
             android:layout_weight="1"
             android:gravity="end"
             android:paddingRight="@dimen/x5"
-            android:text="36.5°c"
+            android:text="未记录"
             android:textColor="#666"
             android:textSize="@dimen/x15" />
 
@@ -280,7 +280,7 @@
             android:layout_weight="1"
             android:gravity="end"
             android:paddingRight="@dimen/x5"
-            android:text="48.5Kg"
+            android:text="未记录"
             android:textColor="#666"
             android:textSize="@dimen/x15" />
 
@@ -323,7 +323,7 @@
             android:layout_weight="1"
             android:gravity="end"
             android:paddingRight="@dimen/x5"
-            android:text="郁闷"
+            android:text="未记录"
             android:textColor="#666"
             android:textSize="@dimen/x15" />
 
@@ -365,8 +365,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="end"
+            android:maxLines="1"
             android:paddingRight="@dimen/x5"
-            android:text="头疼，身体酸痛..."
+            android:text="未记录"
             android:textColor="#666"
             android:textSize="@dimen/x15" />
 
@@ -408,8 +409,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="end"
+            android:maxLines="1"
             android:paddingRight="@dimen/x5"
-            android:text="不乱于心， 不困于情 ，不…"
+            android:text="未记录"
             android:textColor="#666"
             android:textSize="@dimen/x15" />
 

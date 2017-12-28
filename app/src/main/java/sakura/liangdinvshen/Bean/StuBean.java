@@ -22,6 +22,17 @@ public class StuBean {
     private int code;
     private String error_msg;
 
+    public String getRes() {
+        return res;
+    }
+
+    public void setRes(String res) {
+        this.res = res;
+    }
+
+    private String res;
+
+
     public int getStu() {
         return stu;
     }

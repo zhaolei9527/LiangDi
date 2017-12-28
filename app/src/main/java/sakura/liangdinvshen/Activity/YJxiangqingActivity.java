@@ -1,18 +1,33 @@
 package sakura.liangdinvshen.Activity;
 
 import android.graphics.Color;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.VolleyError;
 import com.bigkoo.pickerview.OptionsPickerView;
+import com.google.gson.Gson;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import sakura.liangdinvshen.Base.BaseActivity;
+import sakura.liangdinvshen.Bean.BankEvent;
+import sakura.liangdinvshen.Bean.StuBean;
+import sakura.liangdinvshen.Fragment.RecordFragment;
 import sakura.liangdinvshen.R;
+import sakura.liangdinvshen.Utils.EasyToast;
+import sakura.liangdinvshen.Utils.SpUtil;
+import sakura.liangdinvshen.Utils.UrlUtils;
+import sakura.liangdinvshen.Volley.VolleyInterface;
+import sakura.liangdinvshen.Volley.VolleyRequest;
 
 /**
  * sakura.liangdinvshen.Activity
@@ -41,7 +56,6 @@ public class YJxiangqingActivity extends BaseActivity {
     ArrayList<String> jingxieList = new ArrayList<>();
     private TextView tv_jingxie;
     private TextView tv_xuese;
-
 
     @Override
     protected int setthislayout() {
@@ -126,7 +140,6 @@ public class YJxiangqingActivity extends BaseActivity {
         jingxieList.add("渣状");
     }
 
-
     private void ShowPickerView(String TITLE, final String type, ArrayList<String> list) {// 弹出选择器
         if (!tongjingList.isEmpty()) {
             OptionsPickerView pvOptions = new OptionsPickerView.Builder(this, new OptionsPickerView.OnOptionsSelectListener() {
@@ -156,6 +169,53 @@ public class YJxiangqingActivity extends BaseActivity {
             pvOptions.setPicker(list);//三级选择器
             pvOptions.show();
         }
+    }
+
+    /**
+     * 经期详情
+     */
+    private void lifeDoPeriodDetail(String tongjing, String liuliang, String xuese, String jingxue) {
+        HashMap<String, String> params = new HashMap<>(7);
+        params.put("key", UrlUtils.KEY);
+        params.put("uid", String.valueOf(SpUtil.get(context, "uid", "")));
+        params.put("time", RecordFragment.currentDate.toString());
+        params.put("tongjing", tongjing);
+        params.put("liuliang", liuliang);
+        params.put("xuese", xuese);
+        params.put("jingxue", jingxue);
+        VolleyRequest.RequestPost(context, UrlUtils.BASE_URL + "life/do_period_detail", "life/do_period_detail", params, new VolleyInterface(context) {
+            @Override
+            public void onMySuccess(String result) {
+                Log.e("RegisterActivity", result);
+                try {
+                    StuBean stuBean = new Gson().fromJson(result, StuBean.class);
+                    if ("1".equals(String.valueOf(stuBean.getStu()))) {
+
+                    } else {
+                        EasyToast.showShort(context, "提交失败");
+                    }
+                    stuBean = null;
+                    result = null;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(context, getString(R.string.Abnormalserver), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onMyError(VolleyError error) {
+                error.printStackTrace();
+                Toast.makeText(context, getString(R.string.Abnormalserver), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        EventBus.getDefault().post(
+                new BankEvent(tv_jingxie.getText().toString() + "," + tv_liuliang.getText().toString() + "," + tv_xuese.getText().toString() + "," + tv_tongjing.getText().toString()));
+        lifeDoPeriodDetail(tv_tongjing.getText().toString(), tv_liuliang.getText().toString(), tv_xuese.getText().toString(), tv_jingxie.getText().toString());
     }
 
 
