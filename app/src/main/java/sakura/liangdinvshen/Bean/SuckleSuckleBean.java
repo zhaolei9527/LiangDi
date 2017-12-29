@@ -73,6 +73,17 @@ public class SuckleSuckleBean {
          */
 
         private String start_time;
+
+        public String getEnd_time() {
+            return end_time;
+        }
+
+        public void setEnd_time(String end_time) {
+            this.end_time = end_time;
+        }
+
+        private String end_time;
+
         private String type;
         private String amount;
 

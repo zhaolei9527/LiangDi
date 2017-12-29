@@ -129,10 +129,9 @@ public class DateUtils {
      * @return time -> yyyy-MM-dd
      */
     public static String getDay(long time) {
-
         return new SimpleDateFormat("yyyy-MM-dd").format(time);
-
     }
+
 
     /**
      * 格式到毫秒
@@ -143,6 +142,15 @@ public class DateUtils {
 
         return new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss-SSS").format(time);
 
+    }
+
+    /**
+     * 格式到月
+     *
+     * @return time -> yyyy-MM-dd-HH-mm-ss-SSS
+     */
+    public static String getMonth(long time) {
+        return new SimpleDateFormat("yyyy-MM").format(time);
     }
 
 

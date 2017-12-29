@@ -7,11 +7,15 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.VolleyError;
+import com.google.gson.Gson;
 import com.ldf.calendar.Utils;
 import com.ldf.calendar.component.CalendarAttr;
 import com.ldf.calendar.component.CalendarViewAdapter;
@@ -22,11 +26,19 @@ import com.ldf.calendar.view.MonthPager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import sakura.liangdinvshen.Activity.MainActivity;
 import sakura.liangdinvshen.Adapter.CalendarsAdapter;
+import sakura.liangdinvshen.App;
+import sakura.liangdinvshen.Bean.LifeUserSlqBean;
 import sakura.liangdinvshen.R;
+import sakura.liangdinvshen.Utils.DateUtils;
+import sakura.liangdinvshen.Utils.SpUtil;
+import sakura.liangdinvshen.Utils.UrlUtils;
 import sakura.liangdinvshen.View.CustomDayView;
+import sakura.liangdinvshen.Volley.VolleyInterface;
+import sakura.liangdinvshen.Volley.VolleyRequest;
 
 /**
  * Created by 赵磊 on 2017/9/19.
@@ -39,8 +51,6 @@ public class RecordFragment extends Fragment {
     CoordinatorLayout content;
     MonthPager monthPager;
     RecyclerView rvToDoList;
-
-
     private ArrayList<Calendar> currentCalendars = new ArrayList<>();
     private CalendarViewAdapter calendarAdapter;
     private OnSelectDateListener onSelectDateListener;
@@ -48,17 +58,22 @@ public class RecordFragment extends Fragment {
     private Context context;
     public static CalendarDate currentDate;
     private MainActivity activity;
+    private HashMap<String, String> markData;
+    private CustomDayView customDayView;
+    private CalendarDate date;
+    private CalendarsAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.record_fragment_layout, container, false);
         initView(view);
-
+        getData();
         return view;
     }
 
     private void initView(View view) {
+        markData = new HashMap<>();
         context = getActivity();
         content = (CoordinatorLayout) view.findViewById(R.id.content);
         monthPager = (MonthPager) view.findViewById(R.id.calendar_view);
@@ -70,7 +85,8 @@ public class RecordFragment extends Fragment {
         rvToDoList.setHasFixedSize(true);
         //这里用线性显示 类似于listview
         rvToDoList.setLayoutManager(new LinearLayoutManager(context));
-        rvToDoList.setAdapter(new CalendarsAdapter(context));
+        adapter = new CalendarsAdapter(context);
+        rvToDoList.setAdapter(adapter);
         initCurrentDate();
         initCalendarView();
         activity = (MainActivity) getActivity();
@@ -80,12 +96,9 @@ public class RecordFragment extends Fragment {
                 refreshMonthPager();
             }
         }, 300);
-
-
     }
 
     public void getData() {
-
     }
 
     /**
@@ -104,7 +117,7 @@ public class RecordFragment extends Fragment {
      */
     private void initCalendarView() {
         initListener();
-        CustomDayView customDayView = new CustomDayView(context, R.layout.custom_day_focus);
+        customDayView = new CustomDayView(context, R.layout.custom_day_focus);
         calendarAdapter = new CalendarViewAdapter(
                 context,
                 onSelectDateListener,
@@ -117,7 +130,6 @@ public class RecordFragment extends Fragment {
                 rvToDoList.scrollToPosition(0);
             }
         });
-        initMarkData();
         initMonthPager();
     }
 
@@ -125,13 +137,12 @@ public class RecordFragment extends Fragment {
      * 初始化标记数据，HashMap的形式，可自定义
      * 如果存在异步的话，在使用setMarkData之后调用 calendarAdapter.notifyDataChanged();
      */
-    private void initMarkData() {
-        HashMap<String, String> markData = new HashMap<>();
-        markData.put("2017-8-9", "1");
-        markData.put("2017-7-9", "0");
-        markData.put("2017-6-9", "1");
-        markData.put("2017-6-10", "0");
+    private void initMarkData(List<LifeUserSlqBean.DataBean> list) {
+        for (int i = 0; i < list.size(); i++) {
+            markData.put(list.get(i).getTime(), list.get(i).getStu());
+        }
         calendarAdapter.setMarkData(markData);
+        calendarAdapter.notifyMonthDataChanged(date);
     }
 
     private void initListener() {
@@ -154,6 +165,7 @@ public class RecordFragment extends Fragment {
         currentDate = date;
         tvYear.setText(date.getYear() + "年");
         tvMonth.setText(date.getMonth() + "");
+        adapter.setnow(date.toString());
     }
 
     /**
@@ -181,10 +193,11 @@ public class RecordFragment extends Fragment {
                 mCurrentPage = position;
                 currentCalendars = calendarAdapter.getPagers();
                 if (currentCalendars.get(position % currentCalendars.size()) != null) {
-                    CalendarDate date = currentCalendars.get(position % currentCalendars.size()).getSeedDate();
+                    date = currentCalendars.get(position % currentCalendars.size()).getSeedDate();
                     currentDate = date;
                     tvYear.setText(date.getYear() + "年");
                     tvMonth.setText(date.getMonth() + "");
+                    lifeUserSlq(date);
                 }
             }
 
@@ -203,6 +216,10 @@ public class RecordFragment extends Fragment {
                     calendarAdapter.notifyDataChanged(today);
                     tvYear.setText(today.getYear() + "年");
                     tvMonth.setText(today.getMonth() + "");
+                    lifeUserSlq(currentDate);
+                    date = today;
+                    App.getQueues().cancelAll("life/user_days");
+                    adapter.setnow(DateUtils.getDay(System.currentTimeMillis()));
                 }
             });
         }
@@ -213,4 +230,39 @@ public class RecordFragment extends Fragment {
         super.onDestroy();
 
     }
+
+    /**
+     * 月份数据获取
+     */
+    private void lifeUserSlq(CalendarDate date) {
+        HashMap<String, String> params = new HashMap<>(3);
+        params.put("key", UrlUtils.KEY);
+        params.put("uid", String.valueOf(SpUtil.get(context, "uid", "")));
+        params.put("time", date.getYear() + "-" + date.getMonth());
+        VolleyRequest.RequestPost(context, UrlUtils.BASE_URL + "life/user_slq", "life/user_slq", params, new VolleyInterface(context) {
+            @Override
+            public void onMySuccess(String result) {
+                Log.e("RegisterActivity", result);
+                try {
+                    LifeUserSlqBean lifeUserSlqBean = new Gson().fromJson(result, LifeUserSlqBean.class);
+                    if ("1".equals(String.valueOf(lifeUserSlqBean.getStu()))) {
+                        SpUtil.putAndApply(getActivity(), currentDate.getYear() + "-" + currentDate.getMonth(), result);
+                        initMarkData(lifeUserSlqBean.getData());
+                    }
+                    lifeUserSlqBean = null;
+                    result = null;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onMyError(VolleyError error) {
+                error.printStackTrace();
+                Toast.makeText(context, getString(R.string.Abnormalserver), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
 }

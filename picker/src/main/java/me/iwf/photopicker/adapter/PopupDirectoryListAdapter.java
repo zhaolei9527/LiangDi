@@ -22,71 +22,80 @@ import me.iwf.photopicker.entity.PhotoDirectory;
 public class PopupDirectoryListAdapter extends BaseAdapter {
 
 
-  private List<PhotoDirectory> directories = new ArrayList<>();
-  //private RequestManager glide;
+    private List<PhotoDirectory> directories = new ArrayList<>();
+    //private RequestManager glide;
 
-  public PopupDirectoryListAdapter( List<PhotoDirectory> directories) {
-    this.directories = directories;
-    //this.glide = glide;
-  }
-
-
-  @Override public int getCount() {
-    return directories.size();
-  }
+    public PopupDirectoryListAdapter(List<PhotoDirectory> directories) {
+        this.directories = directories;
+        //this.glide = glide;
+    }
 
 
-  @Override public PhotoDirectory getItem(int position) {
-    return directories.get(position);
-  }
+    @Override
+    public int getCount() {
+        return directories.size();
+    }
 
 
-  @Override public long getItemId(int position) {
-    return directories.get(position).hashCode();
-  }
+    @Override
+    public PhotoDirectory getItem(int position) {
+        return directories.get(position);
+    }
 
 
-  @Override public View getView(int position, View convertView, ViewGroup parent) {
-    ViewHolder holder;
-    if (convertView == null) {
+    @Override
+    public long getItemId(int position) {
+        return directories.get(position).hashCode();
+    }
+
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        ViewHolder holder;
+        if (convertView == null) {
       /*LayoutInflater mLayoutInflater = LayoutInflater.from(parent.getContext());
       convertView = mLayoutInflater.inflate(R.layout.__picker_item_directory, parent, false);*/
-      holder = PhotoPickUtils.holderGenerator.newDirViewHolder(GlobalConfig.context);
-      convertView= holder.rootView;
-      convertView.setTag(holder);
-    } else {
-      holder = (ViewHolder) convertView.getTag();
+            holder = PhotoPickUtils.holderGenerator.newDirViewHolder(GlobalConfig.context);
+            convertView = holder.rootView;
+            convertView.setTag(holder);
+        } else {
+            holder = (ViewHolder) convertView.getTag();
+        }
+        holder.bindData(directories.get(position));
+
+        return convertView;
     }
-    holder.bindData(directories.get(position));
 
-    return convertView;
-  }
+    public static class ViewHolder {
 
-  public static class ViewHolder {
+        public ImageView ivCover;
+        public TextView tvName;
+        public TextView tvCount;
+        public View rootView;
 
-    public ImageView ivCover;
-    public TextView tvName;
-    public TextView tvCount;
-    public View rootView;
-
-    public ViewHolder(View rootView) {
-      this.rootView = rootView;
+        public ViewHolder(View rootView) {
+            this.rootView = rootView;
       /*ivCover = (ImageView) rootView.findViewById(R.id.iv_dir_cover);
       tvName  = (TextView)  rootView.findViewById(R.id.tv_dir_name);
       tvCount = (TextView)  rootView.findViewById(R.id.tv_dir_count);*/
-    }
+        }
 
-    public void assignView(){
+        public void assignView() {
 
-    }
+        }
 
-    public void bindData(PhotoDirectory directory) {
-      ImageLoader.with(null).file(directory.getCoverPath())
-          .widthHeight(100,100)
-          .into(ivCover);
-      tvName.setText(directory.getName());
-      tvCount.setText(tvCount.getContext().getString(R.string.__picker_image_count, directory.getPhotos().size()));
+        public void bindData(PhotoDirectory directory) {
+            try {
+                ImageLoader.with(null).file(directory.getCoverPath())
+                        .widthHeight(100, 100)
+                        .into(ivCover);
+                tvName.setText(directory.getName());
+                tvCount.setText(tvCount.getContext().getString(R.string.__picker_image_count, directory.getPhotos().size()));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
     }
-  }
 
 }

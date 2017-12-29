@@ -16,10 +16,10 @@ import com.google.gson.Gson;
 import java.util.HashMap;
 
 import me.fangx.haorefresh.LoadMoreListener;
-import sakura.liangdinvshen.Adapter.BreastFeedAdapter;
+import sakura.liangdinvshen.Adapter.ChouChouAdapter;
 import sakura.liangdinvshen.App;
 import sakura.liangdinvshen.Base.BaseActivity;
-import sakura.liangdinvshen.Bean.SuckleSuckleBean;
+import sakura.liangdinvshen.Bean.SuckleSmellyDoaddBean;
 import sakura.liangdinvshen.Fragment.RecordFragment;
 import sakura.liangdinvshen.R;
 import sakura.liangdinvshen.Utils.EasyToast;
@@ -46,7 +46,7 @@ public class ChouChouActivity extends BaseActivity {
     private LiangDiRecycleView rv_purchaserecord;
     private Dialog dialog;
     private RelativeLayout ll_empty;
-    private BreastFeedAdapter evaluationAdapter;
+    private ChouChouAdapter evaluationAdapter;
     private TextView tv_add;
     private TextView tv_baby_time;
 
@@ -97,7 +97,7 @@ public class ChouChouActivity extends BaseActivity {
         tv_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(context, AddBreastFeedActivity.class));
+                startActivity(new Intent(context, AddChouChouActivity.class));
             }
         });
     }
@@ -131,16 +131,16 @@ public class ChouChouActivity extends BaseActivity {
                 dialog.dismiss();
                 Log.e("RegisterActivity", result);
                 try {
-                    SuckleSuckleBean suckleSuckleBean = new Gson().fromJson(result, SuckleSuckleBean.class);
-                    tv_baby_time.setText(suckleSuckleBean.getTime() + " 宝宝" + suckleSuckleBean.getMonth() + "个月" + suckleSuckleBean.getDay() + "天");
+                    SuckleSmellyDoaddBean suckleSmellyDoaddBean = new Gson().fromJson(result, SuckleSmellyDoaddBean.class);
+                    tv_baby_time.setText(suckleSmellyDoaddBean.getTime() + " 宝宝" + suckleSmellyDoaddBean.getMonth() + "个月" + suckleSmellyDoaddBean.getDay() + "天");
                     rv_purchaserecord.loadMoreComplete();
-                    if ("1".equals(String.valueOf(suckleSuckleBean.getStu()))) {
+                    if ("1".equals(String.valueOf(suckleSmellyDoaddBean.getStu()))) {
                         ll_empty.setVisibility(View.GONE);
                         if (p == 1) {
-                            evaluationAdapter = new BreastFeedAdapter(suckleSuckleBean.getRes(), context);
+                            evaluationAdapter = new ChouChouAdapter(suckleSmellyDoaddBean.getRes(), context);
                             rv_purchaserecord.setAdapter(evaluationAdapter);
                         } else {
-                            evaluationAdapter.setDatas(suckleSuckleBean.getRes());
+                            evaluationAdapter.setDatas(suckleSmellyDoaddBean.getRes());
                         }
                         if (rv_purchaserecord != null) {
                             rv_purchaserecord.loadMoreComplete();

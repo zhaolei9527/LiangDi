@@ -23,19 +23,26 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
+import sakura.liangdinvshen.Activity.AskListActivity;
 import sakura.liangdinvshen.Activity.BabySymptomActivity;
+import sakura.liangdinvshen.Activity.BaringActivity;
 import sakura.liangdinvshen.Activity.BreastFeedActivity;
 import sakura.liangdinvshen.Activity.ChouChouActivity;
 import sakura.liangdinvshen.Activity.DiaryActivity;
+import sakura.liangdinvshen.Activity.FetalMovementActivity;
+import sakura.liangdinvshen.Activity.GrowthRecordActivity;
 import sakura.liangdinvshen.Activity.RankingActivity;
 import sakura.liangdinvshen.Activity.SymptomActivity;
 import sakura.liangdinvshen.Activity.YJxiangqingActivity;
 import sakura.liangdinvshen.Bean.BankEvent;
+import sakura.liangdinvshen.Bean.LifeUserDaysBean;
 import sakura.liangdinvshen.Bean.StuBean;
 import sakura.liangdinvshen.Fragment.RecordFragment;
 import sakura.liangdinvshen.R;
+import sakura.liangdinvshen.Utils.DateUtils;
 import sakura.liangdinvshen.Utils.EasyToast;
 import sakura.liangdinvshen.Utils.SpUtil;
 import sakura.liangdinvshen.Utils.UrlUtils;
@@ -73,6 +80,50 @@ public class CalendarsAdapter extends RecyclerView.Adapter<CalendarsAdapter.View
         xinqingList.add("一般");
         xinqingList.add("郁闷");
         xinqingList.add("特差");
+    }
+
+    public void setnow(String date) {
+
+        Date date1 = DateUtils.str2Date(date, "yyyy-MM-dd");
+
+        String day = DateUtils.getDay(System.currentTimeMillis());
+
+        Date date2 = DateUtils.str2Date(day, "yyyy-MM-dd");
+
+        if (date1.getTime() == date2.getTime()) {
+            //今天
+            viewHolder.ll_otherDay.setVisibility(View.GONE);
+            String jieduan = (String) SpUtil.get(context, "jieduan", "");
+            if ("1".equals(jieduan) || "2".equals(jieduan)) {
+                viewHolder.ll_mingcijieshi.setVisibility(View.VISIBLE);
+                viewHolder.ll_body.setVisibility(View.VISIBLE);
+                viewHolder.ll_jilu_baby.setVisibility(View.GONE);
+                viewHolder.ll_jilu_huaiyun.setVisibility(View.GONE);
+            } else if ("3".equals(jieduan)) {
+                viewHolder.ll_mingcijieshi.setVisibility(View.GONE);
+                viewHolder.ll_body.setVisibility(View.GONE);
+                viewHolder.ll_jilu_baby.setVisibility(View.GONE);
+                viewHolder.ll_jilu_huaiyun.setVisibility(View.VISIBLE);
+            } else if ("4".equals(jieduan)) {
+                viewHolder.ll_mingcijieshi.setVisibility(View.GONE);
+                viewHolder.ll_body.setVisibility(View.GONE);
+                viewHolder.ll_jilu_baby.setVisibility(View.GONE);
+                viewHolder.ll_jilu_huaiyun.setVisibility(View.VISIBLE);
+            }
+        } else {
+            //其他
+            if (DateUtils.str2Date(date, "yyyy-MM-dd").getTime() > System.currentTimeMillis()) {
+                viewHolder.ll_otherDay.setVisibility(View.VISIBLE);
+                viewHolder.ll_mingcijieshi.setVisibility(View.GONE);
+                viewHolder.ll_body.setVisibility(View.GONE);
+                viewHolder.ll_jilu_baby.setVisibility(View.GONE);
+                viewHolder.ll_jilu_huaiyun.setVisibility(View.GONE);
+                return;
+            } else {
+                viewHolder.ll_otherDay.setVisibility(View.GONE);
+            }
+        }
+        lifeUserDays(date);
     }
 
     private void initTiZhong() {
@@ -214,7 +265,7 @@ public class CalendarsAdapter extends RecyclerView.Adapter<CalendarsAdapter.View
         holder.ll_huaiyun_xinqing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ShowPickerView("心情", "xinqing", xinqingList, holder.tv_body_xinqing, 0);
+                ShowPickerView("心情", "xinqing", xinqingList, holder.tv_huaiyun_xinqing, 0);
             }
         });
 
@@ -298,7 +349,6 @@ public class CalendarsAdapter extends RecyclerView.Adapter<CalendarsAdapter.View
         /**
          * 臭臭
          * */
-
         holder.ll_baby_chouchou.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -309,6 +359,64 @@ public class CalendarsAdapter extends RecyclerView.Adapter<CalendarsAdapter.View
                 }
             }
         });
+
+
+        /**
+         * 生长曲线
+         * */
+        holder.ll_baby_chengzhang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                context.startActivity(new Intent(context, GrowthRecordActivity.class));
+                //注册EventBus
+                if (!EventBus.getDefault().isRegistered(CalendarsAdapter.this)) {
+                    EventBus.getDefault().register(CalendarsAdapter.this);
+                }
+            }
+        });
+
+        /**
+         * 胎动记录
+         * */
+        holder.ll_huaiyun_taidong.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                context.startActivity(new Intent(context, FetalMovementActivity.class));
+                //注册EventBus
+                if (!EventBus.getDefault().isRegistered(CalendarsAdapter.this)) {
+                    EventBus.getDefault().register(CalendarsAdapter.this);
+                }
+            }
+        });
+
+        /**
+         *问题
+         * */
+        holder.ll_huaiyun_wenti.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                context.startActivity(new Intent(context, AskListActivity.class));
+                //注册EventBus
+                if (!EventBus.getDefault().isRegistered(CalendarsAdapter.this)) {
+                    EventBus.getDefault().register(CalendarsAdapter.this);
+                }
+            }
+        });
+
+        /**
+         *大肚照
+         * */
+        holder.ll_huaiyun_daduzhao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                context.startActivity(new Intent(context, BaringActivity.class));
+                //注册EventBus
+                if (!EventBus.getDefault().isRegistered(CalendarsAdapter.this)) {
+                    EventBus.getDefault().register(CalendarsAdapter.this);
+                }
+            }
+        });
+
 
     }
 
@@ -363,10 +471,13 @@ public class CalendarsAdapter extends RecyclerView.Adapter<CalendarsAdapter.View
         public LinearLayout ll_huaiyun_wenti;
         public LinearLayout ll_jilu_huaiyun;
         public LinearLayout cv_item;
+        public LinearLayout ll_otherDay;
+
 
         ViewHolder(View view) {
             super(view);
             this.rootView = view;
+            this.ll_otherDay = (LinearLayout) rootView.findViewById(R.id.ll_otherDay);
             this.ll_mingcijieshi = (LinearLayout) rootView.findViewById(R.id.ll_mingcijieshi);
             this.ll_mingcijieshi = (LinearLayout) rootView.findViewById(R.id.ll_mingcijieshi);
             this.ll_jingqi_start = (LinearLayout) rootView.findViewById(R.id.ll_jingqi_start);
@@ -654,6 +765,117 @@ public class CalendarsAdapter extends RecyclerView.Adapter<CalendarsAdapter.View
     }
 
 
+    /**
+     * 单日数据获取
+     */
+    private void lifeUserDays(final String date) {
+        HashMap<String, String> params = new HashMap<>(1);
+        params.put("key", UrlUtils.KEY);
+        params.put("uid", String.valueOf(SpUtil.get(context, "uid", "")));
+        params.put("time", date);
+        VolleyRequest.RequestPost(context, UrlUtils.BASE_URL + "life/user_days", "life/user_days", params, new VolleyInterface(context) {
+            @Override
+            public void onMySuccess(String result) {
+                Log.e("RegisterActivity", result);
+                try {
+                    LifeUserDaysBean lifeUserDaysBean = new Gson().fromJson(result, LifeUserDaysBean.class);
+                    if ("1".equals(String.valueOf(lifeUserDaysBean.getStu()))) {
+                        LifeUserDaysBean.DataBean data = lifeUserDaysBean.getData();
+                        //其他
+                        if (DateUtils.str2Date(RecordFragment.currentDate.toString(), "yyyy-MM-dd").getTime() > System.currentTimeMillis()) {
+                            viewHolder.ll_otherDay.setVisibility(View.VISIBLE);
+                            viewHolder.ll_mingcijieshi.setVisibility(View.GONE);
+                            viewHolder.ll_body.setVisibility(View.GONE);
+                            viewHolder.ll_jilu_baby.setVisibility(View.GONE);
+                            viewHolder.ll_jilu_huaiyun.setVisibility(View.GONE);
+                            return;
+                        } else {
+                            viewHolder.ll_otherDay.setVisibility(View.GONE);
+                        }
+
+
+                        if ("1".equals(data.getLive_stage()) || "2".equals(data.getLive_stage())) {
+                            viewHolder.ll_mingcijieshi.setVisibility(View.VISIBLE);
+                            viewHolder.ll_body.setVisibility(View.VISIBLE);
+                            viewHolder.ll_jilu_baby.setVisibility(View.GONE);
+                            viewHolder.ll_jilu_huaiyun.setVisibility(View.GONE);
+                        } else if ("3".equals(data.getLive_stage())) {
+                            viewHolder.ll_mingcijieshi.setVisibility(View.GONE);
+                            viewHolder.ll_body.setVisibility(View.GONE);
+                            viewHolder.ll_jilu_baby.setVisibility(View.GONE);
+                            viewHolder.ll_jilu_huaiyun.setVisibility(View.VISIBLE);
+                        } else if ("4".equals(data.getLive_stage())) {
+                            viewHolder.ll_mingcijieshi.setVisibility(View.GONE);
+                            viewHolder.ll_body.setVisibility(View.GONE);
+                            viewHolder.ll_jilu_baby.setVisibility(View.GONE);
+                            viewHolder.ll_jilu_huaiyun.setVisibility(View.VISIBLE);
+                        }
+
+                        if ("1".equals(data.getIs_yuejing())) {
+                            viewHolder.sb_jingqi_start.setChecked(true);
+                        } else {
+                            viewHolder.sb_jingqi_start.setChecked(false);
+                        }
+
+                        viewHolder.tv_yuejingxiangqing.setText(data.getYuejing_detail());
+
+                        if ("1".equals(data.getLove_love())) {
+                            viewHolder.sb_aiai.setChecked(true);
+                        } else {
+                            viewHolder.sb_aiai.setChecked(false);
+                        }
+
+                        viewHolder.tv_body_tiwen.setText(data.getTi_wen());
+
+                        viewHolder.tv_body_tizhong.setText(data.getTi_zhong());
+
+                        viewHolder.tv_body_xinqing.setText(data.getXin_qing());
+
+                        viewHolder.tv_huaiyun_xinqing.setText(data.getXin_qing());
+
+                        viewHolder.tv_body_zhengzhuang.setText(data.getZheng_zhuang());
+
+                        viewHolder.tv_huaiyun_zhengzhuang.setText(data.getZheng_zhuang());
+
+                        viewHolder.tv_body_riji.setText(data.getRi_ji());
+
+                        viewHolder.tv_baby_buru.setText(data.getBu_ru());
+
+                        viewHolder.tv_baby_chouchou.setText(data.getChou_chou());
+
+                        viewHolder.tv_baby_chengzhang.setText(data.getCz_quxian());
+
+                        viewHolder.tv_baby_bushufu.setText(data.getBaby_bushufu());
+
+                        viewHolder.tv_huaiyun_daduzhao.setText(data.getDa_du_pic());
+
+                        viewHolder.tv_huaiyun_tizhong.setText(data.getTi_zhong());
+
+                        viewHolder.tv_huaiyun_zhengzhuang.setText(data.getZheng_zhuang());
+
+                        viewHolder.tv_huaiyun_taidong.setText(data.getTai_dong() + "次");
+
+                        viewHolder.tv_huaiyun_wenti.setText(data.getTi_wen());
+
+
+
+                    }
+                    result = null;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(context, context.getString(R.string.Abnormalserver), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onMyError(VolleyError error) {
+                error.printStackTrace();
+                Toast.makeText(context, context.getString(R.string.Abnormalserver), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(BankEvent event) {
         if (TextUtils.isEmpty(event.getmType())) {
@@ -669,6 +891,10 @@ public class CalendarsAdapter extends RecyclerView.Adapter<CalendarsAdapter.View
             viewHolder.tv_baby_buru.setText(event.getMsg());
         } else if ("chouchou".equals(event.getmType())) {
             viewHolder.tv_baby_chouchou.setText(event.getMsg());
+        } else if ("chengzhang".equals(event.getmType())) {
+            viewHolder.tv_baby_chengzhang.setText(event.getMsg());
+        } else if ("taidong".equals(event.getmType())) {
+            viewHolder.tv_huaiyun_taidong.setText(event.getMsg());
         }
         //反注册EventBus
         EventBus.getDefault().unregister(CalendarsAdapter.this);

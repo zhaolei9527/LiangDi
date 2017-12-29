@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/x15"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/x10"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1、有没有感觉到不舒服，是否有孕吐？"
+            android:textSize="@dimen/x13" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/x15"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="是"
+                android:textColor="@color/text333" />
+
+
+            <CheckBox
+                android:id="@+id/btnIsChoosed"
+                android:layout_width="@dimen/x16"
+                android:layout_height="@dimen/x16"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/x5"
+                android:layout_marginRight="@dimen/x5"
+                android:background="@drawable/rb_selector"
+                android:button="@null" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/x50"
+                android:text="否"
+                android:textColor="@color/text333" />
+
+            <CheckBox
+                android:id="@+id/btnIsChoosed2"
+                android:layout_width="@dimen/x16"
+                android:layout_height="@dimen/x16"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/x5"
+                android:layout_marginRight="@dimen/x5"
+                android:background="@drawable/rb_selector"
+                android:button="@null" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

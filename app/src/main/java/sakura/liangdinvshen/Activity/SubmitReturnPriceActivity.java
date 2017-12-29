@@ -1,5 +1,6 @@
 package sakura.liangdinvshen.Activity;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -21,6 +22,9 @@ import com.android.volley.VolleyError;
 import com.bigkoo.pickerview.OptionsPickerView;
 import com.google.gson.Gson;
 import com.hss01248.frescopicker.FrescoIniter;
+import com.mylhyl.acp.Acp;
+import com.mylhyl.acp.AcpListener;
+import com.mylhyl.acp.AcpOptions;
 
 import net.bither.util.NativeUtil;
 
@@ -136,7 +140,6 @@ public class SubmitReturnPriceActivity extends BaseActivity implements View.OnCl
 
     @Override
     protected void initview() {
-        PhotoPickUtils.init(getApplicationContext(), new FrescoIniter());//第二个参数根据具体依赖库而定
         rl_back = (FrameLayout) findViewById(R.id.rl_back);
         img = (ImageView) findViewById(R.id.img);
         tv_return_type = (TextView) findViewById(R.id.tv_return_type);
@@ -157,6 +160,24 @@ public class SubmitReturnPriceActivity extends BaseActivity implements View.OnCl
         yuanyinlist.add("包装/商品破损");
         yuanyinlist.add("未按约定时间发货");
         yuanyinlist.add("其他问题");
+
+        Acp.getInstance(context).request(new AcpOptions.Builder()
+                        .setPermissions(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
+                        .setDeniedMessage(getString(R.string.requstPerminssions))
+                        .build(),
+                new AcpListener() {
+                    @Override
+                    public void onGranted() {
+                        PhotoPickUtils.init(getApplicationContext(), new FrescoIniter());//第二个参数根据具体依赖库而定
+                    }
+
+                    @Override
+                    public void onDenied(List<String> permissions) {
+                        Toast.makeText(context, R.string.Thepermissionapplicationisrejected, Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+
     }
 
     private void ShowPickerView_fuwu() {// 弹出选择器

@@ -285,6 +285,32 @@
             android:name=".Activity.ChouChouActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan|stateHidden|adjustResize"></activity>
-    </application>
 
+        <activity
+            android:name=".Activity.AddChouChouActivity"
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="adjustPan|stateHidden|adjustResize"></activity>
+
+        <activity
+            android:name=".Activity.GrowthRecordActivity"
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="adjustPan|stateHidden|adjustResize"></activity>
+
+        <activity
+            android:name=".Activity.FetalMovementActivity"
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="adjustPan|stateHidden|adjustResize"></activity>
+        <activity
+            android:name=".Activity.AddFetaMovementActivity"
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="adjustPan|stateHidden|adjustResize"></activity>
+        <activity
+            android:name=".Activity.AskListActivity"
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="adjustPan|stateHidden|adjustResize"></activity>
+        <activity
+            android:name=".Activity.BaringActivity"
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="adjustPan|stateHidden|adjustResize"></activity>
+    </application>
 </manifest>

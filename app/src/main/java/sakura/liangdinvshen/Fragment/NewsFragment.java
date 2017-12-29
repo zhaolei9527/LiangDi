@@ -26,8 +26,10 @@ import java.util.List;
 
 import sakura.liangdinvshen.Adapter.NewsPageAdapter;
 import sakura.liangdinvshen.App;
+import sakura.liangdinvshen.Bean.LifeUserSlqBean;
 import sakura.liangdinvshen.Bean.NewsIndexBean;
 import sakura.liangdinvshen.R;
+import sakura.liangdinvshen.Utils.DateUtils;
 import sakura.liangdinvshen.Utils.SpUtil;
 import sakura.liangdinvshen.Utils.UrlUtils;
 import sakura.liangdinvshen.Utils.Utils;

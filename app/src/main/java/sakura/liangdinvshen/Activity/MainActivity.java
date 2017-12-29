@@ -1,6 +1,14 @@
 package sakura.liangdinvshen.Activity;
 
+import android.Manifest;
 import android.view.View;
+import android.widget.Toast;
+
+import com.mylhyl.acp.Acp;
+import com.mylhyl.acp.AcpListener;
+import com.mylhyl.acp.AcpOptions;
+
+import java.util.List;
 
 import sakura.bottomtabbar.BottomTabBar;
 import sakura.liangdinvshen.Base.BaseActivity;
@@ -22,6 +30,24 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initview() {
+
+        Acp.getInstance(context).request(new AcpOptions.Builder()
+                        .setPermissions(Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
+                        .setDeniedMessage(getString(R.string.requstPerminssions))
+                        .build(),
+                new AcpListener() {
+                    @Override
+                    public void onGranted() {
+
+
+                    }
+
+                    @Override
+                    public void onDenied(List<String> permissions) {
+                        Toast.makeText(context, R.string.Thepermissionapplicationisrejected, Toast.LENGTH_SHORT).show();
+                    }
+                });
+
 
         BottomTabBar = (BottomTabBar) findViewById(R.id.BottomTabBar);
         BottomTabBar.initFragmentorViewPager(getSupportFragmentManager())
@@ -53,7 +79,6 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void initData() {
     }
-
 
 
 }
