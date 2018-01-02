@@ -7,4 +7,7 @@
     <string name="Clicktheexitprogramagain">再按一次退出</string>
     <string name="Abnormalserver">服务器异常</string>
     <string name="hasError">出错啦</string>
+    <string name="pay_result_callback_msg" formatted="false">微信支付结果：%s</string>
+    <string name="noti_text_expression">[表情]</string>
+
 </resources>

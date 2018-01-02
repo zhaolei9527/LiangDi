@@ -14,13 +14,23 @@ import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
+import com.tencent.mm.opensdk.modelpay.PayReq;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.HashMap;
 
 import sakura.liangdinvshen.App;
 import sakura.liangdinvshen.Base.BaseActivity;
+import sakura.liangdinvshen.Bean.BankEvent;
 import sakura.liangdinvshen.Bean.OrderPay;
+import sakura.liangdinvshen.Bean.OrderWxpayBean;
 import sakura.liangdinvshen.R;
+import sakura.liangdinvshen.Utils.Constants;
 import sakura.liangdinvshen.Utils.EasyToast;
 import sakura.liangdinvshen.Utils.SpUtil;
 import sakura.liangdinvshen.Utils.UrlUtils;
@@ -43,6 +53,25 @@ public class PayActivity extends BaseActivity implements View.OnClickListener {
     private String orderid;
     private String order;
     private Dialog dialog;
+    private IWXAPI api;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (isfinish) {
+            isfinish = !isfinish;
+            finish();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        App.getQueues().cancelAll("order/pay");
+        //反注册EventBus
+        EventBus.getDefault().unregister(PayActivity.this);
+        System.gc();
+    }
 
     @Override
     protected int setthislayout() {
@@ -64,6 +93,11 @@ public class PayActivity extends BaseActivity implements View.OnClickListener {
         order = getIntent().getStringExtra("order");
         if (!TextUtils.isEmpty(order)) {
             tv_ordernumber.setText(order);
+        }
+
+        //注册EventBus
+        if (!EventBus.getDefault().isRegistered(PayActivity.this)) {
+            EventBus.getDefault().register(PayActivity.this);
         }
 
         Choosedalipay.setOnClickListener(new View.OnClickListener() {
@@ -88,7 +122,8 @@ public class PayActivity extends BaseActivity implements View.OnClickListener {
             }
         });
 
-
+        api = WXAPIFactory.createWXAPI(this, Constants.APP_ID, false);
+        api.registerApp(Constants.APP_ID);
     }
 
     @Override
@@ -113,9 +148,17 @@ public class PayActivity extends BaseActivity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_paynow:
-                startActivity(new Intent(context, GoodPayActivity.class)
-                        .putExtra("order", order)
-                        .putExtra("orderid", orderid));
+                if (Utils.isConnected(context)) {
+                    dialog.show();
+                    if (Choosedalipay.isChecked()) {
+                    } else if (Choosedweixin.isChecked()) {
+                        orderWxpay();
+                    } else {
+                        EasyToast.showShort(context, "请选择支付方式");
+                    }
+                } else {
+                    EasyToast.showShort(context, "网络未连接");
+                }
                 break;
             case R.id.rl_back:
                 finish();
@@ -176,22 +219,70 @@ public class PayActivity extends BaseActivity implements View.OnClickListener {
         });
     }
 
+    /**
+     * 订单支付
+     */
+    private void orderWxpay() {
+        HashMap<String, String> params = new HashMap<>(3);
+        params.put("key", UrlUtils.KEY);
+        params.put("id", orderid);
+        params.put("uid", String.valueOf(SpUtil.get(context, "uid", "")));
+        Log.e("RegisterActivity", params.toString());
+        VolleyRequest.RequestPost(context, UrlUtils.BASE_URL + "order/wxpay", "order/wxpay", params, new VolleyInterface(context) {
+            @Override
+            public void onMySuccess(String result) {
+                dialog.dismiss();
+                Log.e("RegisterActivity", result);
+                try {
+                    OrderWxpayBean orderWxpayBean = new Gson().fromJson(result, OrderWxpayBean.class);
+                    if (api != null) {
+                        PayReq req = new PayReq();
+                        req.appId = Constants.APP_ID;
+                        req.partnerId = orderWxpayBean.getData().getMch_id();
+                        req.prepayId = orderWxpayBean.getData().getPrepay_id();
+                        req.packageValue = "Sign=WXPay";
+                        req.nonceStr = orderWxpayBean.getData().getNonceStr();
+                        req.timeStamp = orderWxpayBean.getData().getTimeStamp();
+                        req.sign = "Sign=WXPay";
+                        api.sendReq(req);
+                    }
+                    orderWxpayBean = null;
+                    result = null;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(context, getString(R.string.Abnormalserver), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onMyError(VolleyError error) {
+                dialog.dismiss();
+                error.printStackTrace();
+                Toast.makeText(context, getString(R.string.Abnormalserver), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     public static boolean isfinish = false;
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (isfinish) {
-            isfinish = !isfinish;
-            finish();
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventMainThread(BankEvent event) {
+        if (!TextUtils.isEmpty(event.getmType())) {
+            if ("pay".equals(event.getmType())) {
+                if ("good".equals(event.getMsg())) {
+                    startActivity(new Intent(context, GoodPayActivity.class)
+                            .putExtra("type", "good")
+                            .putExtra("order", order)
+                            .putExtra("orderid", orderid));
+                    finish();
+                } else if ("bad".equals(event.getMsg())) {
+                    startActivity(new Intent(context, GoodPayActivity.class)
+                            .putExtra("order", order)
+                            .putExtra("orderid", orderid));
+                    finish();
+                }
+            }
         }
-
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        App.getQueues().cancelAll("order/pay");
-        System.gc();
-    }
 }

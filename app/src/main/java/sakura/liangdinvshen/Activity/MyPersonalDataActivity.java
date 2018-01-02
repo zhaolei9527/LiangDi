@@ -97,7 +97,15 @@ public class MyPersonalDataActivity extends BaseActivity implements View.OnClick
         rl_change_hunyin = (RelativeLayout) findViewById(R.id.rl_change_hunyin);
         textView = (TextView) findViewById(R.id.textView);
         rl_change_address = (RelativeLayout) findViewById(R.id.rl_change_address);
-        SimpleDraweeView.setImageURI(UrlUtils.URL + String.valueOf(SpUtil.get(context, "img", "")));
+
+        String img = (String) SpUtil.get(context, "img", "");
+
+        if (img.startsWith("http://")) {
+            SimpleDraweeView.setImageURI(img);
+        } else {
+            SimpleDraweeView.setImageURI(UrlUtils.URL + SpUtil.get(context, "img", ""));
+        }
+
         tv_name.setText(String.valueOf(SpUtil.get(context, "username", "")));
         tv_shengri.setText(String.valueOf(SpUtil.get(context, "shengri", "")));
         tv_shengao.setText(String.valueOf(SpUtil.get(context, "shengao", "")));

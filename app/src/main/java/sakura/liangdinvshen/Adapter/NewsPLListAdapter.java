@@ -2,6 +2,7 @@ package sakura.liangdinvshen.Adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,7 +49,14 @@ public class NewsPLListAdapter extends RecyclerView.Adapter<NewsPLListAdapter.Vi
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        holder.SimpleDraweeView.setImageURI(UrlUtils.URL + datas.get(position).getHead_img());
+
+        if (!TextUtils.isEmpty(datas.get(position).getHead_img())) {
+            if (datas.get(position).getHead_img().startsWith("http://wx.qlogo.cn/")) {
+                holder.SimpleDraweeView.setImageURI(datas.get(position).getHead_img());
+            } else {
+                holder.SimpleDraweeView.setImageURI(UrlUtils.URL + datas.get(position).getHead_img());
+            }
+        }
         holder.tv_pl_content.setText(datas.get(position).getContent());
         holder.tv_pl_name.setText(datas.get(position).getUname());
         holder.tv_pl_time.setText(DateUtils.getDay(Long.parseLong(datas.get(position).getAdd_time()) * 1000));

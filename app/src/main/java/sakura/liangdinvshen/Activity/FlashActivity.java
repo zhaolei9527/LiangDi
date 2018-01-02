@@ -3,12 +3,12 @@ package sakura.liangdinvshen.Activity;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
+import com.hyphenate.chat.ChatClient;
+import com.hyphenate.helpdesk.callback.Callback;
 
 import java.util.HashMap;
 
@@ -34,11 +34,11 @@ public class FlashActivity extends BaseActivity {
     @Override
     protected void ready() {
         super.ready();
-       /*set it to be no title*/
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-       /*set it to be full screen*/
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+//       /*set it to be no title*/
+//        requestWindowFeature(Window.FEATURE_NO_TITLE);
+//       /*set it to be full screen*/
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+//                WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 
     @Override
@@ -111,7 +111,69 @@ public class FlashActivity extends BaseActivity {
                         SpUtil.putAndApply(context, "hunyin", loginBean.getRes().getHunyin());
                         SpUtil.putAndApply(context, "chengshi", loginBean.getRes().getCity());
                         SpUtil.putAndApply(context, "jieduan", loginBean.getRes().getStu());
-                        gotoMain();
+                        //注册
+                        final LoginBean finalLoginBean = loginBean;
+                        ChatClient.getInstance().register(loginBean.getRes().getId(), loginBean.getRes().getId(), new Callback() {
+                            @Override
+                            public void onSuccess() {
+                                if (ChatClient.getInstance().isLoggedInBefore()) {
+                                    //已经登录，可以直接进入
+                                    gotoMain();
+                                } else {
+                                    //未登录，需要登录后，再进入
+                                    ChatClient.getInstance().login(finalLoginBean.getRes().getId(), finalLoginBean.getRes().getId()
+                                            , new Callback() {
+                                                @Override
+                                                public void onSuccess() {
+                                                    gotoMain();
+                                                }
+
+                                                @Override
+                                                public void onError(int i, String s) {
+                                                    gotoMain();
+                                                }
+
+                                                @Override
+                                                public void onProgress(int i, String s) {
+
+                                                }
+                                            });
+                                }
+                            }
+
+                            @Override
+                            public void onError(int i, String s) {
+                                if (ChatClient.getInstance().isLoggedInBefore()) {
+                                    //已经登录，可以直接进入
+                                    gotoMain();
+                                } else {
+                                    //未登录，需要登录后，再进入
+                                    ChatClient.getInstance().login(finalLoginBean.getRes().getId(), finalLoginBean.getRes().getId()
+                                            , new Callback() {
+                                                @Override
+                                                public void onSuccess() {
+                                                    gotoMain();
+                                                }
+
+                                                @Override
+                                                public void onError(int i, String s) {
+                                                    gotoMain();
+                                                }
+
+                                                @Override
+                                                public void onProgress(int i, String s) {
+
+                                                }
+                                            });
+                                }
+                            }
+
+                            @Override
+                            public void onProgress(int i, String s) {
+
+                            }
+                        });
+
                     } else {
                         Toast.makeText(context, loginBean.getMsg(), Toast.LENGTH_SHORT).show();
                         gotoLogin();

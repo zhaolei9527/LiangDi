@@ -57,6 +57,7 @@ import sakura.liangdinvshen.View.LiangDiRecycleView;
 import sakura.liangdinvshen.View.ProgressView;
 import sakura.liangdinvshen.Volley.VolleyInterface;
 import sakura.liangdinvshen.Volley.VolleyRequest;
+import sakura.liangdinvshen.onekeyshare.OnekeyShare;
 
 
 /**
@@ -140,6 +141,7 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     protected void initListener() {
+        img_share.setOnClickListener(this);
         img_back.setOnClickListener(this);
         img_shoucang.setOnClickListener(this);
         // 启动缓存
@@ -223,7 +225,7 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
                                     public void run() {
                                         //设置缩略图,Vitamio提供的工具类。
                                         final Bitmap videoThumbnail = ThumbnailUtils.createVideoThumbnail(
-                                                context, newsDetailsBean.getRes().getVideo_url()
+                                                context, UrlUtils.URL + newsDetailsBean.getRes().getImg()
                                                 , MediaStore.Video.Thumbnails.MINI_KIND);
                                         if (videoThumbnail != null) {
                                             mIvThumbnail.post(new Runnable() {
@@ -370,9 +372,38 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
                     scAdd();
                 }
                 break;
+            case R.id.img_share:
+                showShare();
+                break;
             default:
                 break;
         }
+    }
+
+    private void showShare() {
+        OnekeyShare oks = new OnekeyShare();
+        //关闭sso授权
+        oks.disableSSOWhenAuthorize();
+        // 分享时Notification的图标和文字  2.5.9以后的版本不     调用此方法
+        //oks.setNotification(R.drawable.ic_launcher, getString(R.string.app_name));
+        // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
+        oks.setTitle(newsDetailsBean.getRes().getTitle());
+        // titleUrl是标题的网络链接，仅在人人网和QQ空间使用
+        oks.setTitleUrl(newsDetailsBean.getRes().getUrl());
+        // text是分享文本，所有平台都需要这个字段
+        oks.setText(newsDetailsBean.getRes().getTitle());
+        // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
+        oks.setImageUrl(UrlUtils.URL + getIntent().getStringExtra("shareimg"));//确保SDcard下面存在此张图片
+        // url仅在微信（包括好友和朋友圈）中使用
+        oks.setUrl(newsDetailsBean.getRes().getUrl());
+        // comment是我对这条分享的评论，仅在人人网和QQ空间使用
+        // oks.setComment("我是测试评论文本");
+        // site是分享此内容的网站名称，仅在QQ空间使用
+        oks.setSite(getString(R.string.app_name));
+        // siteUrl是分享此内容的网站地址，仅在QQ空间使用
+        //oks.setSiteUrl("http://sharesdk.cn");
+        // 启动分享GUI
+        oks.show(this);
     }
 
 
@@ -449,18 +480,37 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
             String time = data.getStringExtra("time");
             String img = data.getStringExtra("img");
             if (!TextUtils.isEmpty(content) && !TextUtils.isEmpty(time)) {
-                ArrayList<NewsDetailsBean.ResBean.PlListBean> datas = adapter.getDatas();
-                NewsDetailsBean.ResBean.PlListBean plListBean = new NewsDetailsBean.ResBean.PlListBean();
-                plListBean.setContent(content);
-                plListBean.setAdd_time(time);
-                plListBean.setHead_img(img);
-                plListBean.setId("");
-                plListBean.setNid("");
-                plListBean.setUname(String.valueOf(SpUtil.get(context, "username", "")));
-                datas.add(0, plListBean);
-                adapter.notifyDataSetChanged();
-                newsDetailsBean.getRes().setPl_count(String.valueOf(Integer.parseInt(newsDetailsBean.getRes().getPl_count()) + 1));
-                tv_pinglun.setText(newsDetailsBean.getRes().getPl_count() + "个评论");
+
+                try {
+                    ArrayList<NewsDetailsBean.ResBean.PlListBean> datas = adapter.getDatas();
+                    NewsDetailsBean.ResBean.PlListBean plListBean = new NewsDetailsBean.ResBean.PlListBean();
+                    plListBean.setContent(content);
+                    plListBean.setAdd_time(time);
+                    plListBean.setHead_img(img);
+                    plListBean.setId("");
+                    plListBean.setNid("");
+                    plListBean.setUname(String.valueOf(SpUtil.get(context, "username", "")));
+                    datas.add(0, plListBean);
+                    adapter.notifyDataSetChanged();
+                    newsDetailsBean.getRes().setPl_count(String.valueOf(Integer.parseInt(newsDetailsBean.getRes().getPl_count()) + 1));
+                    tv_pinglun.setText(newsDetailsBean.getRes().getPl_count() + "个评论");
+                } catch (Exception e) {
+                    ArrayList<NewsDetailsBean.ResBean.PlListBean> datas = new ArrayList<>();
+                    NewsDetailsBean.ResBean.PlListBean plListBean = new NewsDetailsBean.ResBean.PlListBean();
+                    plListBean.setContent(content);
+                    plListBean.setAdd_time(time);
+                    plListBean.setHead_img(img);
+                    plListBean.setId("");
+                    plListBean.setNid("");
+                    plListBean.setUname(String.valueOf(SpUtil.get(context, "username", "")));
+                    datas.add(0, plListBean);
+                    newsDetailsBean.getRes().setPl_count(String.valueOf(Integer.parseInt(newsDetailsBean.getRes().getPl_count()) + 1));
+                    tv_pinglun.setText(newsDetailsBean.getRes().getPl_count() + "个评论");
+                    adapter = new NewsPLListAdapter(datas, context);
+                    pinglun_lv.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
+                }
+
             }
         }
     }

@@ -6,9 +6,14 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.hyphenate.chat.ChatClient;
+import com.hyphenate.helpdesk.callback.Callback;
+
 import sakura.liangdinvshen.Base.BaseActivity;
 import sakura.liangdinvshen.R;
+import sakura.liangdinvshen.Utils.EasyToast;
 import sakura.liangdinvshen.Utils.SpUtil;
+import sakura.liangdinvshen.Utils.Utils;
 import sakura.liangdinvshen.View.CommomDialog;
 
 /**
@@ -65,15 +70,46 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
             case R.id.tv_exit:
                 new CommomDialog(context, R.style.dialog, "您确定退出登录么？", new CommomDialog.OnCloseListener() {
                     @Override
-                    public void onClick(Dialog dialog, boolean confirm) {
+                    public void onClick(Dialog dialog, final boolean confirm) {
                         if (confirm) {
                             dialog.dismiss();
                         } else {
                             dialog.dismiss();
-                            SpUtil.clear(context);
-                            Intent intent = new Intent(context, LoginActivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                            startActivity(intent);
+
+
+                            if (Utils.isConnected(context)) {
+                                final Dialog dialog1 = Utils.showLoadingDialog(context);
+                                dialog1.show();
+                                //第一个参数为是否解绑推送的devicetoken
+                                ChatClient.getInstance().logout(true, new Callback() {
+                                    @Override
+                                    public void onSuccess() {
+                                        dialog1.dismiss();
+                                        SpUtil.clear(context);
+                                        Intent intent = new Intent(context, LoginActivity.class);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        startActivity(intent);
+                                    }
+
+                                    @Override
+                                    public void onError(int i, String s) {
+                                        dialog1.dismiss();
+                                        SpUtil.clear(context);
+                                        Intent intent = new Intent(context, LoginActivity.class);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        startActivity(intent);
+                                    }
+
+                                    @Override
+                                    public void onProgress(int i, String s) {
+
+                                    }
+                                });
+                            } else {
+                                EasyToast.showShort(context, "网络未连接");
+                            }
+
+
                         }
                     }
                 }).setTitle("提示").show();

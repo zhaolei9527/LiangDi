@@ -20,7 +20,7 @@ public class OrderBean {
     private int code;
     private String orderid;
     private String order;
-    private int total;
+    private double total;
     private String msg;
 
     public int getCode() {
@@ -47,7 +47,7 @@ public class OrderBean {
         this.order = order;
     }
 
-    public int getTotal() {
+    public double getTotal() {
         return total;
     }
 

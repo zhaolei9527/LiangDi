@@ -54,7 +54,14 @@ public class EmployeesActivity extends BaseActivity implements View.OnClickListe
         tv_xiaofeiguanli.setOnClickListener(this);
         tv_yuangong.setOnClickListener(this);
         tv_name.setText(String.valueOf(SpUtil.get(context, "username", "")));
-        SimpleDraweeView.setImageURI(UrlUtils.URL + SpUtil.get(context, "img", ""));
+
+        String img = (String) SpUtil.get(context, "img", "");
+
+        if (img.startsWith("http://")) {
+            SimpleDraweeView.setImageURI(img);
+        } else {
+            SimpleDraweeView.setImageURI(UrlUtils.URL + SpUtil.get(context, "img", ""));
+        }
 
         String role = (String) SpUtil.get(context, "Role", "");
         if ("2".equals(role)) {

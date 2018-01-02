@@ -20,6 +20,10 @@ import android.widget.Toast;
 import com.android.volley.VolleyError;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.Gson;
+import com.hyphenate.chat.ChatClient;
+import com.hyphenate.helpdesk.callback.Callback;
+import com.hyphenate.helpdesk.easeui.util.IntentBuilder;
+import com.hyphenate.helpdesk.model.ContentFactory;
 import com.jude.rollviewpager.OnItemClickListener;
 import com.jude.rollviewpager.hintview.IconHintView;
 import com.tencent.smtt.export.external.interfaces.WebResourceError;
@@ -150,6 +154,7 @@ public class PriceDetailsActivity extends BaseActivity implements View.OnClickLi
         mTvAddshop.setOnClickListener(this);
         mRlShoppingcart.setOnClickListener(this);
         mShopnow.setOnClickListener(this);
+        mLlKefu.setOnClickListener(this);
     }
 
     @Override
@@ -203,6 +208,52 @@ public class PriceDetailsActivity extends BaseActivity implements View.OnClickLi
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.ll_kefu:
+                if (Utils.isConnected(context)) {
+                    if (ChatClient.getInstance().isLoggedInBefore()) {
+                        //已经登录，可以直接进入会话界面
+                        Intent intent = new IntentBuilder(context)
+                                .setServiceIMNumber("liangdinvshen") //获取地址：kefu.easemob.com，“管理员模式 > 渠道管理 > 手机APP”页面的关联的“IM服务号”
+                                .setTitleName("靓蒂女神客服")
+                                .setVisitorInfo(ContentFactory.createVisitorInfo(null)
+                                        .companyName("huanxin")
+                                        .email("abc@123.com")
+                                        .qq("12345")
+                                        .name("visitor_" +"sakura")
+                                        .nickName("nick_" + "sakuraaAA"))
+                                .build();
+                        startActivity(intent);
+                    } else {
+                        //未登录，需要登录后，再进入会话界面
+                        dialog.show();
+                        ChatClient.getInstance().login(String.valueOf(SpUtil.get(context, "uid", "")), String.valueOf(SpUtil.get(context, "uid", ""))
+                                , new Callback() {
+                                    @Override
+                                    public void onSuccess() {
+                                        dialog.dismiss();
+                                        Intent intent = new IntentBuilder(context)
+                                                .setServiceIMNumber("liangdinvshen") //获取地址：kefu.easemob.com，“管理员模式 > 渠道管理 > 手机APP”页面的关联的“IM服务号”
+                                                .setTitleName("靓蒂女神客服")
+                                                .build();
+                                        startActivity(intent);
+                                    }
+
+                                    @Override
+                                    public void onError(int i, String s) {
+                                        dialog.dismiss();
+                                        EasyToast.showShort(context, "暂时无法访问客服");
+                                    }
+
+                                    @Override
+                                    public void onProgress(int i, String s) {
+
+                                    }
+                                });
+                    }
+                } else {
+                    EasyToast.showShort(context, "网络未连接");
+                }
+                break;
             case R.id.shopnow:
                 StringBuilder stringBuilder = new StringBuilder();
                 stringBuilder.append(String.valueOf(goodsDetailBean.getGoods().getId()));

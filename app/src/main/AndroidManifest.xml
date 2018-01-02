@@ -10,6 +10,13 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
+    <!-- 添加必要的权限 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.GET_TASKS"></uses-permission>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"></uses-permission>
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"></uses-permission>
+
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -21,7 +28,6 @@
         <activity android:name=".Activity.FlashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -59,8 +65,15 @@
             android:windowSoftInputMode="adjustPan|stateHidden|adjustResize" />
         <activity
             android:name=".Activity.PayActivity"
-            android:launchMode="singleTop"
-            android:windowSoftInputMode="adjustPan|stateHidden|adjustResize" />
+            android:exported="true"
+            android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="wx0a74ea54b7f465bf" />
+            </intent-filter>
+        </activity>
+
         <activity
             android:name=".Activity.GoodPayActivity"
             android:launchMode="singleTop"
@@ -312,5 +325,56 @@
             android:name=".Activity.BaringActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan|stateHidden|adjustResize"></activity>
+
+        <activity
+            android:name="com.mob.tools.MobUIShell"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+
+        <!-- 填写您从Mob开发者后台中得到的Appkey和AppSecret -->
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="wx0a74ea54b7f465bf" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="sakura.liangdinvshen.wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="wx0a74ea54b7f465bf" />
+            </intent-filter>
+        </activity>
+
+        <meta-data
+            android:name="Mob-AppKey"
+            android:value="2342bf80aa8cc" />
+        <meta-data
+            android:name="Mob-AppSecret"
+            android:value="8fd3c3f1349208b989a094f7f413090d" />
+
+
+        <activity
+            android:name="com.alipay.sdk.app.H5PayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind"></activity>
+        <activity
+            android:name="com.alipay.sdk.auth.AuthActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind"></activity>
+
     </application>
 </manifest>

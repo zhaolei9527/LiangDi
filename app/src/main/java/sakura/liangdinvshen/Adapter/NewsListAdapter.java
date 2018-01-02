@@ -58,7 +58,10 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
             @Override
             public void onClick(View v) {
                 String id = datas.get(position).getId();
-                holder.fl_item.getContext().startActivity(new Intent(holder.fl_item.getContext(), NewsDetailsActivity.class).putExtra("id", id));
+                holder.fl_item.getContext().startActivity(new Intent(holder.fl_item.getContext(), NewsDetailsActivity.class)
+                        .putExtra("id", id)
+                        .putExtra("shareimg", datas.get(position).getImg())
+                );
             }
         });
 
@@ -84,7 +87,7 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
             this.SimpleDraweeView = (SimpleDraweeView) rootView.findViewById(R.id.SimpleDraweeView);
             this.tv_title = (TextView) rootView.findViewById(R.id.tv_title);
             this.tv_classify = (TextView) rootView.findViewById(R.id.tv_classify);
-            this.tv_look = (TextView) rootView.findViewById(R.id.tv_classify);
+            this.tv_look = (TextView) rootView.findViewById(R.id.tv_look);
             this.fl_item = (FrameLayout) rootView.findViewById(R.id.fl_item);
         }
     }

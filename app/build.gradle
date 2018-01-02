@@ -11,17 +11,46 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
-//        ndk {
-//            // 设置支持的SO库架构
-//            abiFilters 'armeabi' ,  'armeabi-v7a'
-//        }
+        ndk {
+            // 设置支持的SO库架构
+            abiFilters 'armeabi' ,  'armeabi-v7a'
+        }
         useLibrary 'org.apache.http.legacy'
     }
+
+    signingConfigs {
+        release {
+            storeFile file('liangdinvshen.jks')
+            storePassword 'zzcn77'
+            keyAlias 'liangdi'
+            keyPassword 'zzcn77'
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+            signingConfig signingConfigs.release
+        }
+
+        debug {
+            signingConfig signingConfigs.release
+        }
+    }
+
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
     }
 }
 
@@ -52,4 +81,6 @@ dependencies {
     compile 'com.github.luoshihai:XXPictureCompress:V1.0.0'
     compile files('libs/httpmime-4.2.5.jar')
     compile project(':calendar')
+    compile 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
+    compile project(':kefu-easeui')
 }

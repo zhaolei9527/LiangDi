@@ -1,6 +1,8 @@
 package sakura.liangdinvshen.Activity;
 
 import android.Manifest;
+import android.content.Intent;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Toast;
 
@@ -31,24 +33,6 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void initview() {
 
-        Acp.getInstance(context).request(new AcpOptions.Builder()
-                        .setPermissions(Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
-                        .setDeniedMessage(getString(R.string.requstPerminssions))
-                        .build(),
-                new AcpListener() {
-                    @Override
-                    public void onGranted() {
-
-
-                    }
-
-                    @Override
-                    public void onDenied(List<String> permissions) {
-                        Toast.makeText(context, R.string.Thepermissionapplicationisrejected, Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-
         BottomTabBar = (BottomTabBar) findViewById(R.id.BottomTabBar);
         BottomTabBar.initFragmentorViewPager(getSupportFragmentManager())
                 .addReplaceLayout(R.id.Vp_context)
@@ -70,6 +54,24 @@ public class MainActivity extends BaseActivity {
         if (!io.vov.vitamio.LibsChecker.checkVitamioLibs(this)) {
             return;
         }
+
+        Acp.getInstance(context).request(new AcpOptions.Builder()
+                        .setPermissions(Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
+                        .setDeniedMessage(getString(R.string.requstPerminssions))
+                        .build(),
+                new AcpListener() {
+                    @Override
+                    public void onGranted() {
+
+
+                    }
+
+                    @Override
+                    public void onDenied(List<String> permissions) {
+                        Toast.makeText(context, R.string.Thepermissionapplicationisrejected, Toast.LENGTH_SHORT).show();
+                    }
+                });
+
     }
 
     @Override
@@ -80,5 +82,16 @@ public class MainActivity extends BaseActivity {
     protected void initData() {
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
 
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            Intent home = new Intent(Intent.ACTION_MAIN);
+            home.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            home.addCategory(Intent.CATEGORY_HOME);
+            startActivity(home);
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 }

@@ -132,7 +132,15 @@ public class MyFragment extends Fragment implements View.OnClickListener {
         mRlWangdian = (RelativeLayout) view.findViewById(R.id.rl_wangdian);
 
 
-        mSdvTouxiang.setImageURI(UrlUtils.URL + String.valueOf(SpUtil.get(getActivity(), "img", "")));
+        String img = (String) SpUtil.get(getActivity(), "img", "");
+
+
+        if (img.startsWith("http://")) {
+            mSdvTouxiang.setImageURI(img);
+        } else {
+            mSdvTouxiang.setImageURI(UrlUtils.URL + String.valueOf(SpUtil.get(getActivity(), "img", "")));
+        }
+
         mTvName.setText(String.valueOf(SpUtil.get(getActivity(), "username", "")));
         mTvJifen.setText("积分" + String.valueOf(SpUtil.get(getActivity(), "jifen", "0")));
         mTvYue.setText("余额￥" + String.valueOf(SpUtil.get(getActivity(), "money", "")));
@@ -261,7 +269,16 @@ public class MyFragment extends Fragment implements View.OnClickListener {
                         SpUtil.putAndApply(getActivity(), "money", userInfoBean.getList().getMoney());
                         SpUtil.putAndApply(getActivity(), "Role", userInfoBean.getList().getRole());
                         SpUtil.putAndApply(getActivity(), "jieduan", userInfoBean.getList().getStu());
-                        mSdvTouxiang.setImageURI(UrlUtils.URL + String.valueOf(SpUtil.get(getActivity(), "img", "")));
+
+                        String img = (String) SpUtil.get(getActivity(), "img", "");
+
+                        if (img.startsWith("http://")) {
+                            mSdvTouxiang.setImageURI(img);
+                        } else {
+                            mSdvTouxiang.setImageURI(UrlUtils.URL + String.valueOf(SpUtil.get(getActivity(), "img", "")));
+                        }
+
+
                         mTvName.setText(String.valueOf(SpUtil.get(getActivity(), "username", "")));
                         mTvJifen.setText("积分" + String.valueOf(SpUtil.get(getActivity(), "jifen", "0")));
                         mTvYue.setText("余额￥" + String.valueOf(SpUtil.get(getActivity(), "money", "")));

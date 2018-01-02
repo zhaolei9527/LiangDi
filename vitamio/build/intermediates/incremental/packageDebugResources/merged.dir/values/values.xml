@@ -7,8 +7,8 @@
     <string name="VideoView_error_text_invalid_progressive_playback">Sorry, this video is not valid for streaming to
         this device.
     </string>
-    <string name="VideoView_error_text_unknown">Sorry, this video cannot be played.</string>
-    <string name="VideoView_error_title">Cannot play video</string>
+    <string name="VideoView_error_text_unknown">Sorry~视频暂时无法播放 orz </string>
+    <string name="VideoView_error_title">出错啦~</string>
     <string name="mediacontroller_play_pause">Play/Pause</string>
     <string name="permission_group_tools_description">Access Vitamio package and resources.</string>
     <string name="permission_group_tools_label">Vitamio tools</string>

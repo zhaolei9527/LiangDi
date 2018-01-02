@@ -17,6 +17,8 @@ import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
+import com.hyphenate.chat.ChatClient;
+import com.hyphenate.helpdesk.callback.Callback;
 
 import java.util.HashMap;
 
@@ -199,8 +201,68 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         SpUtil.putAndApply(context, "chengshi", loginBean.getRes().getCity());
                         SpUtil.putAndApply(context, "jieduan", loginBean.getRes().getStu());
 
-                        startActivity(new Intent(context, MainActivity.class));
-                        finish();
+                        final LoginBean finalLoginBean = loginBean;
+                        ChatClient.getInstance().register(loginBean.getRes().getId(), loginBean.getRes().getId(), new Callback() {
+                            @Override
+                            public void onSuccess() {
+                                if (ChatClient.getInstance().isLoggedInBefore()) {
+                                    //已经登录，可以直接进入
+                                    gotoMain();
+                                } else {
+                                    //未登录，需要登录后，再进入
+                                    ChatClient.getInstance().login(finalLoginBean.getRes().getId(), finalLoginBean.getRes().getId()
+                                            , new Callback() {
+                                                @Override
+                                                public void onSuccess() {
+                                                    gotoMain();
+                                                }
+
+                                                @Override
+                                                public void onError(int i, String s) {
+                                                    gotoMain();
+                                                }
+
+                                                @Override
+                                                public void onProgress(int i, String s) {
+
+                                                }
+                                            });
+                                }
+                            }
+
+                            @Override
+                            public void onError(int i, String s) {
+                                if (ChatClient.getInstance().isLoggedInBefore()) {
+                                    //已经登录，可以直接进入
+                                    gotoMain();
+                                } else {
+                                    //未登录，需要登录后，再进入
+                                    ChatClient.getInstance().login(finalLoginBean.getRes().getId(), finalLoginBean.getRes().getId()
+                                            , new Callback() {
+                                                @Override
+                                                public void onSuccess() {
+                                                    gotoMain();
+                                                }
+
+                                                @Override
+                                                public void onError(int i, String s) {
+                                                    gotoMain();
+                                                }
+
+                                                @Override
+                                                public void onProgress(int i, String s) {
+
+                                                }
+                                            });
+                                }
+                            }
+
+                            @Override
+                            public void onProgress(int i, String s) {
+
+                            }
+                        });
+
                     } else {
                         Toast.makeText(LoginActivity.this, loginBean.getMsg(), Toast.LENGTH_SHORT).show();
                     }
