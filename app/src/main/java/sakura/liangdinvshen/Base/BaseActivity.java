@@ -55,6 +55,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         ViewGroup mContentView = (ViewGroup) this.findViewById(Window.ID_ANDROID_CONTENT);
         int statusBarHeight = getStatusBarHeight(this);
 
+
+
+
+
         View mTopView = mContentView.getChildAt(0);
         if (mTopView != null && mTopView.getLayoutParams() != null && mTopView.getLayoutParams().height == statusBarHeight) {
             //避免重复添加 View
