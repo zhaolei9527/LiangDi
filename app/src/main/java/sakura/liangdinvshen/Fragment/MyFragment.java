@@ -37,12 +37,18 @@ import sakura.liangdinvshen.Activity.SettingActivity;
 import sakura.liangdinvshen.Activity.ShopCarActivity;
 import sakura.liangdinvshen.Activity.WithdrawalActivity;
 import sakura.liangdinvshen.App;
+import sakura.liangdinvshen.Bean.StuBean;
 import sakura.liangdinvshen.Bean.UserInfoBean;
 import sakura.liangdinvshen.R;
+import sakura.liangdinvshen.Utils.EasyToast;
 import sakura.liangdinvshen.Utils.SpUtil;
 import sakura.liangdinvshen.Utils.UrlUtils;
+import sakura.liangdinvshen.Utils.Utils;
+import sakura.liangdinvshen.View.QiandaoDialog;
 import sakura.liangdinvshen.Volley.VolleyInterface;
 import sakura.liangdinvshen.Volley.VolleyRequest;
+
+import static sakura.liangdinvshen.R.style.dialog;
 
 /**
  * Created by 赵磊 on 2017/9/19.
@@ -84,6 +90,7 @@ public class MyFragment extends Fragment implements View.OnClickListener {
     private RelativeLayout mRlSetting;
     private ImageView mImg12;
     private RelativeLayout mRlWangdian;
+    private TextView mTvQiandao;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -94,6 +101,7 @@ public class MyFragment extends Fragment implements View.OnClickListener {
     }
 
     private void initView(View view) {
+        mTvQiandao = (TextView) view.findViewById(R.id.tv_qiandao);
         mLlQiandao = (LinearLayout) view.findViewById(R.id.ll_qiandao);
         mSdvTouxiang = (SimpleDraweeView) view.findViewById(R.id.sdv_touxiang);
         mTvName = (TextView) view.findViewById(R.id.tv_name);
@@ -128,13 +136,8 @@ public class MyFragment extends Fragment implements View.OnClickListener {
         mImg11 = (ImageView) view.findViewById(R.id.img11);
         mRlSetting = (RelativeLayout) view.findViewById(R.id.rl_setting);
         mImg12 = (ImageView) view.findViewById(R.id.img12);
-
         mRlWangdian = (RelativeLayout) view.findViewById(R.id.rl_wangdian);
-
-
         String img = (String) SpUtil.get(getActivity(), "img", "");
-
-
         if (img.startsWith("http://")) {
             mSdvTouxiang.setImageURI(img);
         } else {
@@ -161,6 +164,7 @@ public class MyFragment extends Fragment implements View.OnClickListener {
         mRlTixian.setOnClickListener(this);
         mRlSetting.setOnClickListener(this);
         mRlWangdian.setOnClickListener(this);
+        mLlQiandao.setOnClickListener(this);
         mRlWangdian.setVisibility(View.GONE);
         String role = (String) SpUtil.get(getActivity(), "Role", "");
         if (!"1".equals(role)) {
@@ -242,6 +246,18 @@ public class MyFragment extends Fragment implements View.OnClickListener {
             case R.id.rl_wangdian:
                 startActivity(new Intent(getContext(), EmployeesActivity.class));
                 break;
+            case R.id.ll_qiandao:
+                if ("签到".equals(mTvQiandao.getText().toString())) {
+                    if (Utils.isConnected(getActivity())) {
+
+                        singlePageCheckIn();
+                    } else {
+                        EasyToast.showShort(getActivity(), "网络未连接");
+                    }
+                } else {
+                    EasyToast.showShort(getActivity(), "今天已经签到过啦~");
+                }
+                break;
             default:
                 break;
 
@@ -269,20 +285,25 @@ public class MyFragment extends Fragment implements View.OnClickListener {
                         SpUtil.putAndApply(getActivity(), "money", userInfoBean.getList().getMoney());
                         SpUtil.putAndApply(getActivity(), "Role", userInfoBean.getList().getRole());
                         SpUtil.putAndApply(getActivity(), "jieduan", userInfoBean.getList().getStu());
-
+                        SpUtil.putAndApply(getActivity(), "qiandao", userInfoBean.getList().getIs_qian());
                         String img = (String) SpUtil.get(getActivity(), "img", "");
-
                         if (img.startsWith("http://")) {
                             mSdvTouxiang.setImageURI(img);
                         } else {
                             mSdvTouxiang.setImageURI(UrlUtils.URL + String.valueOf(SpUtil.get(getActivity(), "img", "")));
                         }
 
+                        if ("0".equals(String.valueOf(userInfoBean.getList().getIs_qian()))) {
+                            mTvQiandao.setText("签到");
+                        } else {
+                            mTvQiandao.setText("已签到");
+                        }
 
                         mTvName.setText(String.valueOf(SpUtil.get(getActivity(), "username", "")));
-                        mTvJifen.setText("积分" + String.valueOf(SpUtil.get(getActivity(), "jifen", "0")));
-                        mTvYue.setText("余额￥" + String.valueOf(SpUtil.get(getActivity(), "money", "")));
 
+                        mTvJifen.setText("积分" + String.valueOf(SpUtil.get(getActivity(), "jifen", "0")));
+
+                        mTvYue.setText("余额￥" + String.valueOf(SpUtil.get(getActivity(), "money", "")));
                         String jieduan = (String) SpUtil.get(getActivity(), "jieduan", "");
                         if (!TextUtils.isEmpty(jieduan)) {
                             if ("1".equals(jieduan)) {
@@ -320,9 +341,51 @@ public class MyFragment extends Fragment implements View.OnClickListener {
     }
 
 
+    /**
+     * 免责声明获取
+     */
+    private void singlePageCheckIn() {
+        HashMap<String, String> params = new HashMap<>(1);
+        params.put("key", UrlUtils.KEY);
+        params.put("uid", String.valueOf(SpUtil.get(getActivity(), "uid", "")));
+        VolleyRequest.RequestPost(getActivity(), UrlUtils.BASE_URL + "singlepage/check_in", "singlepage/check_in", params, new VolleyInterface(getActivity()) {
+            @Override
+            public void onMySuccess(String result) {
+                Log.e("RegisterActivity", result);
+                try {
+                    StuBean stuBean = new Gson().fromJson(result, StuBean.class);
+                    if ("1".equals(String.valueOf(stuBean.getStu()))) {
+                        mTvQiandao.setText("已签到");
+                        String jifen = (String) SpUtil.get(getActivity(), "jifen", "");
+                        int i = Integer.parseInt(jifen);
+                        i = ++i;
+                        new QiandaoDialog(getActivity(), dialog, "当前积分" + i).show();
+                        userInfo();
+                    } else {
+                        mTvQiandao.setText("已签到");
+                        EasyToast.showShort(getActivity(), "今天已经签到过啦~");
+                    }
+                    stuBean = null;
+                    result = null;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(getActivity(), getString(R.string.Abnormalserver), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onMyError(VolleyError error) {
+                error.printStackTrace();
+                Toast.makeText(getActivity(), getString(R.string.Abnormalserver), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
     @Override
     public void onDestroy() {
         super.onDestroy();
         App.getQueues().cancelAll("user/info");
+        App.getQueues().cancelAll("singlepage/check_in");
     }
 }

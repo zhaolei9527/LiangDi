@@ -1,7 +1,10 @@
 package sakura.liangdinvshen.Activity;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -12,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alipay.sdk.app.PayTask;
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 import com.tencent.mm.opensdk.modelpay.PayReq;
@@ -23,12 +27,15 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import sakura.liangdinvshen.App;
 import sakura.liangdinvshen.Base.BaseActivity;
 import sakura.liangdinvshen.Bean.BankEvent;
 import sakura.liangdinvshen.Bean.OrderPay;
 import sakura.liangdinvshen.Bean.OrderWxpayBean;
+import sakura.liangdinvshen.Bean.PayResult;
+import sakura.liangdinvshen.Bean.ZfpayBean;
 import sakura.liangdinvshen.R;
 import sakura.liangdinvshen.Utils.Constants;
 import sakura.liangdinvshen.Utils.EasyToast;
@@ -54,6 +61,45 @@ public class PayActivity extends BaseActivity implements View.OnClickListener {
     private String order;
     private Dialog dialog;
     private IWXAPI api;
+
+    private static final int SDK_PAY_FLAG = 1;
+
+    @SuppressLint("HandlerLeak")
+    private Handler mHandler = new Handler() {
+        @Override
+        @SuppressWarnings("unused")
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case SDK_PAY_FLAG: {
+                    @SuppressWarnings("unchecked")
+                    PayResult payResult = new PayResult((Map<String, String>) msg.obj);
+                    /**
+                     对于支付结果，请商户依赖服务端的异步通知结果。同步通知结果，仅作为支付结束的通知。
+                     */
+                    String resultInfo = payResult.getResult();// 同步返回需要验证的信息
+                    String resultStatus = payResult.getResultStatus();
+                    // 判断resultStatus 为9000则代表支付成功
+                    if (TextUtils.equals(resultStatus, "9000")) {
+                        // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
+                        EasyToast.showShort(context, "支付成功");
+                        EventBus.getDefault().post(
+                                new BankEvent("good", "pay"));
+                    } else {
+                        // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
+                        EasyToast.showShort(context, "支付失败，请重试");
+                        EventBus.getDefault().post(
+                                new BankEvent("bad", "pay"));
+                    }
+                    break;
+                }
+                default:
+                    break;
+            }
+        }
+
+        ;
+    };
+
 
     @Override
     protected void onResume() {
@@ -151,6 +197,7 @@ public class PayActivity extends BaseActivity implements View.OnClickListener {
                 if (Utils.isConnected(context)) {
                     dialog.show();
                     if (Choosedalipay.isChecked()) {
+                        orderalipay();
                     } else if (Choosedweixin.isChecked()) {
                         orderWxpay();
                     } else {
@@ -262,6 +309,55 @@ public class PayActivity extends BaseActivity implements View.OnClickListener {
             }
         });
     }
+
+    /**
+     * 订单支付
+     */
+    private void orderalipay() {
+        HashMap<String, String> params = new HashMap<>(3);
+        params.put("key", UrlUtils.KEY);
+        params.put("id", orderid);
+        params.put("uid", String.valueOf(SpUtil.get(context, "uid", "")));
+        Log.e("RegisterActivity", params.toString());
+        VolleyRequest.RequestPost(context, UrlUtils.BASE_URL + "order/zfpay", "order/zfpay", params, new VolleyInterface(context) {
+            @Override
+            public void onMySuccess(String result) {
+                dialog.dismiss();
+                Log.e("RegisterActivity", result);
+                try {
+                    ZfpayBean zfpayBean = new Gson().fromJson(result, ZfpayBean.class);
+                    final ZfpayBean finalZfpayBean = zfpayBean;
+                    Runnable payRunnable = new Runnable() {
+                        @Override
+                        public void run() {
+                            PayTask alipay = new PayTask(PayActivity.this);
+                            Map<String, String> result = alipay.payV2(finalZfpayBean.getRes(), true);
+                            Log.e("msp", result.toString());
+                            Message msg = new Message();
+                            msg.what = SDK_PAY_FLAG;
+                            msg.obj = result;
+                            mHandler.sendMessage(msg);
+                        }
+                    };
+                    Thread payThread = new Thread(payRunnable);
+                    payThread.start();
+                    zfpayBean = null;
+                    result = null;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(context, getString(R.string.Abnormalserver), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onMyError(VolleyError error) {
+                dialog.dismiss();
+                error.printStackTrace();
+                Toast.makeText(context, getString(R.string.Abnormalserver), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 
     public static boolean isfinish = false;
 

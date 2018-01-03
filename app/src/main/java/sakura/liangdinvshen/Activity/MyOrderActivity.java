@@ -42,6 +42,12 @@ public class MyOrderActivity extends BaseActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        context.sendBroadcast(new Intent("OrderContentRefresh").putExtra("stu", ""));
+    }
+
+    @Override
     protected void initListener() {
         rl_back.setOnClickListener(new View.OnClickListener() {
             @Override

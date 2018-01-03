@@ -32,7 +32,6 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initview() {
-
         BottomTabBar = (BottomTabBar) findViewById(R.id.BottomTabBar);
         BottomTabBar.initFragmentorViewPager(getSupportFragmentManager())
                 .addReplaceLayout(R.id.Vp_context)
@@ -51,18 +50,14 @@ public class MainActivity extends BaseActivity {
                     }
                 })
                 .commit();
-        if (!io.vov.vitamio.LibsChecker.checkVitamioLibs(this)) {
-            return;
-        }
 
         Acp.getInstance(context).request(new AcpOptions.Builder()
-                        .setPermissions(Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
+                        .setPermissions(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
                         .setDeniedMessage(getString(R.string.requstPerminssions))
                         .build(),
                 new AcpListener() {
                     @Override
                     public void onGranted() {
-
 
                     }
 
@@ -71,6 +66,11 @@ public class MainActivity extends BaseActivity {
                         Toast.makeText(context, R.string.Thepermissionapplicationisrejected, Toast.LENGTH_SHORT).show();
                     }
                 });
+
+        if (!io.vov.vitamio.LibsChecker.checkVitamioLibs(this)) {
+            return;
+        }
+
 
     }
 
@@ -84,7 +84,6 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             Intent home = new Intent(Intent.ACTION_MAIN);
             home.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

@@ -13,9 +13,8 @@ public class LoginBean {
     /**
      * code : 1
      * msg : 登陆成功！
-     * res : {"id":"10","ni_name":"靓帝女神","img":"/Public/uploads/headimg/default_img.png","tel":"17629345001","password":"5d015f65dc4c84b23767cd0cfc8e5133","add_time":"1511934451","status":"1","rand":"57421","is_del":"1","last_login_time":"1511934751","stu":"1","jifen":"","money":"0.00","total_push_money":"0.00","pid1":"","pid2":"","pid3":"","role":"1","wd_id":"","sheng_li_qi":"","now_days":"","is_yuejing":"2","shengao":"","shengri":"","hunyin":"未婚","city":"","mother_start":"","pregnant_start":"","pregnant_expected":"","period_start":"","period_end":"","period_length":"","period_cycle":"","baby_sex":"","baby_birthday":"","erweima":"","is_tuan":"","tuan":"","check_in_time":""}
+     * res : {"id":"77","ni_name":"Sakura","img":"http://wx.qlogo.cn/mmopen/JJ4Xwib2uLibWQwCvjMlzyRwUTUFvzgNbm7Os3fmmjVkiaXYVQS4o1yZvySicibrpxzj0pia1hNtbVeaBCSDqX4gztsGF2cLs5IGuO/0","tel":"17629345001","password":"50b7f8ce37a31dfca3bd9a382175fdad","add_time":"1510042190","status":"1","rand":"21789","is_del":"1","last_login_time":"1514975182","stu":"1","jifen":"1","money":"0.00","total_push_money":"0.04","pid1":"","pid2":"","pid3":"","role":"1","wd_id":"","sheng_li_qi":"","now_days":"","is_yuejing":"2","shengao":"","shengri":"","hunyin":"未婚","city":"","openid_qq":"AC07447416C11AF922EFC9E9BAA13658","openid_qq_type":"","openid_wx":"oOb-0wc7dzX018_Il4bgirYxTmq8","check_in_time":"1514974771","erweima":"","mother_start":"","pregnant_start":"","pregnant_expected":"","period_start":"","period_end":"","period_length":"","period_cycle":"","baby_sex":"","baby_birthday":"","is_tuan":"","tuan":""}
      */
-
 
     private String code;
     private String msg;
@@ -46,69 +45,21 @@ public class LoginBean {
     }
 
     public static class ResBean {
-        //生日
-        //(nonatomic, copy) NSString *baby_birthday;
-//人生阶段人生阶段，1第一经期，2第二备孕，3，第三怀孕，4第四辣妈
-        //(nonatomic, copy) NSString *stu;
-//1小王子2小公主
-        //(nonatomic, copy) NSString *baby_sex;
-//城市
-        //(nonatomic, copy) NSString *city;
-//婚姻未婚
-        //(nonatomic, copy) NSString *hunyin;
-//头像
-        //(nonatomic, copy) NSString *img;
-//是否是月经期1是2不是
-        //(nonatomic, copy) NSString *is_yuejing;
-//积分
-        //(nonatomic, copy) NSString *jifen;
-//余额
-        //(nonatomic, copy) NSString *money;
-//辣妈开始时间
-        //(nonatomic, copy) NSString *mother_start;
-//昵称
-        //(nonatomic, copy) NSString *ni_name;
-//经期的第几天
-        //(nonatomic, copy) NSString *now_days;
-//月经周期长度
-        //(nonatomic, copy) NSString *period_cycle;
-//月经结束
-        //(nonatomic, copy) NSString *period_end;
-//月经长度
-        //(nonatomic, copy) NSString *period_length;
-//月经开始
-        //(nonatomic, copy) NSString *period_start;
-//怀孕预产期
-        //(nonatomic, copy) NSString *pregnant_expected;
-//怀孕开始时间
-        //(nonatomic, copy) NSString *pregnant_start;
-//1;角色 1 会员 2员工 3.负责人
-        //(nonatomic, copy) NSString *role;
-//生理期
-        //(nonatomic, copy) NSString *sheng_li_qi;
-//身高
-        //(nonatomic, copy) NSString *shengao;
-//生日
-        //(nonatomic, copy) NSString *shengri;
-//消费累计总额
-        //(nonatomic, copy) NSString *total_push_money;
-
-
         /**
-         * id : 10
-         * ni_name : 靓帝女神
-         * img : /Public/uploads/headimg/default_img.png
+         * id : 77
+         * ni_name : Sakura
+         * img : http://wx.qlogo.cn/mmopen/JJ4Xwib2uLibWQwCvjMlzyRwUTUFvzgNbm7Os3fmmjVkiaXYVQS4o1yZvySicibrpxzj0pia1hNtbVeaBCSDqX4gztsGF2cLs5IGuO/0
          * tel : 17629345001
-         * password : 5d015f65dc4c84b23767cd0cfc8e5133
-         * add_time : 1511934451
+         * password : 50b7f8ce37a31dfca3bd9a382175fdad
+         * add_time : 1510042190
          * status : 1
-         * rand : 57421
+         * rand : 21789
          * is_del : 1
-         * last_login_time : 1511934751
+         * last_login_time : 1514975182
          * stu : 1
-         * jifen :
+         * jifen : 1
          * money : 0.00
-         * total_push_money : 0.00
+         * total_push_money : 0.04
          * pid1 :
          * pid2 :
          * pid3 :
@@ -121,6 +72,11 @@ public class LoginBean {
          * shengri :
          * hunyin : 未婚
          * city :
+         * openid_qq : AC07447416C11AF922EFC9E9BAA13658
+         * openid_qq_type :
+         * openid_wx : oOb-0wc7dzX018_Il4bgirYxTmq8
+         * check_in_time : 1514974771
+         * erweima :
          * mother_start :
          * pregnant_start :
          * pregnant_expected :
@@ -130,10 +86,8 @@ public class LoginBean {
          * period_cycle :
          * baby_sex :
          * baby_birthday :
-         * erweima :
          * is_tuan :
          * tuan :
-         * check_in_time :
          */
 
         private String id;
@@ -162,6 +116,11 @@ public class LoginBean {
         private String shengri;
         private String hunyin;
         private String city;
+        private String openid_qq;
+        private String openid_qq_type;
+        private String openid_wx;
+        private String check_in_time;
+        private String erweima;
         private String mother_start;
         private String pregnant_start;
         private String pregnant_expected;
@@ -171,10 +130,8 @@ public class LoginBean {
         private String period_cycle;
         private String baby_sex;
         private String baby_birthday;
-        private String erweima;
         private String is_tuan;
         private String tuan;
-        private String check_in_time;
 
         public String getId() {
             return id;
@@ -384,6 +341,46 @@ public class LoginBean {
             this.city = city;
         }
 
+        public String getOpenid_qq() {
+            return openid_qq;
+        }
+
+        public void setOpenid_qq(String openid_qq) {
+            this.openid_qq = openid_qq;
+        }
+
+        public String getOpenid_qq_type() {
+            return openid_qq_type;
+        }
+
+        public void setOpenid_qq_type(String openid_qq_type) {
+            this.openid_qq_type = openid_qq_type;
+        }
+
+        public String getOpenid_wx() {
+            return openid_wx;
+        }
+
+        public void setOpenid_wx(String openid_wx) {
+            this.openid_wx = openid_wx;
+        }
+
+        public String getCheck_in_time() {
+            return check_in_time;
+        }
+
+        public void setCheck_in_time(String check_in_time) {
+            this.check_in_time = check_in_time;
+        }
+
+        public String getErweima() {
+            return erweima;
+        }
+
+        public void setErweima(String erweima) {
+            this.erweima = erweima;
+        }
+
         public String getMother_start() {
             return mother_start;
         }
@@ -456,14 +453,6 @@ public class LoginBean {
             this.baby_birthday = baby_birthday;
         }
 
-        public String getErweima() {
-            return erweima;
-        }
-
-        public void setErweima(String erweima) {
-            this.erweima = erweima;
-        }
-
         public String getIs_tuan() {
             return is_tuan;
         }
@@ -478,14 +467,6 @@ public class LoginBean {
 
         public void setTuan(String tuan) {
             this.tuan = tuan;
-        }
-
-        public String getCheck_in_time() {
-            return check_in_time;
-        }
-
-        public void setCheck_in_time(String check_in_time) {
-            this.check_in_time = check_in_time;
         }
     }
 }
