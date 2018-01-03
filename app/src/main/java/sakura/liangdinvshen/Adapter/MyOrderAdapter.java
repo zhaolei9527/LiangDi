@@ -219,7 +219,7 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHold
             public void onClick(View v) {
                 try {
                     orderReceipt(datas.get(position).getId());
-                    datas.remove(position);
+                    datas.get(position).setStu("4");
                     notifyDataSetChanged();
                     if (datas.isEmpty()) {
                         ll_empty.setVisibility(View.VISIBLE);
@@ -369,6 +369,4 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHold
             }
         });
     }
-
-
 }

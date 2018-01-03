@@ -33,6 +33,7 @@ import sakura.liangdinvshen.App;
 import sakura.liangdinvshen.Bean.CodeBean;
 import sakura.liangdinvshen.Bean.ContentBean;
 import sakura.liangdinvshen.Bean.QQBean;
+import sakura.liangdinvshen.Bean.WXBean;
 import sakura.liangdinvshen.R;
 import sakura.liangdinvshen.Utils.CodeUtils;
 import sakura.liangdinvshen.Utils.SpUtil;
@@ -120,6 +121,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         tv_changecode.setOnClickListener(this);
         tv_xieyi.setOnClickListener(this);
         tv_shengming.setOnClickListener(this);
+        img_qq.setOnClickListener(this);
+        img_weixin.setOnClickListener(this);
         dialog = Utils.showLoadingDialog(context);
     }
 
@@ -144,7 +147,22 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         //输出所有授权信息
                         String s = arg0.getDb().exportData();
                         Log.e("LoginActivity", s);
-
+                        try {
+                            WXBean wxBean = new Gson().fromJson(s, WXBean.class);
+                            openid = wxBean.getUserID();
+                            type = "1";
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    dialog.dismiss();
+                                    btn_register.setText("微信授权注册");
+                                    img_weixin.setVisibility(View.GONE);
+                                    img_qq.setVisibility(View.GONE);
+                                }
+                            });
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
 
                     }
 
@@ -178,11 +196,20 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                             QQBean qqBean = new Gson().fromJson(s, QQBean.class);
                             openid = qqBean.getUserID();
                             type = "1";
-                            getRegister("", "", "", "", openid, type);
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    dialog.dismiss();
+                                    btn_register.setText("QQ授权注册");
+                                    img_weixin.setVisibility(View.GONE);
+                                    img_qq.setVisibility(View.GONE);
+                                }
+                            });
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
+
                     @Override
                     public void onCancel(Platform arg0, int arg1) {
                         // TODO Auto-generated method stub
@@ -475,6 +502,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         VolleyRequest.RequestPost(context, UrlUtils.BASE_URL + "login/regist", "login/regist", params, new VolleyInterface(context) {
             @Override
             public void onMySuccess(String result) {
+                dialog.dismiss();
                 time = 0;
                 String decode = result;
                 Log.e("RegisterActivity", decode);
@@ -496,6 +524,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
             @Override
             public void onMyError(VolleyError error) {
+                dialog.dismiss();
                 time = 0;
                 error.printStackTrace();
                 Toast.makeText(context, getString(R.string.Abnormalserver), Toast.LENGTH_SHORT).show();

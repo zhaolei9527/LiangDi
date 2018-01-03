@@ -81,6 +81,9 @@ public class GoodPayActivity extends BaseActivity implements View.OnClickListene
                 PayActivity.isfinish = true;
                 break;
             case R.id.btn_repay:
+                startActivity(new Intent(context, PayActivity.class)
+                        .putExtra("orderid", orderid)
+                        .putExtra("order", order));
                 finish();
                 break;
             case R.id.btn_abckorder:

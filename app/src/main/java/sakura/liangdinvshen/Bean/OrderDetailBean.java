@@ -12,8 +12,8 @@ import java.util.List;
 public class OrderDetailBean {
     /**
      * stu : 1
-     * goods : [{"id":"23","gid":"12","status":"3","price":"12.00","number":"1","type":"1","img":"/Public/uploads/goods/img/2017-10-13/59e05bda67cf0.jpg","title":"出口外贸尾单秋冬羊绒衫女毛衣加厚高领菠萝针织衫打底外套保暖衫","gstatus":"1","thid":"11"}]
-     * order : {"xian":"金水区","shi":"郑州","sheng":"河南","address":"河西大道东1027","tel":"13027607540","paytype":"1","name":"jackma","orderid":"15139224657829196","sfmoney":"0.00","totalprice":"12","yunfei":"0.00","score":"","yemoney":"12","payment":"","fh_jifen":"","addtime":"1513922465","exp":"","expnum":"","fhbeizhu":"","paybeizhu":"","shtime":"","stu":"2"}
+     * goods : [{"id":"82","gid":"12","status":"0","price":"12.00","number":"1","type":"1","yfwnum":"0","img":"/Public/uploads/goods/img/2017-10-13/59e05bda67cf0.jpg","title":"出口外贸尾单秋冬羊绒衫女毛衣加厚高领菠萝针织衫打底外套保暖衫","gstatus":"1"}]
+     * order : {"xian":"金水区","shi":"郑州","sheng":"河南","address":"河西大道东1027","tel":"13027607540","paytype":"1","name":"jackma","orderid":"15149632437408096","sfmoney":"0.00","totalprice":"12","yunfei":"0.00","score":"","yemoney":"12","payment":"","fh_jifen":"","addtime":"1514963243","exp":"申通快递","expnum":"14876165615651233","fhbeizhu":"","paybeizhu":"","shtime":"","stu":"3"}
      */
 
     private int stu;
@@ -53,7 +53,7 @@ public class OrderDetailBean {
          * tel : 13027607540
          * paytype : 1
          * name : jackma
-         * orderid : 15139224657829196
+         * orderid : 15149632437408096
          * sfmoney : 0.00
          * totalprice : 12
          * yunfei : 0.00
@@ -61,13 +61,13 @@ public class OrderDetailBean {
          * yemoney : 12
          * payment :
          * fh_jifen :
-         * addtime : 1513922465
-         * exp :
-         * expnum :
+         * addtime : 1514963243
+         * exp : 申通快递
+         * expnum : 14876165615651233
          * fhbeizhu :
          * paybeizhu :
          * shtime :
-         * stu : 2
+         * stu : 3
          */
 
         private String xian;
@@ -272,17 +272,16 @@ public class OrderDetailBean {
 
     public static class GoodsBean {
         /**
-         *
-         * id : 23
+         * id : 82
          * gid : 12
-         * status : 3
+         * status : 0
          * price : 12.00
          * number : 1
          * type : 1
+         * yfwnum : 0
          * img : /Public/uploads/goods/img/2017-10-13/59e05bda67cf0.jpg
          * title : 出口外贸尾单秋冬羊绒衫女毛衣加厚高领菠萝针织衫打底外套保暖衫
          * gstatus : 1
-         * thid : 11
          */
 
         private String id;
@@ -291,19 +290,21 @@ public class OrderDetailBean {
         private String price;
         private String number;
         private String type;
+        private String yfwnum;
         private String img;
         private String title;
         private String gstatus;
+
+        public String getThid() {
+            return thid;
+        }
+
+        public void setThid(String thid) {
+            this.thid = thid;
+        }
+
         private String thid;
-        private String yfwnum;
 
-        public String getYfwnum() {
-            return yfwnum;
-        }
-
-        public void setYfwnum(String yfwnum) {
-            this.yfwnum = yfwnum;
-        }
 
         public String getId() {
             return id;
@@ -353,6 +354,14 @@ public class OrderDetailBean {
             this.type = type;
         }
 
+        public String getYfwnum() {
+            return yfwnum;
+        }
+
+        public void setYfwnum(String yfwnum) {
+            this.yfwnum = yfwnum;
+        }
+
         public String getImg() {
             return img;
         }
@@ -376,15 +385,8 @@ public class OrderDetailBean {
         public void setGstatus(String gstatus) {
             this.gstatus = gstatus;
         }
-
-        public String getThid() {
-            return thid;
-        }
-
-        public void setThid(String thid) {
-            this.thid = thid;
-        }
     }
+
 //
 //    @property (nonatomic, copy) NSString *address;//地址
 //    @property (nonatomic, copy) NSString *addtime;//下单时间

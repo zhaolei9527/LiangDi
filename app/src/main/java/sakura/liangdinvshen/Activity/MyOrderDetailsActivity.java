@@ -67,6 +67,8 @@ public class MyOrderDetailsActivity extends BaseActivity implements View.OnClick
     private RelativeLayout rl_yue;
     private Button btn_delete_order;
     private Button btn_delete_order_info;
+    private TextView tv_order_exp;
+    private TextView tv_order_expnum;
 
     @Override
     protected void onDestroy() {
@@ -135,6 +137,8 @@ public class MyOrderDetailsActivity extends BaseActivity implements View.OnClick
         img_checkaddress.setVisibility(View.GONE);
         rl_jifen = (RelativeLayout) findViewById(R.id.rl_jifen);
         rl_yue = (RelativeLayout) findViewById(R.id.rl_yue);
+        tv_order_exp = (TextView) findViewById(R.id.tv_order_exp);
+        tv_order_expnum = (TextView) findViewById(R.id.tv_order_expnum);
     }
 
     @Override
@@ -167,6 +171,12 @@ public class MyOrderDetailsActivity extends BaseActivity implements View.OnClick
                     tv_name.setText(orderDetailBean.getOrder().getName());
                     tv_phone.setText(orderDetailBean.getOrder().getTel());
                     tv_dizhi.setText(orderDetailBean.getOrder().getSheng() + orderDetailBean.getOrder().getShi() + orderDetailBean.getOrder().getXian() + orderDetailBean.getOrder().getAddress());
+
+                    if (!TextUtils.isEmpty(orderDetailBean.getOrder().getExp()) && !TextUtils.isEmpty(orderDetailBean.getOrder().getExpnum())) {
+                        tv_order_exp.setText("快递公司：" + orderDetailBean.getOrder().getExp());
+                        tv_order_expnum.setText("快递单号：" + orderDetailBean.getOrder().getExpnum());
+                    }
+
                     if (TextUtils.isEmpty(orderDetailBean.getOrder().getTotalprice())) {
                         tv_brand_price.setText("￥0.00");
                     } else {

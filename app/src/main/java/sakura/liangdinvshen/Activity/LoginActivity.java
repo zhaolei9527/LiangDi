@@ -31,6 +31,7 @@ import sakura.liangdinvshen.App;
 import sakura.liangdinvshen.Base.BaseActivity;
 import sakura.liangdinvshen.Bean.LoginBean;
 import sakura.liangdinvshen.Bean.QQBean;
+import sakura.liangdinvshen.Bean.WXBean;
 import sakura.liangdinvshen.R;
 import sakura.liangdinvshen.Utils.SpUtil;
 import sakura.liangdinvshen.Utils.UrlUtils;
@@ -137,15 +138,21 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     public void onError(Platform arg0, int arg1, Throwable arg2) {
                         // TODO Auto-generated method stub
                         arg2.printStackTrace();
-
                     }
-
                     @Override
                     public void onComplete(Platform arg0, int arg1, HashMap<String, Object> arg2) {
                         // TODO Auto-generated method stub
                         //输出所有授权信息
                         String s = arg0.getDb().exportData();
                         Log.e("LoginActivity", s);
+                        try {
+                            WXBean wxBean = new Gson().fromJson(s, WXBean.class);
+                            openid = wxBean.getUserID();
+                            type = "2";
+                            getLogin("", "", openid, type);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
 
 
                     }
@@ -174,6 +181,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         // TODO Auto-generated method stub
                         //输出所有授权信息
                         String s = arg0.getDb().exportData();
+                        Log.e("LoginActivity", s);
                         try {
                             QQBean qqBean = new Gson().fromJson(s, QQBean.class);
                             openid = qqBean.getUserID();
@@ -258,6 +266,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         params.put("openid", openid);
         params.put("type", type);
         params.put("password", password);
+        Log.e("LoginActivity", params.toString());
         VolleyRequest.RequestPost(context, UrlUtils.BASE_URL + "login/login", "login/login", params, new VolleyInterface(context) {
             @Override
             public void onMySuccess(String result) {

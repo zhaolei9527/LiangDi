@@ -71,7 +71,6 @@ public class FlashActivity extends BaseActivity {
         }
     }
 
-
     private void AutoLogin() {
         account = (String) SpUtil.get(context, "account", "");
         password = (String) SpUtil.get(context, "password", "");
@@ -87,6 +86,7 @@ public class FlashActivity extends BaseActivity {
         } else {
             gotoLogin();
         }
+
     }
 
     /**

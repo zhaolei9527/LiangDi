@@ -7,24 +7,22 @@ package sakura.liangdinvshen.Bean;
  * @date 2018/1/3
  * 功能描述：
  */
-public class QQBean {
+public class WXBean {
 
     /**
-     * unionid :
-     * userID : AC07447416C11AF922EFC9E9BAA13658
-     *
-     * icon : http://q.qlogo.cn/qqapp/1106553319/AC07447416C11AF922EFC9E9BAA13658/100
-     * expiresTime : 1514944919454
-     * nickname : ����
-     * token : 0BE6B4A2283E137F0538337A3249658D
-     * secretType : 0
+     * unionid : o9PFR0sYr1_qVr86eccntHNLZLeU
+     * userID : om1Mu1hmcTef7IwCA0sBt8cfsEgM
+     * icon : http://wx.qlogo.cn/mmopen/vi_32/gQXOjW4DB0XWyc7Rm66FNuevIRYTIGYcwIP4WyBticenDGBAJAGxROQiazySRtu2NdSUNUCaib8EmHaDibuGicsmCKw/0
+     * expiresTime : 1514957660606
+     * nickname : Sakura
+     * token : 5_ZujVNYP7FaTfo8vvljU2F0AzZP5WrfT7_XL-vz3gpEYrG2s0bd7VX0q-0eKfJzD6hdgtBtGOIQumfxi_3Kcvv9I24Q27K9xyGRv4vJN9lxY
+     * city :
      * gender : 0
-     * pf : desktop_m_qq-10000144-android-2002-
-     * pay_token : 9990D8CC468615FC19650F664FCE2F46
-     * secret :
-     * iconQzone : http://qzapp.qlogo.cn/qzapp/1106553319/AC07447416C11AF922EFC9E9BAA13658/100
-     * pfkey : d55b76d84c2494982825915353d6637b
-     * expiresIn : 7776000
+     * province :
+     * refresh_token : 5_S4DJj0ptavx2YKeVsmep4tBBbpmIvBfYjupHHO-5i0TpPkJl5_HExVrJvhse41uNG4TAFOm4dMS-uhojH4Ueg29TOZp6_jpZvwq14uYDyrM
+     * openid : om1Mu1hmcTef7IwCA0sBt8cfsEgM
+     * country : BB
+     * expiresIn : 7200
      */
 
     private String unionid;
@@ -33,13 +31,12 @@ public class QQBean {
     private long expiresTime;
     private String nickname;
     private String token;
-    private String secretType;
+    private String city;
     private String gender;
-    private String pf;
-    private String pay_token;
-    private String secret;
-    private String iconQzone;
-    private String pfkey;
+    private String province;
+    private String refresh_token;
+    private String openid;
+    private String country;
     private int expiresIn;
 
     public String getUnionid() {
@@ -90,12 +87,12 @@ public class QQBean {
         this.token = token;
     }
 
-    public String getSecretType() {
-        return secretType;
+    public String getCity() {
+        return city;
     }
 
-    public void setSecretType(String secretType) {
-        this.secretType = secretType;
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public String getGender() {
@@ -106,44 +103,36 @@ public class QQBean {
         this.gender = gender;
     }
 
-    public String getPf() {
-        return pf;
+    public String getProvince() {
+        return province;
     }
 
-    public void setPf(String pf) {
-        this.pf = pf;
+    public void setProvince(String province) {
+        this.province = province;
     }
 
-    public String getPay_token() {
-        return pay_token;
+    public String getRefresh_token() {
+        return refresh_token;
     }
 
-    public void setPay_token(String pay_token) {
-        this.pay_token = pay_token;
+    public void setRefresh_token(String refresh_token) {
+        this.refresh_token = refresh_token;
     }
 
-    public String getSecret() {
-        return secret;
+    public String getOpenid() {
+        return openid;
     }
 
-    public void setSecret(String secret) {
-        this.secret = secret;
+    public void setOpenid(String openid) {
+        this.openid = openid;
     }
 
-    public String getIconQzone() {
-        return iconQzone;
+    public String getCountry() {
+        return country;
     }
 
-    public void setIconQzone(String iconQzone) {
-        this.iconQzone = iconQzone;
-    }
-
-    public String getPfkey() {
-        return pfkey;
-    }
-
-    public void setPfkey(String pfkey) {
-        this.pfkey = pfkey;
+    public void setCountry(String country) {
+        this.country = country;
     }
 
     public int getExpiresIn() {
