@@ -35,6 +35,7 @@ import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import cn.sharesdk.tencent.qq.QQ;
 import io.vov.vitamio.MediaPlayer;
 import io.vov.vitamio.ThumbnailUtils;
 import io.vov.vitamio.provider.MediaStore;
@@ -383,6 +384,7 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
     private void showShare() {
         OnekeyShare oks = new OnekeyShare();
         //关闭sso授权
+        oks.addHiddenPlatform(QQ.NAME);
         oks.disableSSOWhenAuthorize();
         // 分享时Notification的图标和文字  2.5.9以后的版本不     调用此方法
         //oks.setNotification(R.drawable.ic_launcher, getString(R.string.app_name));

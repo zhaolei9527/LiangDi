@@ -22,9 +22,15 @@ import com.hyphenate.helpdesk.callback.Callback;
 
 import java.util.HashMap;
 
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.PlatformActionListener;
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.tencent.qq.QQ;
+import cn.sharesdk.wechat.friends.Wechat;
 import sakura.liangdinvshen.App;
 import sakura.liangdinvshen.Base.BaseActivity;
 import sakura.liangdinvshen.Bean.LoginBean;
+import sakura.liangdinvshen.Bean.QQBean;
 import sakura.liangdinvshen.R;
 import sakura.liangdinvshen.Utils.SpUtil;
 import sakura.liangdinvshen.Utils.UrlUtils;
@@ -57,6 +63,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private int pswminlen = 6;
     private String account;
     private String password;
+    private String openid = "";
+    private String type = "";
 
     @Override
     protected void ready() {
@@ -83,6 +91,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         btn_login.setOnClickListener(this);
         tv_register.setOnClickListener(this);
         tv_forgetpassworld.setOnClickListener(this);
+        img_weixin.setOnClickListener(this);
+        img_qq.setOnClickListener(this);
+        dialog = Utils.showLoadingDialog(context);
     }
 
     @Override
@@ -104,6 +115,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         finish();
     }
 
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -115,6 +127,73 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 break;
             case R.id.tv_forgetpassworld:
                 startActivity(new Intent(context, ForgetActivity.class));
+                break;
+            case R.id.img_weixin:
+                dialog.show();
+                Platform weChat = ShareSDK.getPlatform(Wechat.NAME);
+//回调信息，可以在这里获取基本的授权返回的信息，但是注意如果做提示和UI操作要传到主线程handler里去执行
+                weChat.setPlatformActionListener(new PlatformActionListener() {
+                    @Override
+                    public void onError(Platform arg0, int arg1, Throwable arg2) {
+                        // TODO Auto-generated method stub
+                        arg2.printStackTrace();
+
+                    }
+
+                    @Override
+                    public void onComplete(Platform arg0, int arg1, HashMap<String, Object> arg2) {
+                        // TODO Auto-generated method stub
+                        //输出所有授权信息
+                        String s = arg0.getDb().exportData();
+                        Log.e("LoginActivity", s);
+
+
+                    }
+
+                    @Override
+                    public void onCancel(Platform arg0, int arg1) {
+                        // TODO Auto-generated method stub
+
+                    }
+                });
+                weChat.showUser(null);//授权并获取用户信息
+                break;
+            case R.id.img_qq:
+                dialog.show();
+                final Platform qq = ShareSDK.getPlatform(QQ.NAME);
+//回调信息，可以在这里获取基本的授权返回的信息，但是注意如果做提示和UI操作要传到主线程handler里去执行
+                qq.setPlatformActionListener(new PlatformActionListener() {
+                    @Override
+                    public void onError(Platform arg0, int arg1, Throwable arg2) {
+                        // TODO Auto-generated method stub
+                        arg2.printStackTrace();
+                    }
+
+                    @Override
+                    public void onComplete(Platform arg0, int arg1, HashMap<String, Object> arg2) {
+                        // TODO Auto-generated method stub
+                        //输出所有授权信息
+                        String s = arg0.getDb().exportData();
+                        try {
+                            QQBean qqBean = new Gson().fromJson(s, QQBean.class);
+                            openid = qqBean.getUserID();
+                            type = "1";
+                            getLogin("", "", openid, type);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onCancel(Platform arg0, int arg1) {
+                        // TODO Auto-generated method stub
+
+                    }
+                });
+                qq.showUser(null);//授权并获取用户信息
+                break;
+            default:
+
                 break;
         }
     }
@@ -163,23 +242,25 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
         // TODO validate success, do something
 
-        dialog = Utils.showLoadingDialog(context);
         dialog.show();
-        getLogin(account, password);
+
+        getLogin(account, password, openid, type);
+
     }
 
     /**
      * 登录获取
      */
-    private void getLogin(final String tel, final String password) {
+    private void getLogin(final String tel, final String password, final String openid, final String type) {
         HashMap<String, String> params = new HashMap<>(1);
         params.put("key", UrlUtils.KEY);
         params.put("tel", tel);
+        params.put("openid", openid);
+        params.put("type", type);
         params.put("password", password);
         VolleyRequest.RequestPost(context, UrlUtils.BASE_URL + "login/login", "login/login", params, new VolleyInterface(context) {
             @Override
             public void onMySuccess(String result) {
-                dialog.dismiss();
                 String decode = result;
                 Log.e("LoginActivity", decode);
                 try {
@@ -200,11 +281,16 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         SpUtil.putAndApply(context, "hunyin", loginBean.getRes().getHunyin());
                         SpUtil.putAndApply(context, "chengshi", loginBean.getRes().getCity());
                         SpUtil.putAndApply(context, "jieduan", loginBean.getRes().getStu());
-
+                        if ("1".equals(type)) {
+                            SpUtil.putAndApply(context, "qqopenid", openid);
+                        } else if ("2".equals(type)) {
+                            SpUtil.putAndApply(context, "wxopenid", openid);
+                        }
                         final LoginBean finalLoginBean = loginBean;
                         ChatClient.getInstance().register(loginBean.getRes().getId(), loginBean.getRes().getId(), new Callback() {
                             @Override
                             public void onSuccess() {
+                                dialog.dismiss();
                                 if (ChatClient.getInstance().isLoggedInBefore()) {
                                     //已经登录，可以直接进入
                                     gotoMain();
@@ -232,6 +318,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
                             @Override
                             public void onError(int i, String s) {
+                                dialog.dismiss();
                                 if (ChatClient.getInstance().isLoggedInBefore()) {
                                     //已经登录，可以直接进入
                                     gotoMain();
@@ -263,7 +350,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                             }
                         });
 
+                    } else if ("215".equals(loginBean.getCode())) {
+                        dialog.dismiss();
+                        btn_login.setText("授权登录");
                     } else {
+                        dialog.dismiss();
                         Toast.makeText(LoginActivity.this, loginBean.getMsg(), Toast.LENGTH_SHORT).show();
                     }
                     decode = null;

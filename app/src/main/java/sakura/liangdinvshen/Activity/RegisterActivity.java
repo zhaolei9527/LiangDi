@@ -24,9 +24,15 @@ import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.PlatformActionListener;
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.tencent.qq.QQ;
+import cn.sharesdk.wechat.friends.Wechat;
 import sakura.liangdinvshen.App;
 import sakura.liangdinvshen.Bean.CodeBean;
 import sakura.liangdinvshen.Bean.ContentBean;
+import sakura.liangdinvshen.Bean.QQBean;
 import sakura.liangdinvshen.R;
 import sakura.liangdinvshen.Utils.CodeUtils;
 import sakura.liangdinvshen.Utils.SpUtil;
@@ -66,6 +72,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private String password;
     private String passwordagain;
     private String tuijian;
+    private String openid = "";
+    private String type = "";
+    private Dialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,12 +120,77 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         tv_changecode.setOnClickListener(this);
         tv_xieyi.setOnClickListener(this);
         tv_shengming.setOnClickListener(this);
-
+        dialog = Utils.showLoadingDialog(context);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.img_weixin:
+                dialog.show();
+                Platform weChat = ShareSDK.getPlatform(Wechat.NAME);
+//回调信息，可以在这里获取基本的授权返回的信息，但是注意如果做提示和UI操作要传到主线程handler里去执行
+                weChat.setPlatformActionListener(new PlatformActionListener() {
+                    @Override
+                    public void onError(Platform arg0, int arg1, Throwable arg2) {
+                        // TODO Auto-generated method stub
+                        arg2.printStackTrace();
+
+                    }
+
+                    @Override
+                    public void onComplete(Platform arg0, int arg1, HashMap<String, Object> arg2) {
+                        // TODO Auto-generated method stub
+                        //输出所有授权信息
+                        String s = arg0.getDb().exportData();
+                        Log.e("LoginActivity", s);
+
+
+                    }
+
+                    @Override
+                    public void onCancel(Platform arg0, int arg1) {
+                        // TODO Auto-generated method stub
+
+                    }
+                });
+                weChat.showUser(null);//授权并获取用户信息
+                break;
+            case R.id.img_qq:
+                dialog.show();
+
+                final Platform qq = ShareSDK.getPlatform(QQ.NAME);
+//回调信息，可以在这里获取基本的授权返回的信息，但是注意如果做提示和UI操作要传到主线程handler里去执行
+                qq.setPlatformActionListener(new PlatformActionListener() {
+                    @Override
+                    public void onError(Platform arg0, int arg1, Throwable arg2) {
+                        // TODO Auto-generated method stub
+                        arg2.printStackTrace();
+
+                    }
+
+                    @Override
+                    public void onComplete(Platform arg0, int arg1, HashMap<String, Object> arg2) {
+                        // TODO Auto-generated method stub
+                        //输出所有授权信息
+                        String s = arg0.getDb().exportData();
+                        try {
+                            QQBean qqBean = new Gson().fromJson(s, QQBean.class);
+                            openid = qqBean.getUserID();
+                            type = "1";
+                            getRegister("", "", "", "", openid, type);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    @Override
+                    public void onCancel(Platform arg0, int arg1) {
+                        // TODO Auto-generated method stub
+
+                    }
+                });
+                qq.showUser(null);//授权并获取用户信息
+                break;
             case R.id.btn_register:
                 submit();
                 break;
@@ -188,7 +262,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 }
                 break;
             default:
-
                 break;
         }
     }
@@ -380,20 +453,22 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             }
         }
 
-        getRegister(account, phonecode, password, tuijian);
+        getRegister(account, phonecode, password, tuijian, openid, type);
 
     }
 
     /**
      * 注册id
      */
-    private void getRegister(String phone, String code, String password, String tel2) {
+    private void getRegister(String phone, String code, String password, String tel2, String openid, String type) {
         HashMap<String, String> params = new HashMap<>(1);
         params.put("key", UrlUtils.KEY);
         params.put("tel", phone);
         params.put("ecode", code);
         params.put("password", password);
         params.put("cfmpwd", password);
+        params.put("openid", openid);
+        params.put("type", type);
         if (TextUtils.isEmpty(tel2)) {
             params.put("tel2", tel2);
         }

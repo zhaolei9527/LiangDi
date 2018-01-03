@@ -30,6 +30,8 @@ public class FlashActivity extends BaseActivity {
 
     private String account;
     private String password;
+    private String qqopenid;
+    private String wxopenid;
 
     @Override
     protected void ready() {
@@ -73,8 +75,15 @@ public class FlashActivity extends BaseActivity {
     private void AutoLogin() {
         account = (String) SpUtil.get(context, "account", "");
         password = (String) SpUtil.get(context, "password", "");
+        qqopenid = (String) SpUtil.get(context, "qqopenid", "");
+        wxopenid = (String) SpUtil.get(context, "wxopenid", "");
+
         if (!TextUtils.isEmpty(account) && !TextUtils.isEmpty(password)) {
-            getLogin(account, password);
+            getLogin(account, password, "", "");
+        } else if (!TextUtils.isEmpty(qqopenid)) {
+            getLogin("", "", "1", qqopenid);
+        } else if (!TextUtils.isEmpty(wxopenid)) {
+            getLogin("", "", "2", qqopenid);
         } else {
             gotoLogin();
         }
@@ -83,11 +92,13 @@ public class FlashActivity extends BaseActivity {
     /**
      * 登录获取
      */
-    private void getLogin(final String tel, final String password) {
+    private void getLogin(final String tel, final String password, String type, String openid) {
         HashMap<String, String> params = new HashMap<>(1);
         params.put("key", UrlUtils.KEY);
         params.put("tel", tel);
         params.put("password", password);
+        params.put("type", type);
+        params.put("openid", openid);
         VolleyRequest.RequestPost(context, UrlUtils.BASE_URL + "login/login", "login/login", params, new VolleyInterface(context) {
             @Override
             public void onMySuccess(String result) {
