@@ -1,5 +1,6 @@
 package sakura.liangdinvshen.Activity;
 
+import android.app.Dialog;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.View;
@@ -10,21 +11,26 @@ import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.bigkoo.pickerview.OptionsPickerView;
+import com.bigkoo.pickerview.TimePickerView;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 
 import sakura.liangdinvshen.App;
 import sakura.liangdinvshen.Base.BaseActivity;
 import sakura.liangdinvshen.Bean.LifePeriodBean;
-import sakura.liangdinvshen.Bean.StuBean;
 import sakura.liangdinvshen.R;
+import sakura.liangdinvshen.Utils.DateUtils;
 import sakura.liangdinvshen.Utils.EasyToast;
 import sakura.liangdinvshen.Utils.SpUtil;
 import sakura.liangdinvshen.Utils.UrlUtils;
+import sakura.liangdinvshen.Utils.Utils;
 import sakura.liangdinvshen.Volley.VolleyInterface;
 import sakura.liangdinvshen.Volley.VolleyRequest;
+
 
 public class MenstrualPeriodActivity extends BaseActivity implements View.OnClickListener {
 
@@ -35,6 +41,10 @@ public class MenstrualPeriodActivity extends BaseActivity implements View.OnClic
     int jingqichangdu = 32;
     private TextView tv_changdu;
     private TextView tv_zhouchang;
+    private RelativeLayout rl_jingqishijian;
+    private TextView tv_jingqishijian;
+    private TextView tv_submit;
+    private Dialog dialog;
 
     @Override
     protected int setthislayout() {
@@ -48,6 +58,46 @@ public class MenstrualPeriodActivity extends BaseActivity implements View.OnClic
         rl_zhouqi = (RelativeLayout) findViewById(R.id.rl_zhouqi);
         tv_changdu = (TextView) findViewById(R.id.tv_changdu);
         tv_zhouchang = (TextView) findViewById(R.id.tv_zhouchang);
+        tv_submit = (TextView) findViewById(R.id.tv_submit);
+        tv_submit.setOnClickListener(this);
+        rl_jingqishijian = (RelativeLayout) findViewById(R.id.rl_jingqishijian);
+        tv_jingqishijian = (TextView) findViewById(R.id.tv_jingqishijian);
+        rl_jingqishijian.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar selectedDate = Calendar.getInstance();
+                Calendar startDate = Calendar.getInstance();
+                startDate.set(1972, 0, 23);
+                Calendar endDate = Calendar.getInstance();
+                endDate.set(2050, 11, 28);
+                TimePickerView pvTime = new TimePickerView.Builder(context, new TimePickerView.OnTimeSelectListener() {
+                    @Override
+                    public void onTimeSelect(Date date, View v) {//选中事件回调
+                        // 这里回调过来的v,就是show()方法里面所添加的 View 参数，如果show的时候没有添加参数，v则为null
+                        tv_jingqishijian.setText(DateUtils.getDay(date.getTime()));
+                        jin_time = DateUtils.getDay(date.getTime());
+                    }
+                })
+                        //年月日时分秒 的显示与否，不设置则默认全部显示
+                        .setType(new boolean[]{true, true, true, false, false, false})
+                        .setLabel("年", "月", "日", "", "", "")
+                        .isCenterLabel(false)
+                        .setDividerColor(Color.DKGRAY)
+                        .setTitleBgColor(getResources().getColor(R.color.pressedColor))
+                        .setCancelColor(getResources().getColor(R.color.text))
+                        .setSubmitColor(getResources().getColor(R.color.text))
+                        .setTitleText("最后经期时间")
+                        .setTitleColor(getResources().getColor(R.color.text))
+                        .setContentSize(21)
+                        .setDate(selectedDate)
+                        .setRangDate(startDate, endDate)
+                        .setBackgroundId(0x00FFFFFF) //设置外部遮罩颜色
+                        .setDecorView(null)
+                        .build();
+                pvTime.show();
+            }
+        });
+
     }
 
     @Override
@@ -67,6 +117,7 @@ public class MenstrualPeriodActivity extends BaseActivity implements View.OnClic
 
     private String period_length = "0";
     private String period_cycle = "0";
+    private String jin_time = "0";
 
     private void ShowPickerView_changdu(String TITLE) {// 弹出选择器
         if (!jingqitems.isEmpty()) {
@@ -76,7 +127,6 @@ public class MenstrualPeriodActivity extends BaseActivity implements View.OnClic
                     if (!period_length.equals(String.valueOf(options1 + 1))) {
                         period_length = String.valueOf(options1 + 1);
                         tv_changdu.setText(String.valueOf(jingqitems.get(options1)));
-                        lifeDoPeriodLength();
                     }
                 }
             })
@@ -103,7 +153,6 @@ public class MenstrualPeriodActivity extends BaseActivity implements View.OnClic
                     if (!period_cycle.equals(String.valueOf(options1 + 1))) {
                         period_cycle = String.valueOf(options1 + 1);
                         tv_zhouchang.setText(String.valueOf(jingqitems.get(options1)));
-                        lifeDoPeriodCycle();
                     }
                 }
             })
@@ -135,72 +184,59 @@ public class MenstrualPeriodActivity extends BaseActivity implements View.OnClic
             case R.id.rl_zhouqi:
                 ShowPickerView_jiange("选择经期间隔");
                 break;
-
-        }
-    }
-
-    /**
-     * 记录-只记经期-经期长度
-     */
-    private void lifeDoPeriodLength() {
-        HashMap<String, String> params = new HashMap<>(4);
-        params.put("key", UrlUtils.KEY);
-        params.put("uid", String.valueOf(SpUtil.get(context, "uid", "")));
-        params.put("period_length", period_length);
-        if ("jingqi".equals(getIntent().getStringExtra("type"))) {
-            params.put("type", "1");
-        } else {
-            params.put("type", "2");
-        }
-        VolleyRequest.RequestPost(context, UrlUtils.BASE_URL + "life/do_period_length", "life/do_period_length", params, new VolleyInterface(context) {
-            @Override
-            public void onMySuccess(String result) {
-                Log.e("RegisterActivity", result);
-                try {
-                    StuBean stuBean = new Gson().fromJson(result, StuBean.class);
-                    if ("1".equals(String.valueOf(stuBean.getStu()))) {
-                    } else {
-                        EasyToast.showShort(context, "设置失败");
-                    }
-                    result = null;
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Toast.makeText(context, getString(R.string.Abnormalserver), Toast.LENGTH_SHORT).show();
+            case R.id.tv_submit:
+                if ("请选择周期长度".equals(tv_zhouchang.getText())) {
+                    EasyToast.showShort(context, "请选择周期长度");
+                    return;
                 }
-            }
+                if ("请选择经期长度".equals(tv_changdu.getText())) {
+                    EasyToast.showShort(context, "请选择经期长度");
+                    return;
+                }
+                if ("请选择经期时间".equals(tv_jingqishijian.getText())) {
+                    EasyToast.showShort(context, "请选择经期时间");
+                    return;
+                }
 
-            @Override
-            public void onMyError(VolleyError error) {
-                error.printStackTrace();
-                Toast.makeText(context, getString(R.string.Abnormalserver), Toast.LENGTH_SHORT).show();
-            }
-        });
+                if (Utils.isConnected(context)) {
+                    dialog = Utils.showLoadingDialog(context);
+                    dialog.show();
+                    userZhiji();
+                } else {
+                    EasyToast.showShort(context, "网络未连接~");
+                }
+
+
+                break;
+            default:
+                break;
+        }
     }
 
 
     /**
-     * 记录-只记经期-周期长度
+     * 人生状态切换  1：只记经期，，2：我要备孕
      */
-    private void lifeDoPeriodCycle() {
-        HashMap<String, String> params = new HashMap<>(4);
+    private void userZhiji() {
+        HashMap<String, String> params = new HashMap<>(1);
         params.put("key", UrlUtils.KEY);
         params.put("uid", String.valueOf(SpUtil.get(context, "uid", "")));
+        params.put("jin_time", jin_time);
+        params.put("period_length", period_length);
         params.put("period_cycle", period_cycle);
         if ("jingqi".equals(getIntent().getStringExtra("type"))) {
-            params.put("type", "1");
-        } else {
-            params.put("type", "2");
+            params.put("type ", "1");
+        } else if ("beiyun".equals(getIntent().getStringExtra("type"))) {
+            params.put("type ", "2");
         }
-        VolleyRequest.RequestPost(context, UrlUtils.BASE_URL + "life/do_period_cycle", "life/do_period_cycle", params, new VolleyInterface(context) {
+        Log.e("RegisterActivity", "params:" + params);
+        VolleyRequest.RequestPost(context, UrlUtils.BASE_URL + "user/zhiji", "user/zhiji", params, new VolleyInterface(context) {
             @Override
             public void onMySuccess(String result) {
                 Log.e("RegisterActivity", result);
                 try {
-                    StuBean stuBean = new Gson().fromJson(result, StuBean.class);
-                    if ("1".equals(String.valueOf(stuBean.getStu()))) {
-                    } else {
-                        EasyToast.showShort(context, "设置失败");
-                    }
+                    dialog.dismiss();
+
                     result = null;
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -210,11 +246,13 @@ public class MenstrualPeriodActivity extends BaseActivity implements View.OnClic
 
             @Override
             public void onMyError(VolleyError error) {
+                dialog.dismiss();
                 error.printStackTrace();
                 Toast.makeText(context, getString(R.string.Abnormalserver), Toast.LENGTH_SHORT).show();
             }
         });
     }
+
 
     /**
      * 经期设置信息获取

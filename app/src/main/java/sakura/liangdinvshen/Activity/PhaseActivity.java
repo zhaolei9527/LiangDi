@@ -1,6 +1,5 @@
 package sakura.liangdinvshen.Activity;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
@@ -22,7 +21,6 @@ import sakura.liangdinvshen.R;
 import sakura.liangdinvshen.Utils.DateUtils;
 import sakura.liangdinvshen.Utils.SpUtil;
 import sakura.liangdinvshen.Utils.UrlUtils;
-import sakura.liangdinvshen.View.CommomDialog;
 import sakura.liangdinvshen.Volley.VolleyInterface;
 import sakura.liangdinvshen.Volley.VolleyRequest;
 
@@ -100,104 +98,42 @@ public class PhaseActivity extends BaseActivity implements View.OnClickListener 
                 finish();
                 break;
             case R.id.Choosed_jingqi:
+                Choosed_beiyun.setChecked(false);
+                Choosed_huanyun.setChecked(false);
+                Choosed_lama.setChecked(false);
                 Choosed_jingqi.setChecked(true);
-                new CommomDialog(context, R.style.dialog, "确定要切换至只记经期吗？", new CommomDialog.OnCloseListener() {
-                    @Override
-                    public void onClick(Dialog dialog, boolean confirm) {
-                        if (confirm) {
-                            Toast.makeText(context, "点击取消", Toast.LENGTH_SHORT).show();
-                            dialog.dismiss();
-                            Choosed_jingqi.setChecked(false);
-                        } else {
-                            Toast.makeText(context, "点击确定", Toast.LENGTH_SHORT).show();
-                            Choosed_beiyun.setChecked(false);
-                            Choosed_huanyun.setChecked(false);
-                            Choosed_lama.setChecked(false);
-                            Choosed_jingqi.setChecked(true);
-                            tv_jiedaun.setText("人生阶段：只记经期");
-                            SpUtil.putAndApply(context, "jieduan", "1");
-                            dialog.dismiss();
-                            context.startActivity(new Intent(context, MenstrualPeriodActivity.class)
-                                    .putExtra("type", "jingqi"));
-                        }
-
-                    }
-                }).setTitle("提示").show();
+                tv_jiedaun.setText("人生阶段：只记经期");
+                SpUtil.putAndApply(context, "jieduan", "1");
+                context.startActivity(new Intent(context, MenstrualPeriodActivity.class)
+                        .putExtra("type", "jingqi"));
                 break;
             case R.id.Choosed_beiyun:
+                Choosed_jingqi.setChecked(false);
+                Choosed_huanyun.setChecked(false);
+                Choosed_lama.setChecked(false);
                 Choosed_beiyun.setChecked(true);
-                new CommomDialog(context, R.style.dialog, "确定要切换至我在备孕吗？", new CommomDialog.OnCloseListener() {
-                    @Override
-                    public void onClick(Dialog dialog, boolean confirm) {
-                        if (confirm) {
-                            Toast.makeText(context, "点击取消", Toast.LENGTH_SHORT).show();
-                            dialog.dismiss();
-                            Choosed_beiyun.setChecked(false);
-                        } else {
-                            Toast.makeText(context, "点击确定", Toast.LENGTH_SHORT).show();
-                            Choosed_jingqi.setChecked(false);
-                            Choosed_huanyun.setChecked(false);
-                            Choosed_lama.setChecked(false);
-                            Choosed_beiyun.setChecked(true);
-                            tv_jiedaun.setText("人生阶段：我在备孕");
-                            SpUtil.putAndApply(context, "jieduan", "2");
-                            dialog.dismiss();
-                            context.startActivity(new Intent(context, MenstrualPeriodActivity.class)
-                                    .putExtra("type", "beiyun"));
-
-                        }
-
-                    }
-                }).setTitle("提示").show();
+                tv_jiedaun.setText("人生阶段：我在备孕");
+                SpUtil.putAndApply(context, "jieduan", "2");
+                context.startActivity(new Intent(context, MenstrualPeriodActivity.class)
+                        .putExtra("type", "beiyun"));
                 break;
             case R.id.Choosed_huanyun:
+                Choosed_jingqi.setChecked(false);
+                Choosed_beiyun.setChecked(false);
+                Choosed_lama.setChecked(false);
                 Choosed_huanyun.setChecked(true);
-                new CommomDialog(context, R.style.dialog, "确定要切换至我怀孕了吗？", new CommomDialog.OnCloseListener() {
-                    @Override
-                    public void onClick(Dialog dialog, boolean confirm) {
-                        if (confirm) {
-                            Toast.makeText(context, "点击取消", Toast.LENGTH_SHORT).show();
-                            dialog.dismiss();
-                            Choosed_huanyun.setChecked(false);
-                        } else {
-                            Toast.makeText(context, "点击确定", Toast.LENGTH_SHORT).show();
-                            Choosed_jingqi.setChecked(false);
-                            Choosed_beiyun.setChecked(false);
-                            Choosed_lama.setChecked(false);
-                            Choosed_huanyun.setChecked(true);
-                            tv_jiedaun.setText("人生阶段：我怀孕了");
-                            SpUtil.putAndApply(context, "jieduan", "3");
-                            dialog.dismiss();
-                            context.startActivity(new Intent(context, DueDateActivity.class));
-
-                        }
-
-                    }
-                }).setTitle("提示").show();
+                tv_jiedaun.setText("人生阶段：我怀孕了");
+                SpUtil.putAndApply(context, "jieduan", "3");
+                context.startActivity(new Intent(context, DueDateActivity.class));
                 break;
             case R.id.Choosed_lama:
+                Choosed_jingqi.setChecked(false);
+                Choosed_beiyun.setChecked(false);
+                Choosed_huanyun.setChecked(false);
                 Choosed_lama.setChecked(true);
-                new CommomDialog(context, R.style.dialog, "确定要切换至我是辣妈吗？", new CommomDialog.OnCloseListener() {
-                    @Override
-                    public void onClick(Dialog dialog, boolean confirm) {
-                        if (confirm) {
-                            Choosed_lama.setChecked(false);
-                            Toast.makeText(context, "点击取消", Toast.LENGTH_SHORT).show();
-                            dialog.dismiss();
-                        } else {
-                            Toast.makeText(context, "点击确定", Toast.LENGTH_SHORT).show();
-                            Choosed_jingqi.setChecked(false);
-                            Choosed_beiyun.setChecked(false);
-                            Choosed_huanyun.setChecked(false);
-                            Choosed_lama.setChecked(true);
-                            tv_jiedaun.setText("人生阶段：我是辣妈");
-                            SpUtil.putAndApply(context, "jieduan", "4");
-                            dialog.dismiss();
-                            context.startActivity(new Intent(context, LaMaActivity.class));
-                        }
-
-                    }
-                }).setTitle("提示").show();
+                tv_jiedaun.setText("人生阶段：我是辣妈");
+                SpUtil.putAndApply(context, "jieduan", "4");
+                context.startActivity(new Intent(context, LaMaActivity.class));
                 break;
             default:
                 break;

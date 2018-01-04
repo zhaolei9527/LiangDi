@@ -1,5 +1,6 @@
 package sakura.liangdinvshen.Activity;
 
+import android.app.Dialog;
 import android.graphics.Color;
 import android.text.TextUtils;
 import android.util.Log;
@@ -22,11 +23,12 @@ import java.util.HashMap;
 
 import sakura.liangdinvshen.Base.BaseActivity;
 import sakura.liangdinvshen.Bean.LifePeriodBean;
-import sakura.liangdinvshen.Bean.StuBean;
 import sakura.liangdinvshen.R;
+import sakura.liangdinvshen.Utils.DateUtils;
 import sakura.liangdinvshen.Utils.EasyToast;
 import sakura.liangdinvshen.Utils.SpUtil;
 import sakura.liangdinvshen.Utils.UrlUtils;
+import sakura.liangdinvshen.Utils.Utils;
 import sakura.liangdinvshen.Volley.VolleyInterface;
 import sakura.liangdinvshen.Volley.VolleyRequest;
 
@@ -49,6 +51,11 @@ public class LaMaActivity extends BaseActivity implements View.OnClickListener {
     private String period_cycle = "";
     private String baby_birthday = "";
     private String baby_sex = "";
+    private String jin_time = "";
+    private RelativeLayout rl_jingqishijian;
+    private TextView tv_jingqishijian;
+    private TextView tv_submit;
+    private Dialog dialog;
 
     @Override
     protected int setthislayout() {
@@ -66,7 +73,46 @@ public class LaMaActivity extends BaseActivity implements View.OnClickListener {
         rl_baby_born = (RelativeLayout) findViewById(R.id.rl_baby_born);
         rl_jingqi = (RelativeLayout) findViewById(R.id.rl_jingqi);
         rl_zhouqi = (RelativeLayout) findViewById(R.id.rl_zhouqi);
+        tv_submit = (TextView) findViewById(R.id.tv_submit);
+        tv_submit.setOnClickListener(this);
 
+        rl_jingqishijian = (RelativeLayout) findViewById(R.id.rl_jingqishijian);
+        tv_jingqishijian = (TextView) findViewById(R.id.tv_jingqishijian);
+        rl_jingqishijian.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar selectedDate = Calendar.getInstance();
+                Calendar startDate = Calendar.getInstance();
+                startDate.set(1972, 0, 23);
+                Calendar endDate = Calendar.getInstance();
+                endDate.set(2050, 11, 28);
+                TimePickerView pvTime = new TimePickerView.Builder(context, new TimePickerView.OnTimeSelectListener() {
+                    @Override
+                    public void onTimeSelect(Date date, View v) {//选中事件回调
+                        // 这里回调过来的v,就是show()方法里面所添加的 View 参数，如果show的时候没有添加参数，v则为null
+                        tv_jingqishijian.setText(DateUtils.getDay(date.getTime()));
+                        jin_time = DateUtils.getDay(date.getTime());
+                    }
+                })
+                        //年月日时分秒 的显示与否，不设置则默认全部显示
+                        .setType(new boolean[]{true, true, true, false, false, false})
+                        .setLabel("年", "月", "日", "", "", "")
+                        .isCenterLabel(false)
+                        .setDividerColor(Color.DKGRAY)
+                        .setTitleBgColor(getResources().getColor(R.color.pressedColor))
+                        .setCancelColor(getResources().getColor(R.color.text))
+                        .setSubmitColor(getResources().getColor(R.color.text))
+                        .setTitleText("最后经期时间")
+                        .setTitleColor(getResources().getColor(R.color.text))
+                        .setContentSize(21)
+                        .setDate(selectedDate)
+                        .setRangDate(startDate, endDate)
+                        .setBackgroundId(0x00FFFFFF) //设置外部遮罩颜色
+                        .setDecorView(null)
+                        .build();
+                pvTime.show();
+            }
+        });
         initTimePicker();
     }
 
@@ -87,7 +133,6 @@ public class LaMaActivity extends BaseActivity implements View.OnClickListener {
                 // 这里回调过来的v,就是show()方法里面所添加的 View 参数，如果show的时候没有添加参数，v则为null
                 baby_birthday = getTime(date);
                 tv_baby_born_time.setText(getTime(date));
-                lifeDoBabyBirthday();
             }
         })
                 //年月日时分秒 的显示与否，不设置则默认全部显示
@@ -116,7 +161,6 @@ public class LaMaActivity extends BaseActivity implements View.OnClickListener {
                 public void onOptionsSelect(int options1, int options2, int options3, View v) {
                     tv_jingqi.setText(jingqitems.get(options1));
                     period_length = String.valueOf(options1 + 1);
-                    lifeDoPeriodLength();
                 }
             })
                     .setTitleBgColor(getResources().getColor(R.color.pressedColor))
@@ -141,7 +185,6 @@ public class LaMaActivity extends BaseActivity implements View.OnClickListener {
                 public void onOptionsSelect(int options1, int options2, int options3, View v) {
                     tv_zhouqi.setText(jingqitems.get(options1));
                     period_cycle = String.valueOf(options1 + 1);
-                    lifeDoPeriodCycle();
                 }
             })
                     .setTitleBgColor(getResources().getColor(R.color.pressedColor))
@@ -167,7 +210,6 @@ public class LaMaActivity extends BaseActivity implements View.OnClickListener {
                 public void onOptionsSelect(int options1, int options2, int options3, View v) {
                     tv_baby_sex.setText(babysexs.get(options1));
                     baby_sex = String.valueOf(options1 + 1);
-                    lifeDoBabySex();
                 }
             })
                     .setTitleBgColor(getResources().getColor(R.color.pressedColor))
@@ -225,9 +267,77 @@ public class LaMaActivity extends BaseActivity implements View.OnClickListener {
                 //选择宝宝性别
                 ShowPickerView_babysex("选择宝宝性别");
                 break;
+            case R.id.tv_submit:
+                if ("".equals(tv_zhouqi.getText())) {
+                    EasyToast.showShort(context, "请选择周期长度");
+                    return;
+                }
+                if ("".equals(tv_jingqi.getText())) {
+                    EasyToast.showShort(context, "请选择经期长度");
+                    return;
+                }
+                if ("".equals(tv_jingqishijian.getText())) {
+                    EasyToast.showShort(context, "请选择经期时间");
+                    return;
+                }
+
+                if ("".equals(tv_baby_sex.getText())) {
+                    EasyToast.showShort(context, "请选择宝宝性别");
+                    return;
+                }
+
+                if ("".equals(tv_baby_born_time.getText())) {
+                    EasyToast.showShort(context, "请选择宝宝出生日");
+                    return;
+                }
+
+                if (Utils.isConnected(context)) {
+                    dialog = Utils.showLoadingDialog(context);
+                    dialog.show();
+                    userLama();
+                } else {
+                    EasyToast.showShort(context, "网络未连接~");
+                }
+                break;
             default:
                 break;
         }
+    }
+
+
+    /**
+     * 人生状态切换  1：只记经期，，2：我要备孕
+     */
+    private void userLama() {
+        HashMap<String, String> params = new HashMap<>(1);
+        params.put("key", UrlUtils.KEY);
+        params.put("uid", String.valueOf(SpUtil.get(context, "uid", "")));
+        params.put("jin_time", jin_time);
+        params.put("period_length", period_length);
+        params.put("period_cycle", period_cycle);
+        params.put("baby_sex", baby_sex);
+        params.put("baby_birthday", baby_birthday);
+        Log.e("RegisterActivity", "params:" + params);
+        VolleyRequest.RequestPost(context, UrlUtils.BASE_URL + "user/lama", "user/lama", params, new VolleyInterface(context) {
+            @Override
+            public void onMySuccess(String result) {
+                Log.e("RegisterActivity", result);
+                try {
+                    dialog.dismiss();
+                    result = null;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(context, getString(R.string.Abnormalserver), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onMyError(VolleyError error) {
+                dialog.dismiss();
+                error.printStackTrace();
+                Toast.makeText(context, getString(R.string.Abnormalserver), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     /**
@@ -278,142 +388,5 @@ public class LaMaActivity extends BaseActivity implements View.OnClickListener {
         });
     }
 
-    /**
-     * 记录-只记经期-经期长度
-     */
-    private void lifeDoPeriodLength() {
-        HashMap<String, String> params = new HashMap<>(4);
-        params.put("key", UrlUtils.KEY);
-        params.put("uid", String.valueOf(SpUtil.get(context, "uid", "")));
-        params.put("period_length", period_length);
-        params.put("type", "4");
-        Log.e("RegisterActivity", "params:" + params);
-        VolleyRequest.RequestPost(context, UrlUtils.BASE_URL + "life/do_period_length", "life/do_period_length", params, new VolleyInterface(context) {
-            @Override
-            public void onMySuccess(String result) {
-                Log.e("RegisterActivity", result);
-                try {
-                    StuBean stuBean = new Gson().fromJson(result, StuBean.class);
-                    if ("1".equals(String.valueOf(stuBean.getStu()))) {
-                    } else {
-                        EasyToast.showShort(context, "设置失败");
-                    }
-                    result = null;
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Toast.makeText(context, getString(R.string.Abnormalserver), Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onMyError(VolleyError error) {
-                error.printStackTrace();
-                Toast.makeText(context, getString(R.string.Abnormalserver), Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    /**
-     * 记录-只记经期-周期长度
-     */
-    private void lifeDoPeriodCycle() {
-        HashMap<String, String> params = new HashMap<>(4);
-        params.put("key", UrlUtils.KEY);
-        params.put("uid", String.valueOf(SpUtil.get(context, "uid", "")));
-        params.put("period_cycle", period_cycle);
-        params.put("type", "4");
-        Log.e("RegisterActivity", "params:" + params);
-        VolleyRequest.RequestPost(context, UrlUtils.BASE_URL + "life/do_period_cycle", "life/do_period_cycle", params, new VolleyInterface(context) {
-            @Override
-            public void onMySuccess(String result) {
-                Log.e("RegisterActivity", result);
-                try {
-                    StuBean stuBean = new Gson().fromJson(result, StuBean.class);
-                    if ("1".equals(String.valueOf(stuBean.getStu()))) {
-                    } else {
-                        EasyToast.showShort(context, "设置失败");
-                    }
-                    result = null;
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Toast.makeText(context, getString(R.string.Abnormalserver), Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onMyError(VolleyError error) {
-                error.printStackTrace();
-                Toast.makeText(context, getString(R.string.Abnormalserver), Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    /**
-     * 记录-只记经期-宝宝性别
-     */
-    private void lifeDoBabySex() {
-        HashMap<String, String> params = new HashMap<>(3);
-        params.put("key", UrlUtils.KEY);
-        params.put("uid", String.valueOf(SpUtil.get(context, "uid", "")));
-        params.put("baby_sex", baby_sex);
-        Log.e("RegisterActivity", "params:" + params);
-        VolleyRequest.RequestPost(context, UrlUtils.BASE_URL + "life/do_baby_sex", "life/do_baby_sex", params, new VolleyInterface(context) {
-            @Override
-            public void onMySuccess(String result) {
-                Log.e("RegisterActivity", result);
-                try {
-                    StuBean stuBean = new Gson().fromJson(result, StuBean.class);
-                    if ("1".equals(String.valueOf(stuBean.getStu()))) {
-                    } else {
-                        EasyToast.showShort(context, "设置失败");
-                    }
-                    result = null;
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Toast.makeText(context, getString(R.string.Abnormalserver), Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onMyError(VolleyError error) {
-                error.printStackTrace();
-                Toast.makeText(context, getString(R.string.Abnormalserver), Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    /**
-     * 记录-只记经期-宝宝生日
-     */
-    private void lifeDoBabyBirthday() {
-        HashMap<String, String> params = new HashMap<>(3);
-        params.put("key", UrlUtils.KEY);
-        params.put("uid", String.valueOf(SpUtil.get(context, "uid", "")));
-        params.put("baby_birthday", baby_birthday);
-        Log.e("RegisterActivity", params.toString());
-        VolleyRequest.RequestPost(context, UrlUtils.BASE_URL + "life/do_baby_birthday", "life/do_baby_birthday", params, new VolleyInterface(context) {
-            @Override
-            public void onMySuccess(String result) {
-                Log.e("RegisterActivity", result);
-                try {
-                    StuBean stuBean = new Gson().fromJson(result, StuBean.class);
-                    if ("1".equals(String.valueOf(stuBean.getStu()))) {
-                    } else {
-                        EasyToast.showShort(context, "设置失败");
-                    }
-                    result = null;
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Toast.makeText(context, getString(R.string.Abnormalserver), Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onMyError(VolleyError error) {
-                error.printStackTrace();
-                Toast.makeText(context, getString(R.string.Abnormalserver), Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
 
 }
