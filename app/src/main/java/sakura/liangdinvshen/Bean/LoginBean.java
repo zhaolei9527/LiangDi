@@ -13,7 +13,7 @@ public class LoginBean {
     /**
      * code : 1
      * msg : 登陆成功！
-     * res : {"id":"77","ni_name":"Sakura","img":"http://wx.qlogo.cn/mmopen/JJ4Xwib2uLibWQwCvjMlzyRwUTUFvzgNbm7Os3fmmjVkiaXYVQS4o1yZvySicibrpxzj0pia1hNtbVeaBCSDqX4gztsGF2cLs5IGuO/0","tel":"17629345001","password":"50b7f8ce37a31dfca3bd9a382175fdad","add_time":"1510042190","status":"1","rand":"21789","is_del":"1","last_login_time":"1514975182","stu":"1","jifen":"1","money":"0.00","total_push_money":"0.04","pid1":"","pid2":"","pid3":"","role":"1","wd_id":"","sheng_li_qi":"","now_days":"","is_yuejing":"2","shengao":"","shengri":"","hunyin":"未婚","city":"","openid_qq":"AC07447416C11AF922EFC9E9BAA13658","openid_qq_type":"","openid_wx":"oOb-0wc7dzX018_Il4bgirYxTmq8","check_in_time":"1514974771","erweima":"","mother_start":"","pregnant_start":"","pregnant_expected":"","period_start":"","period_end":"","period_length":"","period_cycle":"","baby_sex":"","baby_birthday":"","is_tuan":"","tuan":""}
+     * res : {"id":"2","ni_name":"tttttt","img":"/Public/uploads/headimg/2017-12-23/5a3e00552dd98.jpg","tel":"17629345001","password":"192c951735070f5b76a1c68ea8caac74","add_time":"1501055560","status":"1","rand":"58880","is_del":"1","last_login_time":"1514944831","stu":"3","jifen":"288","money":"7284.98","total_push_money":"12740.00","pid1":"","pid2":"","pid3":"","role":"1","wd_id":"","sheng_li_qi":"2","now_days":"6","is_yuejing":"2","shengao":"158CM","shengri":"2017-10-23","hunyin":"已婚","city":"上海市上海市黄浦区","openid_qq":"","openid_qq_type":"","openid_wx":"","check_in_time":"1511515663","erweima":"","mother_start":"1514296966","pregnant_start":"1514553004","pregnant_expected":"1524412800","period_start":"1514390400","period_end":"1514390400","period_length":"7","period_cycle":"26","baby_sex":"1","baby_birthday":"2017-12-27","is_tuan":"1","tuan":"2","dj_jifen":"/0","level_name":"1"}
      */
 
     private String code;
@@ -46,48 +46,50 @@ public class LoginBean {
 
     public static class ResBean {
         /**
-         * id : 77
-         * ni_name : Sakura
-         * img : http://wx.qlogo.cn/mmopen/JJ4Xwib2uLibWQwCvjMlzyRwUTUFvzgNbm7Os3fmmjVkiaXYVQS4o1yZvySicibrpxzj0pia1hNtbVeaBCSDqX4gztsGF2cLs5IGuO/0
+         * id : 2
+         * ni_name : tttttt
+         * img : /Public/uploads/headimg/2017-12-23/5a3e00552dd98.jpg
          * tel : 17629345001
-         * password : 50b7f8ce37a31dfca3bd9a382175fdad
-         * add_time : 1510042190
+         * password : 192c951735070f5b76a1c68ea8caac74
+         * add_time : 1501055560
          * status : 1
-         * rand : 21789
+         * rand : 58880
          * is_del : 1
-         * last_login_time : 1514975182
-         * stu : 1
-         * jifen : 1
-         * money : 0.00
-         * total_push_money : 0.04
+         * last_login_time : 1514944831
+         * stu : 3
+         * jifen : 288
+         * money : 7284.98
+         * total_push_money : 12740.00
          * pid1 :
          * pid2 :
          * pid3 :
          * role : 1
          * wd_id :
-         * sheng_li_qi :
-         * now_days :
+         * sheng_li_qi : 2
+         * now_days : 6
          * is_yuejing : 2
-         * shengao :
-         * shengri :
-         * hunyin : 未婚
-         * city :
-         * openid_qq : AC07447416C11AF922EFC9E9BAA13658
+         * shengao : 158CM
+         * shengri : 2017-10-23
+         * hunyin : 已婚
+         * city : 上海市上海市黄浦区
+         * openid_qq :
          * openid_qq_type :
-         * openid_wx : oOb-0wc7dzX018_Il4bgirYxTmq8
-         * check_in_time : 1514974771
+         * openid_wx :
+         * check_in_time : 1511515663
          * erweima :
-         * mother_start :
-         * pregnant_start :
-         * pregnant_expected :
-         * period_start :
-         * period_end :
-         * period_length :
-         * period_cycle :
-         * baby_sex :
-         * baby_birthday :
-         * is_tuan :
-         * tuan :
+         * mother_start : 1514296966
+         * pregnant_start : 1514553004
+         * pregnant_expected : 1524412800
+         * period_start : 1514390400
+         * period_end : 1514390400
+         * period_length : 7
+         * period_cycle : 26
+         * baby_sex : 1
+         * baby_birthday : 2017-12-27
+         * is_tuan : 1
+         * tuan : 2
+         * dj_jifen : /0
+         * level_name : 1
          */
 
         private String id;
@@ -132,6 +134,8 @@ public class LoginBean {
         private String baby_birthday;
         private String is_tuan;
         private String tuan;
+        private String dj_jifen;
+        private String level_name;
 
         public String getId() {
             return id;
@@ -467,6 +471,22 @@ public class LoginBean {
 
         public void setTuan(String tuan) {
             this.tuan = tuan;
+        }
+
+        public String getDj_jifen() {
+            return dj_jifen;
+        }
+
+        public void setDj_jifen(String dj_jifen) {
+            this.dj_jifen = dj_jifen;
+        }
+
+        public String getLevel_name() {
+            return level_name;
+        }
+
+        public void setLevel_name(String level_name) {
+            this.level_name = level_name;
         }
     }
 }

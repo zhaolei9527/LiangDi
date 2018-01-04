@@ -80,7 +80,7 @@ public class LaMaActivity extends BaseActivity implements View.OnClickListener {
         Calendar startDate = Calendar.getInstance();
         startDate.set(1972, 0, 23);
         Calendar endDate = Calendar.getInstance();
-        endDate.set(2020, 11, 28);
+        endDate.set(2050, 11, 28);
         pvTime = new TimePickerView.Builder(this, new TimePickerView.OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date date, View v) {//选中事件回调

@@ -49,6 +49,7 @@ public class DiaryActivity extends BaseActivity {
     private TextView tv_nongli;
     private EditText et_content;
     private Dialog dialog;
+    private String s1;
 
     @Override
     protected int setthislayout() {
@@ -90,7 +91,19 @@ public class DiaryActivity extends BaseActivity {
         tv_month.setText(RecordFragment.currentDate.getMonth() + "月" + RecordFragment.currentDate.getDay() + "日");
         String lunar = Lauar.getLunar(String.valueOf(RecordFragment.currentDate.getYear()), String.valueOf(RecordFragment.currentDate.getMonth()), String.valueOf(RecordFragment.currentDate.getDay()));
         tv_nongli.setText(lunar);
-        tv_week.setText(DateUtils.getWeekByDateStr(RecordFragment.currentDate.toString()));
+
+        String s = RecordFragment.currentDate.getYear() + "-";
+        int month = RecordFragment.currentDate.getMonth();
+
+        if (month < 10) {
+            s1 = "0" + RecordFragment.currentDate.getMonth() + "-";
+        } else {
+            s1 = RecordFragment.currentDate.getMonth() + "-";
+        }
+
+        String s2 = String.valueOf(RecordFragment.currentDate.getDay());
+
+        tv_week.setText(DateUtils.getWeekByDateStr(s + s1 + s2));
         if (Utils.isConnected(context)) {
             dialog = Utils.showLoadingDialog(context);
             dialog.show();

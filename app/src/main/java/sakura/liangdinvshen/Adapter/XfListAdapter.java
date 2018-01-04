@@ -49,7 +49,14 @@ public class XfListAdapter extends RecyclerView.Adapter<XfListAdapter.ViewHolder
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         XflistBean.ListBean listBean = datas.get(position);
-        holder.img.setImageURI(UrlUtils.URL + listBean.getImg());
+
+        if (listBean.getImg().startsWith("http://wx.qlogo.cn/")) {
+            holder.img.setImageURI(listBean.getImg());
+        } else {
+            holder.img.setImageURI(UrlUtils.URL + listBean.getImg());
+        }
+
+
         holder.tv_fuwuma.setText("服务码：" + listBean.getFworder());
         holder.tv_money.setText("￥" + listBean.getPrice());
         holder.tv_name.setText(listBean.getNi_name());

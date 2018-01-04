@@ -9,9 +9,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,10 +26,8 @@ import java.util.List;
 
 import sakura.liangdinvshen.Adapter.NewsPageAdapter;
 import sakura.liangdinvshen.App;
-import sakura.liangdinvshen.Bean.LifeUserSlqBean;
 import sakura.liangdinvshen.Bean.NewsIndexBean;
 import sakura.liangdinvshen.R;
-import sakura.liangdinvshen.Utils.DateUtils;
 import sakura.liangdinvshen.Utils.SpUtil;
 import sakura.liangdinvshen.Utils.UrlUtils;
 import sakura.liangdinvshen.Utils.Utils;
@@ -56,6 +54,7 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
     private SwitchButton sb_nofade;
     private ViewPager VpNews_context;
     private Dialog dialog;
+    private RelativeLayout rl_isyuejing;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -68,9 +67,20 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         getCache();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        App.getQueues().cancelAll("index/index");
     }
 
     @Override
@@ -79,14 +89,10 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
         //super.onSaveInstanceState(outState);
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-    }
-
     private void initView(View view) {
         this.vp = (ViewPager) view.findViewById(R.id.VpNews_context);
         this.ll_head = (LinearLayout) view.findViewById(R.id.ll_head);
+        rl_isyuejing = (RelativeLayout) view.findViewById(R.id.rl_isyuejing);
         tabs = (PagerSlidingTabStrip) view.findViewById(R.id.tabs);
         String uid = (String) SpUtil.get(getActivity(), "uid", "");
         tv_name = (TextView) view.findViewById(R.id.tv_name);
@@ -94,12 +100,6 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
         tv_stu_title = (TextView) view.findViewById(R.id.tv_stu_title);
         tv_yun_lv = (TextView) view.findViewById(R.id.tv_yun_lv);
         sb_nofade = (SwitchButton) view.findViewById(R.id.sb_nofade);
-        sb_nofade.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Toast.makeText(getActivity(), "isChecked:" + isChecked, Toast.LENGTH_SHORT).show();
-            }
-        });
         if (!TextUtils.isEmpty(uid)) {
             getIndex(uid);
         }
@@ -107,10 +107,12 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
         String jieduan = (String) SpUtil.get(getActivity(), "jieduan", "");
         if (!TextUtils.isEmpty(jieduan)) {
             if ("1".equals(jieduan)) {
-                sb_nofade.setChecked(true);
+            } else if ("2".equals(jieduan)) {
+            } else if ("3".equals(jieduan)) {
+                rl_isyuejing.setVisibility(View.GONE);
+            } else if ("4".equals(jieduan)) {
             }
         }
-
     }
 
     private void getCache() {
@@ -123,6 +125,14 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
                 tv_now_days.setText(String.valueOf(newsIndexBean.getYun().getNow_days()));
                 tv_stu_title.setText("(" + newsIndexBean.getYun().getStu_title() + ")");
                 tv_yun_lv.setText("怀孕几率" + String.valueOf(newsIndexBean.getYun().getYun_lv()));
+
+
+                if ("1".equals(newsIndexBean.getYun().getIs_yuejing())) {
+                    sb_nofade.setChecked(true);
+                } else {
+                    sb_nofade.setChecked(false);
+                }
+
                 //新闻分类处理
                 List<NewsIndexBean.CateBean> cate = newsIndexBean.getCate();
                 titles.clear();
@@ -172,6 +182,13 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
                     tv_now_days.setText(String.valueOf(newsIndexBean.getYun().getNow_days()));
                     tv_stu_title.setText("(" + newsIndexBean.getYun().getStu_title() + ")");
                     tv_yun_lv.setText("怀孕几率" + String.valueOf(newsIndexBean.getYun().getYun_lv()));
+
+                    if ("1".equals(newsIndexBean.getYun().getIs_yuejing())) {
+                        sb_nofade.setChecked(true);
+                    } else {
+                        sb_nofade.setChecked(false);
+                    }
+
                     //新闻分类处理
                     List<NewsIndexBean.CateBean> cate = newsIndexBean.getCate();
                     titles.clear();
@@ -211,16 +228,12 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        App.getQueues().cancelAll("index/index");
-    }
-
-    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.sb_nofade:
 
+                break;
+            default:
                 break;
         }
     }

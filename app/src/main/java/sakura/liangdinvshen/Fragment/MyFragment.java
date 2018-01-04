@@ -136,7 +136,9 @@ public class MyFragment extends Fragment implements View.OnClickListener {
         mImg11 = (ImageView) view.findViewById(R.id.img11);
         mRlSetting = (RelativeLayout) view.findViewById(R.id.rl_setting);
         mImg12 = (ImageView) view.findViewById(R.id.img12);
+        ImageView img_dengji = (ImageView) view.findViewById(R.id.img_dengji);
         mRlWangdian = (RelativeLayout) view.findViewById(R.id.rl_wangdian);
+
         String img = (String) SpUtil.get(getActivity(), "img", "");
         if (img.startsWith("http://")) {
             mSdvTouxiang.setImageURI(img);
@@ -145,7 +147,7 @@ public class MyFragment extends Fragment implements View.OnClickListener {
         }
 
         mTvName.setText(String.valueOf(SpUtil.get(getActivity(), "username", "")));
-        mTvJifen.setText("积分" + String.valueOf(SpUtil.get(getActivity(), "jifen", "0")));
+        mTvJifen.setText("可用/冻结" + String.valueOf(SpUtil.get(getActivity(), "jifen", "0"))+String.valueOf(SpUtil.get(getActivity(),"dongjie","0")));
         mTvYue.setText("余额￥" + String.valueOf(SpUtil.get(getActivity(), "money", "")));
 
         mRlMyService.setOnClickListener(this);
@@ -172,7 +174,24 @@ public class MyFragment extends Fragment implements View.OnClickListener {
         } else {
             mRlWangdian.setVisibility(View.GONE);
         }
+        String Level = (String) SpUtil.get(getActivity(), "Level", "");
 
+
+        if ("1".equals(Level)) {
+            img_dengji.setBackgroundResource(R.mipmap.myv1);
+        } else if ("2".equals(Level)) {
+            img_dengji.setBackgroundResource(R.mipmap.myv2);
+        } else if ("3".equals(Level)) {
+            img_dengji.setBackgroundResource(R.mipmap.myv3);
+        } else if ("4".equals(Level)) {
+            img_dengji.setBackgroundResource(R.mipmap.myv4);
+        } else if ("5".equals(Level)) {
+            img_dengji.setBackgroundResource(R.mipmap.myv5);
+        } else if ("6".equals(Level)) {
+            img_dengji.setBackgroundResource(R.mipmap.myv6);
+        } else if ("7".equals(Level)) {
+            img_dengji.setBackgroundResource(R.mipmap.myv7);
+        }
 
         String jieduan = (String) SpUtil.get(getActivity(), "jieduan", "");
         if (!TextUtils.isEmpty(jieduan)) {
@@ -301,7 +320,7 @@ public class MyFragment extends Fragment implements View.OnClickListener {
 
                         mTvName.setText(String.valueOf(SpUtil.get(getActivity(), "username", "")));
 
-                        mTvJifen.setText("积分" + String.valueOf(SpUtil.get(getActivity(), "jifen", "0")));
+                        mTvJifen.setText("可用/冻结" + String.valueOf(SpUtil.get(getActivity(), "jifen", "0"))+String.valueOf(SpUtil.get(getActivity(),"dongjie","0")));
 
                         mTvYue.setText("余额￥" + String.valueOf(SpUtil.get(getActivity(), "money", "")));
                         String jieduan = (String) SpUtil.get(getActivity(), "jieduan", "");

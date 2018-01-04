@@ -66,7 +66,13 @@ public class ReturnPriceAdapter extends RecyclerView.Adapter<ReturnPriceAdapter.
         holder.tv_change_price_title.setText(datas.get(position).getTitle());
         holder.tv_change_price_classify.setText("￥" + datas.get(position).getPrice());
         holder.tv_change_price_time.setText(DateUtils.getMillon(Long.parseLong(datas.get(position).getAddtime()) * 1000));
-        holder.SimpleDraweeView.setImageURI(UrlUtils.URL + datas.get(position).getGimg());
+
+        if (datas.get(position).getGimg().startsWith("http://wx.qlogo.cn/")) {
+            holder.SimpleDraweeView.setImageURI( datas.get(position).getGimg());
+        } else {
+            holder.SimpleDraweeView.setImageURI(UrlUtils.URL + datas.get(position).getGimg());
+        }
+
         holder.tv_number.setText("×" + datas.get(position).getNumber());
         if ("-1".equals(String.valueOf(datas.get(position).getStatus()))) {
             holder.tv_change_price_type.setText("退换状态：取消申请");

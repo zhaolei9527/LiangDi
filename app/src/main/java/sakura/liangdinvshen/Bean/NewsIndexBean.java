@@ -14,7 +14,7 @@ public class NewsIndexBean {
     /**
      * stu : 1
      * cate : [{"id":"2","cate_name":"小说"},{"id":"5","cate_name":"大姨妈"},{"id":"4","cate_name":"育儿"},{"id":"1","cate_name":"情感"}]
-     * yun : {"id":"4","name":"妊娠期","yun_lv":"8%","stu_title":"极低","now_days":17741}
+     * yun : {"id":"4","name":"妊娠期","yun_lv":"8%","stu_title":"极低","now_days":133,"is_yuejing":"2","stu":"3"}
      */
 
     private String stu;
@@ -51,7 +51,9 @@ public class NewsIndexBean {
          * name : 妊娠期
          * yun_lv : 8%
          * stu_title : 极低
-         * now_days : 17741
+         * now_days : 133
+         * is_yuejing : 2
+         * stu : 3
          */
 
         private String id;
@@ -59,6 +61,8 @@ public class NewsIndexBean {
         private String yun_lv;
         private String stu_title;
         private int now_days;
+        private String is_yuejing;
+        private String stu;
 
         public String getId() {
             return id;
@@ -98,6 +102,22 @@ public class NewsIndexBean {
 
         public void setNow_days(int now_days) {
             this.now_days = now_days;
+        }
+
+        public String getIs_yuejing() {
+            return is_yuejing;
+        }
+
+        public void setIs_yuejing(String is_yuejing) {
+            this.is_yuejing = is_yuejing;
+        }
+
+        public String getStu() {
+            return stu;
+        }
+
+        public void setStu(String stu) {
+            this.stu = stu;
         }
     }
 

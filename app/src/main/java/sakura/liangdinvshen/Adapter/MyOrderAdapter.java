@@ -344,6 +344,7 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHold
         params.put("key", UrlUtils.KEY);
         params.put("uid", String.valueOf(SpUtil.get(mContext, "uid", "")));
         params.put("id", id);
+        Log.e("MyOrderAdapter", "params:" + params);
         VolleyRequest.RequestPost(mContext, UrlUtils.BASE_URL + "order/receipt", "order/receipt", params, new VolleyInterface(mContext) {
             @Override
             public void onMySuccess(String result) {

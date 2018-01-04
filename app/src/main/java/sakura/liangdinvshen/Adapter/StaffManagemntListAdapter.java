@@ -2,6 +2,7 @@ package sakura.liangdinvshen.Adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,11 +54,19 @@ public class StaffManagemntListAdapter extends RecyclerView.Adapter<StaffManagem
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.img.setImageURI(UrlUtils.URL + datas.get(position).getImg());
+
+        if (datas.get(position).getImg().startsWith("http://wx.qlogo.cn/")) {
+            holder.img.setImageURI(datas.get(position).getImg());
+        } else {
+            holder.img.setImageURI(UrlUtils.URL + datas.get(position).getImg());
+        }
+
         holder.tv_fuwuma.setText("注册时间：" + DateUtils.getMillon(Long.parseLong(datas.get(position).getAdd_time()) * 1000));
         holder.tv_money.setText("手机号：" + datas.get(position).getTel());
         holder.tv_name.setText(datas.get(position).getNi_name());
-        holder.tv_phone.setText("最近登录：" + DateUtils.getMillon(Long.parseLong(datas.get(position).getLast_login_time()) * 1000));
+        if (!TextUtils.isEmpty(datas.get(position).getLast_login_time())) {
+            holder.tv_phone.setText("最近登录：" + DateUtils.getMillon(Long.parseLong(datas.get(position).getLast_login_time()) * 1000));
+        }
         holder.tv_time.setText("帐号：" + datas.get(position).getTel());
         holder.tv_num.setText("id:" + datas.get(position).getId());
     }

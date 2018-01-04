@@ -115,6 +115,7 @@ public class FlashActivity extends BaseActivity {
                         SpUtil.putAndApply(context, "img", loginBean.getRes().getImg());
                         SpUtil.putAndApply(context, "username", loginBean.getRes().getNi_name());
                         SpUtil.putAndApply(context, "jifen", loginBean.getRes().getJifen());
+                        SpUtil.putAndApply(context, "dongjie", loginBean.getRes().getDj_jifen());
                         SpUtil.putAndApply(context, "money", loginBean.getRes().getMoney());
                         SpUtil.putAndApply(context, "Role", loginBean.getRes().getRole());
                         SpUtil.putAndApply(context, "shengri", loginBean.getRes().getShengri());
@@ -122,6 +123,8 @@ public class FlashActivity extends BaseActivity {
                         SpUtil.putAndApply(context, "hunyin", loginBean.getRes().getHunyin());
                         SpUtil.putAndApply(context, "chengshi", loginBean.getRes().getCity());
                         SpUtil.putAndApply(context, "jieduan", loginBean.getRes().getStu());
+                        SpUtil.putAndApply(context, "Level", loginBean.getRes().getLevel_name());
+
                         //注册
                         final LoginBean finalLoginBean = loginBean;
                         ChatClient.getInstance().register(loginBean.getRes().getId(), loginBean.getRes().getId(), new Callback() {

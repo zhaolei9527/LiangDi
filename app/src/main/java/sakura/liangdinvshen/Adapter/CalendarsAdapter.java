@@ -773,6 +773,7 @@ public class CalendarsAdapter extends RecyclerView.Adapter<CalendarsAdapter.View
         params.put("key", UrlUtils.KEY);
         params.put("uid", String.valueOf(SpUtil.get(context, "uid", "")));
         params.put("time", date);
+        Log.e("CalendarsAdapter", "params:" + params);
         VolleyRequest.RequestPost(context, UrlUtils.BASE_URL + "life/user_days", "life/user_days", params, new VolleyInterface(context) {
             @Override
             public void onMySuccess(String result) {
@@ -853,12 +854,10 @@ public class CalendarsAdapter extends RecyclerView.Adapter<CalendarsAdapter.View
 
                         viewHolder.tv_huaiyun_zhengzhuang.setText(data.getZheng_zhuang());
 
-                        viewHolder.tv_huaiyun_taidong.setText(data.getTai_dong() + "次");
-
+                        if (!"无记录".equals(data.getTai_dong())) {
+                            viewHolder.tv_huaiyun_taidong.setText(data.getTai_dong() + "次");
+                        }
                         viewHolder.tv_huaiyun_wenti.setText(data.getTi_wen());
-
-
-
                     }
                     result = null;
                 } catch (Exception e) {
@@ -895,6 +894,8 @@ public class CalendarsAdapter extends RecyclerView.Adapter<CalendarsAdapter.View
             viewHolder.tv_baby_chengzhang.setText(event.getMsg());
         } else if ("taidong".equals(event.getmType())) {
             viewHolder.tv_huaiyun_taidong.setText(event.getMsg());
+        } else if ("ask".equals(event.getmType())) {
+            viewHolder.tv_huaiyun_wenti.setText("已记录");
         }
         //反注册EventBus
         EventBus.getDefault().unregister(CalendarsAdapter.this);

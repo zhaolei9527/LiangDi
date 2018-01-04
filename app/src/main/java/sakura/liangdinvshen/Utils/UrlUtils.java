@@ -12,13 +12,13 @@ public class UrlUtils {
     /**
      * url连接头
      */
-    public static final String URL = "http://www.liangdinvshen.com/";
+    public static final String URL = "http://192.168.1.199/";
 
 
     /**
      * url连接头
      */
-    public static final String BASE_URL = "http://www.liangdinvshen.com/api.php/";
+    public static final String BASE_URL = "http://192.168.1.199/api.php/";
 
     /**
      * 接口连接key

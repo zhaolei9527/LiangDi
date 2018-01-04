@@ -48,7 +48,12 @@ public class MyServiceAdapter extends RecyclerView.Adapter<MyServiceAdapter.View
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+
         holder.SimpleDraweeView.setImageURI(UrlUtils.URL + datas.get(position).getImg());
+
+
+
+
         holder.tv_service_name.setText(datas.get(position).getTitle());
         holder.tv_service_price.setText("￥" + datas.get(position).getPrice());
         holder.tv_servive_order_number.setText("服务码：" + datas.get(position).getFworder());

@@ -52,7 +52,13 @@ public class EvaluationAdapter extends RecyclerView.Adapter<EvaluationAdapter.Vi
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.sdv_pingjia.setImageURI(UrlUtils.URL + datas.get(position).getHeadimg());
+
+        if (datas.get(position).getHeadimg().startsWith("http://wx.qlogo.cn/")) {
+            holder.sdv_pingjia.setImageURI(datas.get(position).getHeadimg());
+        } else {
+            holder.sdv_pingjia.setImageURI(UrlUtils.URL + datas.get(position).getHeadimg());
+        }
+
         holder.tv_pingjia_name.setText(datas.get(position).getNickname());
         holder.tv_pingjia_content.setText(datas.get(position).getContent());
         String addtime = datas.get(position).getAddtime();

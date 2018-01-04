@@ -3,12 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="@dimen/x15"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/x10"
+        android:layout_marginTop="@dimen/x10"
         android:orientation="vertical">
 
         <TextView
@@ -16,7 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="1、有没有感觉到不舒服，是否有孕吐？"
-            android:textSize="@dimen/x13" />
+            android:textSize="@dimen/x15" />
 
 
         <LinearLayout
@@ -27,6 +29,7 @@
             android:orientation="horizontal">
 
             <TextView
+                android:textSize="@dimen/x15"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="是"
@@ -35,8 +38,8 @@
 
             <CheckBox
                 android:id="@+id/btnIsChoosed"
-                android:layout_width="@dimen/x16"
-                android:layout_height="@dimen/x16"
+                android:layout_width="@dimen/x18"
+                android:layout_height="@dimen/x18"
                 android:layout_centerVertical="true"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="@dimen/x5"
@@ -48,13 +51,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/x50"
+                android:textSize="@dimen/x15"
                 android:text="否"
                 android:textColor="@color/text333" />
 
             <CheckBox
                 android:id="@+id/btnIsChoosed2"
-                android:layout_width="@dimen/x16"
-                android:layout_height="@dimen/x16"
+                android:layout_width="@dimen/x18"
+                android:layout_height="@dimen/x18"
                 android:layout_centerVertical="true"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="@dimen/x5"
@@ -66,5 +70,17 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    <Button
+        android:visibility="gone"
+        android:id="@+id/btn_submit"
+        android:layout_width="@dimen/x250"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/x15"
+        android:layout_marginTop="@dimen/x15"
+        android:background="@drawable/bg_register_btn"
+        android:text="确定"
+        android:textColor="@color/white" />
 
 </LinearLayout>

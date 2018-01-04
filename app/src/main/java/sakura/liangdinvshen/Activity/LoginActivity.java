@@ -139,6 +139,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         // TODO Auto-generated method stub
                         arg2.printStackTrace();
                     }
+
                     @Override
                     public void onComplete(Platform arg0, int arg1, HashMap<String, Object> arg2) {
                         // TODO Auto-generated method stub
@@ -283,6 +284,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         SpUtil.putAndApply(context, "img", loginBean.getRes().getImg());
                         SpUtil.putAndApply(context, "username", loginBean.getRes().getNi_name());
                         SpUtil.putAndApply(context, "jifen", loginBean.getRes().getJifen());
+                        SpUtil.putAndApply(context, "dongjie", loginBean.getRes().getDj_jifen());
                         SpUtil.putAndApply(context, "money", loginBean.getRes().getMoney());
                         SpUtil.putAndApply(context, "Role", loginBean.getRes().getRole());
                         SpUtil.putAndApply(context, "shengri", loginBean.getRes().getShengri());
@@ -290,6 +292,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         SpUtil.putAndApply(context, "hunyin", loginBean.getRes().getHunyin());
                         SpUtil.putAndApply(context, "chengshi", loginBean.getRes().getCity());
                         SpUtil.putAndApply(context, "jieduan", loginBean.getRes().getStu());
+                        SpUtil.putAndApply(context, "Level", loginBean.getRes().getLevel_name());
+
                         if ("1".equals(type)) {
                             SpUtil.putAndApply(context, "qqopenid", openid);
                         } else if ("2".equals(type)) {

@@ -153,7 +153,6 @@ public class DateUtils {
         return new SimpleDateFormat("yyyy-MM").format(time);
     }
 
-
     /**
      * 输入的是String，格式诸如20120102，实现加一天的功能，返回的格式为String，诸如20120103
      */

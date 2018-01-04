@@ -24,6 +24,7 @@ import sakura.liangdinvshen.Utils.EasyToast;
 import sakura.liangdinvshen.Utils.UrlUtils;
 import sakura.liangdinvshen.Utils.Utils;
 import sakura.liangdinvshen.View.LiangDiRecycleView;
+import sakura.liangdinvshen.View.ProgressView;
 import sakura.liangdinvshen.View.SakuraLinearLayoutManager;
 import sakura.liangdinvshen.Volley.VolleyInterface;
 import sakura.liangdinvshen.Volley.VolleyRequest;
@@ -39,7 +40,7 @@ public class EvaluationActivity extends BaseActivity {
 
     @Override
     protected int setthislayout() {
-        return R.layout.activity_evaluation;
+        return R.layout.activity_all_pingjia;
     }
 
     @Override
@@ -50,6 +51,10 @@ public class EvaluationActivity extends BaseActivity {
         line.setOrientation(LinearLayoutManager.VERTICAL);
         rv_purchaserecord.setLayoutManager(line);
         rv_purchaserecord.setItemAnimator(new DefaultItemAnimator());
+        ProgressView progressView = new ProgressView(context);
+        progressView.setIndicatorId(ProgressView.BallRotate);
+        progressView.setIndicatorColor(getResources().getColor(R.color.colorAccent));
+        rv_purchaserecord.setFootLoadingView(progressView);
         TextView textView = new TextView(context);
         textView.setText("-我也是有底线的-");
         rv_purchaserecord.setFootEndView(textView);
@@ -60,7 +65,6 @@ public class EvaluationActivity extends BaseActivity {
                 getData();
             }
         });
-
     }
 
     public void getData() {

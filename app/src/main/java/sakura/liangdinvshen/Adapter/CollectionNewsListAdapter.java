@@ -53,7 +53,13 @@ public class CollectionNewsListAdapter extends RecyclerView.Adapter<CollectionNe
         holder.tv_title.setText(datas.get(position).getTitle());
         holder.tv_look.setText("浏览量：" + datas.get(position).getView());
         holder.tv_classify.setText("分类：" + datas.get(position).getCate_name());
-        holder.SimpleDraweeView.setImageURI(UrlUtils.URL + datas.get(position).getImg());
+
+        if (datas.get(position).getImg().startsWith("http://wx.qlogo.cn/")) {
+            holder.SimpleDraweeView.setImageURI(datas.get(position).getImg());
+        } else {
+            holder.SimpleDraweeView.setImageURI(UrlUtils.URL + datas.get(position).getImg());
+        }
+
         holder.fl_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

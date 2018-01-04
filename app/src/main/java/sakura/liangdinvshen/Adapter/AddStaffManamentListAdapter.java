@@ -59,7 +59,11 @@ public class AddStaffManamentListAdapter extends RecyclerView.Adapter<AddStaffMa
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         final WangQbListBean.ListBean listBean = datas.get(position);
-        holder.img.setImageURI(UrlUtils.URL + listBean.getImg());
+        if (listBean.getImg().startsWith("http://wx.qlogo.cn/")) {
+            holder.img.setImageURI(listBean.getImg());
+        } else {
+            holder.img.setImageURI(UrlUtils.URL + listBean.getImg());
+        }
         holder.tv_name.setText(listBean.getNi_name());
         holder.tv_time.setText("注册时间：" + DateUtils.getMillon(Long.parseLong(listBean.getAdd_time()) * 1000));
         holder.btn_add_address.setOnClickListener(new View.OnClickListener() {
@@ -70,7 +74,6 @@ public class AddStaffManamentListAdapter extends RecyclerView.Adapter<AddStaffMa
                 notifyDataSetChanged();
             }
         });
-
     }
 
     @Override

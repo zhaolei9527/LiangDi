@@ -2,9 +2,9 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:rvp="http://schemas.android.com/tools"
-    android:background="@color/white"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -110,6 +110,7 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/rl_isyuejing"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/y35"
                 android:background="@color/white"
@@ -129,7 +130,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/x7"
                     android:layout_toRightOf="@id/img_jing"
-                    android:text="经期开始"
+                    android:text="是否经期"
                     android:textColor="#333333" />
 
                 <com.kyleduo.switchbutton.SwitchButton
@@ -156,11 +157,11 @@
         </LinearLayout>
 
         <com.astuetz.PagerSlidingTabStrip
-            android:background="@color/white"
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="@dimen/y34"
             android:layout_marginLeft="@dimen/x10"
+            android:background="@color/white"
             app:pstsIndicatorColor="@color/pressedColor"
             app:pstsTabTextColor="@drawable/pagerslidingtabtextcolor" />
 
