@@ -158,21 +158,38 @@ public class PhaseActivity extends BaseActivity implements View.OnClickListener 
                             tv_jingqi_content.setText("周期为" + lifeStageBean.getPeriod_cycle() + "天" + "经期" + lifeStageBean.getPeriod_length() + "天");
                         }
                         tv_jiedaun.setText("人生阶段：只记经期");
+                        Choosed_beiyun.setChecked(false);
+                        Choosed_huanyun.setChecked(false);
+                        Choosed_lama.setChecked(false);
+                        Choosed_jingqi.setChecked(true);
                     } else if ("2".equals(String.valueOf(lifeStageBean.getStu()))) {
                         if (!TextUtils.isEmpty(lifeStageBean.getPeriod_cycle())) {
                             tv_beiyun_content.setText("周期为" + lifeStageBean.getPeriod_cycle() + "天" + "经期" + lifeStageBean.getPeriod_length() + "天");
                         }
                         tv_jiedaun.setText("人生阶段：我在备孕");
+                        Choosed_jingqi.setChecked(false);
+                        Choosed_huanyun.setChecked(false);
+                        Choosed_lama.setChecked(false);
+                        Choosed_beiyun.setChecked(true);
                     } else if ("3".equals(String.valueOf(lifeStageBean.getStu()))) {
                         if (!TextUtils.isEmpty(lifeStageBean.getPregnant_expected())) {
                             tv_huaiyun_content.setText("待产期" + DateUtils.getDay(Long.parseLong(lifeStageBean.getPregnant_expected()) * 1000));
                         }
                         tv_jiedaun.setText("人生阶段：我怀孕了");
+                        Choosed_jingqi.setChecked(false);
+                        Choosed_beiyun.setChecked(false);
+                        Choosed_lama.setChecked(false);
+                        Choosed_huanyun.setChecked(true);
                     } else if ("4".equals(String.valueOf(lifeStageBean.getStu()))) {
                         if (!TextUtils.isEmpty(lifeStageBean.getBaby_birthday())) {
-                            tv_lama_content.setText("宝贝生日" + lifeStageBean.getBaby_birthday());
+                            long l = Long.parseLong(lifeStageBean.getBaby_birthday()) * 1000;
+                            tv_lama_content.setText("宝贝生日:" + DateUtils.getDay(l));
                         }
                         tv_jiedaun.setText("人生阶段：我是辣妈");
+                        Choosed_jingqi.setChecked(false);
+                        Choosed_beiyun.setChecked(false);
+                        Choosed_huanyun.setChecked(false);
+                        Choosed_lama.setChecked(true);
                     }
                     lifeStageBean = null;
                     result = null;

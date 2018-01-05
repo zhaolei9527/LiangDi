@@ -170,6 +170,7 @@ public class DueDateActivity extends BaseActivity implements View.OnClickListene
                 try {
                     StuBean stuBean = new Gson().fromJson(result, StuBean.class);
                     if ("1".equals(String.valueOf(stuBean.getStu()))) {
+                        EasyToast.showShort(context, "切换成功");
                     } else {
                         EasyToast.showShort(context, "设置失败");
                     }

@@ -28,10 +28,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="经期开始"
+            android:text="是否经期"
             android:textColor="@color/text333"
             android:textSize="@dimen/x15" />
-
 
         <RelativeLayout
             android:layout_width="0dp"
@@ -42,58 +41,6 @@
 
         <com.kyleduo.switchbutton.SwitchButton
             android:id="@+id/sb_jingqi_start"
-            style="@style/SwitchButtonStyle"
-            android:layout_width="@dimen/x63"
-            android:layout_height="@dimen/y20"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:clickable="false"
-            android:enabled="true"
-            android:focusable="false"
-            android:textColor="#FFFFFF"
-            android:textSize="16dp"
-            app:kswFadeBack="false"
-            app:kswTextOff="Off"
-            app:kswTextOn="On" />
-
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/x1"
-        android:background="#efefef"></View>
-
-    <LinearLayout
-        android:id="@+id/ll_jingqi_end"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/y36"
-        android:gravity="center_vertical">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/x15"
-            android:layout_marginRight="@dimen/x5"
-            android:background="@mipmap/jingjieshu" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="经期结束"
-            android:textColor="@color/text333"
-            android:textSize="@dimen/x15" />
-
-
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
-
-
-        </RelativeLayout>
-
-        <com.kyleduo.switchbutton.SwitchButton
-            android:id="@+id/sb_jingqi_end"
             style="@style/SwitchButtonStyle"
             android:layout_width="@dimen/x63"
             android:layout_height="@dimen/y20"

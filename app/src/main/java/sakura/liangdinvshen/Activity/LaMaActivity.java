@@ -23,6 +23,7 @@ import java.util.HashMap;
 
 import sakura.liangdinvshen.Base.BaseActivity;
 import sakura.liangdinvshen.Bean.LifePeriodBean;
+import sakura.liangdinvshen.Bean.StuBean;
 import sakura.liangdinvshen.R;
 import sakura.liangdinvshen.Utils.DateUtils;
 import sakura.liangdinvshen.Utils.EasyToast;
@@ -324,6 +325,11 @@ public class LaMaActivity extends BaseActivity implements View.OnClickListener {
                 Log.e("RegisterActivity", result);
                 try {
                     dialog.dismiss();
+                    StuBean stuBean = new Gson().fromJson(result, StuBean.class);
+                    if ("1".equals(String.valueOf(stuBean.getStu()))) {
+                        EasyToast.showShort(context, "切换成功");
+                    }
+                    stuBean = null;
                     result = null;
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -356,9 +362,12 @@ public class LaMaActivity extends BaseActivity implements View.OnClickListener {
                     LifePeriodBean lifePeriodBean = new Gson().fromJson(result, LifePeriodBean.class);
                     if ("1".equals(String.valueOf(lifePeriodBean.getStu()))) {
                         if (!TextUtils.isEmpty(lifePeriodBean.getRes().getBaby_birthday())) {
-                            tv_baby_born_time.setText(lifePeriodBean.getRes().getBaby_birthday());
+                            long l = Long.parseLong(lifePeriodBean.getRes().getBaby_birthday()) * 1000;
+                            baby_birthday = DateUtils.getDay(l);
+                            tv_baby_born_time.setText(baby_birthday);
                         }
                         if (!TextUtils.isEmpty(lifePeriodBean.getRes().getBaby_sex())) {
+                            baby_sex = lifePeriodBean.getRes().getBaby_sex();
                             if ("1".equals(String.valueOf(lifePeriodBean.getRes().getBaby_sex()))) {
                                 tv_baby_sex.setText("小王子");
                             } else {
@@ -366,9 +375,12 @@ public class LaMaActivity extends BaseActivity implements View.OnClickListener {
                             }
                         }
                         if (!TextUtils.isEmpty(lifePeriodBean.getRes().getPeriod_length())) {
+                            period_length = lifePeriodBean.getRes().getPeriod_length();
                             tv_jingqi.setText(lifePeriodBean.getRes().getPeriod_length() + "天");
                         }
                         if (!TextUtils.isEmpty(lifePeriodBean.getRes().getPeriod_cycle())) {
+                            period_cycle = lifePeriodBean.getRes().getPeriod_cycle();
+
                             tv_zhouqi.setText(lifePeriodBean.getRes().getPeriod_cycle() + "天");
                         }
                     }

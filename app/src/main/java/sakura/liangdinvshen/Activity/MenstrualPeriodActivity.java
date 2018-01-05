@@ -22,6 +22,7 @@ import java.util.HashMap;
 import sakura.liangdinvshen.App;
 import sakura.liangdinvshen.Base.BaseActivity;
 import sakura.liangdinvshen.Bean.LifePeriodBean;
+import sakura.liangdinvshen.Bean.StuBean;
 import sakura.liangdinvshen.R;
 import sakura.liangdinvshen.Utils.DateUtils;
 import sakura.liangdinvshen.Utils.EasyToast;
@@ -225,9 +226,9 @@ public class MenstrualPeriodActivity extends BaseActivity implements View.OnClic
         params.put("period_length", period_length);
         params.put("period_cycle", period_cycle);
         if ("jingqi".equals(getIntent().getStringExtra("type"))) {
-            params.put("type ", "1");
+            params.put("type", "1");
         } else if ("beiyun".equals(getIntent().getStringExtra("type"))) {
-            params.put("type ", "2");
+            params.put("type", "2");
         }
         Log.e("RegisterActivity", "params:" + params);
         VolleyRequest.RequestPost(context, UrlUtils.BASE_URL + "user/zhiji", "user/zhiji", params, new VolleyInterface(context) {
@@ -236,7 +237,11 @@ public class MenstrualPeriodActivity extends BaseActivity implements View.OnClic
                 Log.e("RegisterActivity", result);
                 try {
                     dialog.dismiss();
-
+                    StuBean stuBean = new Gson().fromJson(result, StuBean.class);
+                    if ("1".equals(String.valueOf(stuBean.getStu()))) {
+                        EasyToast.showShort(context, "切换成功");
+                    }
+                    stuBean = null;
                     result = null;
                 } catch (Exception e) {
                     e.printStackTrace();

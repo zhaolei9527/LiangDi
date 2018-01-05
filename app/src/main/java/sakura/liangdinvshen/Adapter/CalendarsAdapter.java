@@ -161,13 +161,12 @@ public class CalendarsAdapter extends RecyclerView.Adapter<CalendarsAdapter.View
         });
 
         /**
-         * 经期开始
+         * 是否经期
          * */
         holder.ll_jingqi_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 holder.sb_jingqi_start.setChecked(!holder.sb_jingqi_start.isChecked());
-                holder.sb_jingqi_end.setChecked(!holder.sb_jingqi_start.isChecked());
                 if (holder.sb_jingqi_start.isChecked()) {
                     lifePeriodStart();
                 } else {
@@ -176,20 +175,6 @@ public class CalendarsAdapter extends RecyclerView.Adapter<CalendarsAdapter.View
             }
         });
 
-        /**
-         * 经期结束
-         * */
-        holder.ll_jingqi_end.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                holder.sb_jingqi_end.setChecked(!holder.sb_jingqi_end.isChecked());
-                if (holder.sb_jingqi_end.isChecked()) {
-                    lifePeriodEnd();
-                } else {
-                    lifePeriodStart();
-                }
-            }
-        });
 
         /**
          * 爱爱
@@ -429,10 +414,7 @@ public class CalendarsAdapter extends RecyclerView.Adapter<CalendarsAdapter.View
         public View rootView;
         public LinearLayout ll_mingcijieshi;
         public LinearLayout ll_jingqi_start;
-        public LinearLayout ll_jingqi_end;
-
         public SwitchButton sb_jingqi_start;
-        public SwitchButton sb_jingqi_end;
         public TextView tv_yuejingxiangqing;
         public LinearLayout ll_yuejingxiangqing;
         public LinearLayout ll_aiai;
@@ -482,8 +464,6 @@ public class CalendarsAdapter extends RecyclerView.Adapter<CalendarsAdapter.View
             this.ll_mingcijieshi = (LinearLayout) rootView.findViewById(R.id.ll_mingcijieshi);
             this.ll_jingqi_start = (LinearLayout) rootView.findViewById(R.id.ll_jingqi_start);
             this.sb_jingqi_start = (SwitchButton) rootView.findViewById(R.id.sb_jingqi_start);
-            this.sb_jingqi_end = (SwitchButton) rootView.findViewById(R.id.sb_jingqi_end);
-            this.ll_jingqi_end = (LinearLayout) rootView.findViewById(R.id.ll_jingqi_end);
             this.tv_yuejingxiangqing = (TextView) rootView.findViewById(R.id.tv_yuejingxiangqing);
             this.ll_yuejingxiangqing = (LinearLayout) rootView.findViewById(R.id.ll_yuejingxiangqing);
             this.ll_aiai = (LinearLayout) rootView.findViewById(R.id.ll_aiai);
@@ -792,6 +772,12 @@ public class CalendarsAdapter extends RecyclerView.Adapter<CalendarsAdapter.View
                             return;
                         } else {
                             viewHolder.ll_otherDay.setVisibility(View.GONE);
+                        }
+
+                        if ("1".equals(lifeUserDaysBean.getData().getIs_yuejing())) {
+                            viewHolder.sb_jingqi_start.setChecked(true);
+                        } else if ("2".equals(lifeUserDaysBean.getData().getIs_yuejing())) {
+                            viewHolder.sb_jingqi_start.setChecked(true);
                         }
 
 
