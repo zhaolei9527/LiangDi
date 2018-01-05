@@ -106,7 +106,9 @@ public class FetalMovementActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         if (Utils.isConnected(context)) {
-            dialog.show();
+            if (!dialog.isShowing()){
+                dialog.show();
+            }
             suckleSuckle();
         } else {
             EasyToast.showShort(context, "网络未连接");

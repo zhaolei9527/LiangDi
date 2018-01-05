@@ -198,7 +198,9 @@ public class AddBreastFeedActivity extends BaseActivity {
                         tv_size.setText(mlList.get(options1));
                         if (Utils.isConnected(context)) {
                             dialog = Utils.showLoadingDialog(context);
-                            dialog.show();
+                            if (!dialog.isShowing()){
+                                dialog.show();
+                            }
                             suckleSuckleDoadd(tv_type.getText().toString(), tv_size.getText().toString(), tv_start.getText().toString());
                         } else {
                             EasyToast.showShort(context, "网络未连接");
@@ -232,7 +234,9 @@ public class AddBreastFeedActivity extends BaseActivity {
                         tv_size.setText(minutesList.get(options1) + secondsList.get(options2));
                         if (Utils.isConnected(context)) {
                             dialog = Utils.showLoadingDialog(context);
-                            dialog.show();
+                            if (!dialog.isShowing()){
+                                dialog.show();
+                            }
                             suckleSuckleDoadd(tv_type.getText().toString(), tv_size.getText().toString(), tv_start.getText().toString());
                         } else {
                             EasyToast.showShort(context, "网络未连接");

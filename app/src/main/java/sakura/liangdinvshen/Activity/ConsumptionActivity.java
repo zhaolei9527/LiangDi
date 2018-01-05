@@ -72,7 +72,9 @@ public class ConsumptionActivity extends BaseActivity implements View.OnClickLis
         // TODO validate success, do something
         if (Utils.isConnected(context)) {
             dialog = Utils.showLoadingDialog(context);
-            dialog.show();
+            if (!dialog.isShowing()){
+                dialog.show();
+            }
             wangXiaofei(code);
         } else {
             EasyToast.showShort(context, "网络未连接");

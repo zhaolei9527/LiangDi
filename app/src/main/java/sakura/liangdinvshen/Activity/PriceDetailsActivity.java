@@ -21,9 +21,11 @@ import com.android.volley.VolleyError;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.Gson;
 import com.hyphenate.chat.ChatClient;
+import com.hyphenate.chat.Message;
 import com.hyphenate.helpdesk.callback.Callback;
 import com.hyphenate.helpdesk.easeui.util.IntentBuilder;
 import com.hyphenate.helpdesk.model.ContentFactory;
+import com.hyphenate.helpdesk.model.VisitorTrack;
 import com.jude.rollviewpager.OnItemClickListener;
 import com.jude.rollviewpager.hintview.IconHintView;
 import com.tencent.smtt.export.external.interfaces.WebResourceError;
@@ -216,13 +218,36 @@ public class PriceDetailsActivity extends BaseActivity implements View.OnClickLi
                                 .setServiceIMNumber("liangdinvshen") //获取地址：kefu.easemob.com，“管理员模式 > 渠道管理 > 手机APP”页面的关联的“IM服务号”
                                 .setTitleName("靓蒂女神客服")
                                 .setVisitorInfo(ContentFactory.createVisitorInfo(null)
-                                        .companyName("huanxin")
-                                        .email("abc@123.com")
-                                        .qq("12345")
-                                        .name("visitor_" +"sakura")
-                                        .nickName("nick_" + "sakuraaAA"))
+                                        .phone(String.valueOf(SpUtil.get(context, "account", "")))
+                                        .name(String.valueOf(SpUtil.get(context, "username", "")))
+                                        .nickName(String.valueOf(SpUtil.get(context, "username", ""))))
                                 .build();
                         startActivity(intent);
+
+                        VisitorTrack track = ContentFactory.createVisitorTrack(null);
+                        track.title("我正在看")  //显示标题
+                                .price(mTvPrice.getText().toString()) //显示价格
+                                .desc(mTvTitle.getText().toString()) //描述
+                                .imageUrl(UrlUtils.URL + keFuImageUrl);//显示图片
+                        final Message message = Message.createTxtSendMessage("", "liangdinvshen");
+                        message.addContent(track);
+                        ChatClient.getInstance().chatManager().sendMessage(message, new Callback() {
+                            @Override
+                            public void onSuccess() {
+                                ChatClient.getInstance().chatManager().getConversation("liangdinvshen").removeMessage(message.getMsgId());
+                            }
+
+                            @Override
+                            public void onError(int i, String s) {
+                                ChatClient.getInstance().chatManager().getConversation("liangdinvshen").removeMessage(message.getMsgId());
+                            }
+
+                            @Override
+                            public void onProgress(int i, String s) {
+
+                            }
+                        });
+
                     } else {
                         //未登录，需要登录后，再进入会话界面
                         dialog.show();
@@ -234,8 +259,37 @@ public class PriceDetailsActivity extends BaseActivity implements View.OnClickLi
                                         Intent intent = new IntentBuilder(context)
                                                 .setServiceIMNumber("liangdinvshen") //获取地址：kefu.easemob.com，“管理员模式 > 渠道管理 > 手机APP”页面的关联的“IM服务号”
                                                 .setTitleName("靓蒂女神客服")
+                                                .setVisitorInfo(ContentFactory.createVisitorInfo(null)
+                                                        .phone(String.valueOf(SpUtil.get(context, "account", "")))
+                                                        .name(String.valueOf(SpUtil.get(context, "username", "")))
+                                                        .nickName(String.valueOf(SpUtil.get(context, "username", ""))))
                                                 .build();
                                         startActivity(intent);
+
+                                        VisitorTrack track = ContentFactory.createVisitorTrack(null);
+                                        track.title("我正在看")  //显示标题
+                                                .price(mTvPrice.getText().toString()) //显示价格
+                                                .desc(mTvTitle.getText().toString()) //描述
+                                                .imageUrl(UrlUtils.URL + keFuImageUrl);//显示图片
+                                        final Message message = Message.createTxtSendMessage("", "liangdinvshen");
+                                        message.addContent(track);
+                                        ChatClient.getInstance().chatManager().sendMessage(message, new Callback() {
+                                            @Override
+                                            public void onSuccess() {
+                                                ChatClient.getInstance().chatManager().getConversation("liangdinvshen").removeMessage(message.getMsgId());
+                                            }
+
+                                            @Override
+                                            public void onError(int i, String s) {
+                                                ChatClient.getInstance().chatManager().getConversation("liangdinvshen").removeMessage(message.getMsgId());
+                                            }
+
+                                            @Override
+                                            public void onProgress(int i, String s) {
+
+                                            }
+                                        });
+
                                     }
 
                                     @Override
@@ -347,6 +401,9 @@ public class PriceDetailsActivity extends BaseActivity implements View.OnClickLi
         });
     }
 
+
+    private String keFuImageUrl = "";
+
     /**
      * 产品缓存获取
      */
@@ -356,6 +413,7 @@ public class PriceDetailsActivity extends BaseActivity implements View.OnClickLi
             try {
                 GoodsDetailBean goodsDetailBean = new Gson().fromJson(goodsDetail, GoodsDetailBean.class);
                 if ("310".equals(goodsDetailBean.getCode())) {
+                    keFuImageUrl = goodsDetailBean.getGoods().getImg().get(0);
                     mTvTitle.setText(goodsDetailBean.getGoods().getTitle());
                     mTvPrice.setText("￥" + goodsDetailBean.getGoods().getPrice());
                     RollPagerView.setAdapter(new LoopAdapter(RollPagerView, goodsDetailBean.getGoods()));

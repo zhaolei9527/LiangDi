@@ -99,8 +99,6 @@ public class MultiPickResultView extends FrameLayout {
         photoAdapter.setAction(action);
         recyclerView.setAdapter(photoAdapter);
         //recyclerView.setLayoutFrozen(true);
-
-
     }
 
 
@@ -112,13 +110,6 @@ public class MultiPickResultView extends FrameLayout {
         }
 
     }
-
-
-
-
-
-
-
 
     public  void onActivityResult(int requestCode, int resultCode, Intent data){
         if (action == ACTION_SELECT){

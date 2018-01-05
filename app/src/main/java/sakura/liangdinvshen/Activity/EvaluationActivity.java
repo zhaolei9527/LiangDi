@@ -69,7 +69,9 @@ public class EvaluationActivity extends BaseActivity {
 
     public void getData() {
         dialog = Utils.showLoadingDialog(context);
-        dialog.show();
+        if (!dialog.isShowing()){
+            dialog.show();
+        }
         if (Utils.isConnected(context)) {
             sucklePingjia();
         } else {

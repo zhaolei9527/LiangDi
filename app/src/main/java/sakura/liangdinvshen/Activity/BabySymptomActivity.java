@@ -159,7 +159,9 @@ public class BabySymptomActivity extends BaseActivity {
                 }
                 if (Utils.isConnected(context)) {
                     dialog = Utils.showLoadingDialog(context);
-                    dialog.show();
+                    if (!dialog.isShowing()){
+                        dialog.show();
+                    }
                     lifeAddSick(stringBuilder.toString());
                 } else {
                     EasyToast.showShort(context, "网络未连接");

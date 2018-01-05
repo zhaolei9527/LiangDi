@@ -127,7 +127,7 @@ public class SubmitReturnPriceActivity extends BaseActivity implements View.OnCl
                     if (!appDir.exists()) {
                         appDir.mkdir();
                     }
-                    NativeUtil.compressBitmap(mbitmap, Environment.getExternalStorageDirectory().getPath() + "/ScreenCapture/" + finalI + ".png", 50);
+                    NativeUtil.compressBitmap(mbitmap, Environment.getExternalStorageDirectory().getPath() + "/ScreenCapture/" + finalI + ".png", true);
                 }
             });
         }
@@ -201,8 +201,6 @@ public class SubmitReturnPriceActivity extends BaseActivity implements View.OnCl
                 .setTextColorCenter(Color.BLACK) //设置选中项文字颜色
                 .setContentTextSize(18)
                 .build();
-        /*pvOptions.setPicker(options1Items);//一级选择器
-        pvOptions.setPicker(options1Items, options2Items);//二级选择器*/
         pvOptions.setPicker(fuwulist);//三级选择器
         pvOptions.show();
 

@@ -160,6 +160,7 @@ public class CalendarsAdapter extends RecyclerView.Adapter<CalendarsAdapter.View
             }
         });
 
+
         /**
          * 是否经期
          * */
@@ -258,7 +259,6 @@ public class CalendarsAdapter extends RecyclerView.Adapter<CalendarsAdapter.View
         /**
          * 身体症状
          * */
-
         holder.ll_body_zhengzhuang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -780,7 +780,6 @@ public class CalendarsAdapter extends RecyclerView.Adapter<CalendarsAdapter.View
                             viewHolder.sb_jingqi_start.setChecked(true);
                         }
 
-
                         if ("1".equals(data.getLive_stage()) || "2".equals(data.getLive_stage())) {
                             viewHolder.ll_mingcijieshi.setVisibility(View.VISIBLE);
                             viewHolder.ll_body.setVisibility(View.VISIBLE);
@@ -834,13 +833,17 @@ public class CalendarsAdapter extends RecyclerView.Adapter<CalendarsAdapter.View
 
                         viewHolder.tv_baby_bushufu.setText(data.getBaby_bushufu());
 
-                        viewHolder.tv_huaiyun_daduzhao.setText(data.getDa_du_pic());
+                        if ("1".equals(String.valueOf(data.getDa_du_pic()))) {
+                            viewHolder.tv_huaiyun_daduzhao.setText("查看");
+                        } else {
+                            viewHolder.tv_huaiyun_daduzhao.setText(data.getDa_du_pic());
+                        }
 
                         viewHolder.tv_huaiyun_tizhong.setText(data.getTi_zhong());
 
                         viewHolder.tv_huaiyun_zhengzhuang.setText(data.getZheng_zhuang());
 
-                        if (!"无记录".equals(data.getTai_dong())) {
+                        if (!"未记录".equals(data.getTai_dong())) {
                             viewHolder.tv_huaiyun_taidong.setText(data.getTai_dong() + "次");
                         }
                         viewHolder.tv_huaiyun_wenti.setText(data.getTi_wen());
@@ -882,7 +885,10 @@ public class CalendarsAdapter extends RecyclerView.Adapter<CalendarsAdapter.View
             viewHolder.tv_huaiyun_taidong.setText(event.getMsg());
         } else if ("ask".equals(event.getmType())) {
             viewHolder.tv_huaiyun_wenti.setText("已记录");
+        } else if ("daduzhao".equals(event.getmType())) {
+            viewHolder.tv_huaiyun_wenti.setText("查看");
         }
+
         //反注册EventBus
         EventBus.getDefault().unregister(CalendarsAdapter.this);
     }

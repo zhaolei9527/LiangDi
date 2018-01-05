@@ -327,12 +327,11 @@ public class OrderActivity extends BaseActivity {
                         String jf_tj = orderIndexBean.getJf_tj();
                         double jftjv = Double.parseDouble(jf_tj);
 
-                        if (jftjv <= totol) {
+                        if (jftjv < totol) {
                             rl_jifen.setVisibility(View.VISIBLE);
                         } else {
                             rl_jifen.setVisibility(View.GONE);
                         }
-
 
                         //矫正余额
                         yue = orderIndexBean.getMoney();

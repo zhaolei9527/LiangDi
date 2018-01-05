@@ -106,7 +106,9 @@ public class DiaryActivity extends BaseActivity {
         tv_week.setText(DateUtils.getWeekByDateStr(s + s1 + s2));
         if (Utils.isConnected(context)) {
             dialog = Utils.showLoadingDialog(context);
-            dialog.show();
+            if (!dialog.isShowing()){
+                dialog.show();
+            }
             lifeShowDiary();
         } else {
             EasyToast.showShort(context, "网络未连接");
@@ -122,7 +124,9 @@ public class DiaryActivity extends BaseActivity {
             return;
         }
         if (Utils.isConnected(context)) {
-            dialog.show();
+            if (!dialog.isShowing()){
+                dialog.show();
+            }
             lifeDiary(content);
         } else {
             EasyToast.showShort(context, "网络未连接");

@@ -115,11 +115,19 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
             } else {
                 String str = photoPaths.get(position);
                 Log.e("file", str);
-                ImageLoader.with(null)
-                        .file(str)
-                        .widthHeight(imageSize, imageSize)
-                        .placeHolder(R.drawable.__picker_default_weixin, true)
-                        .into(holder.ivPhoto);
+                if (str.startsWith("http://")) {
+                    ImageLoader.with(null)
+                            .url(str)
+                            .widthHeight(imageSize, imageSize)
+                            .placeHolder(R.drawable.__picker_default_weixin, true)
+                            .into(holder.ivPhoto);
+                } else {
+                    ImageLoader.with(null)
+                            .file(str)
+                            .widthHeight(imageSize, imageSize)
+                            .placeHolder(R.drawable.__picker_default_weixin, true)
+                            .into(holder.ivPhoto);
+                }
                 holder.deleteBtn.setVisibility(View.VISIBLE);
                 holder.deleteBtn.setOnClickListener(new View.OnClickListener() {
                     @Override

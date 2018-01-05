@@ -95,7 +95,9 @@ public class AddressActivitry extends BaseActivity implements View.OnClickListen
         super.onResume();
         if (Utils.isConnected(context)) {
             dialog = Utils.showLoadingDialog(context);
-            dialog.show();
+            if (!dialog.isShowing()) {
+                dialog.show();
+            }
             addressIndex();
         } else {
             EasyToast.showShort(context, "网络未连接");
@@ -153,7 +155,11 @@ public class AddressActivitry extends BaseActivity implements View.OnClickListen
                                         }
                                     }
                                     if (Utils.isConnected(context)) {
-                                        dialog.show();
+                                        if (dialog != null) {
+                                            if (!dialog.isShowing()) {
+                                                dialog.show();
+                                            }
+                                        }
                                         addressQie((String) item_address.getTag());
                                     } else {
                                         EasyToast.showShort(context, "网络未连接");

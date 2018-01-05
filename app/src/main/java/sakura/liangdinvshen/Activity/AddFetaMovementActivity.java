@@ -111,8 +111,8 @@ public class AddFetaMovementActivity extends BaseActivity {
 
             @Override
             public void onClick(View v) {
-                Date date = DateUtils.str2Date(RecordFragment.currentDate.toString()+" "+tv_start.getText().toString(),"yyyy-MM-dd HH:mm");
-                Date date1 = DateUtils.str2Date(RecordFragment.currentDate.toString()+" "+tv_endtime.getText().toString(),"yyyy-MM-dd HH:mm");
+                Date date = DateUtils.str2Date(RecordFragment.currentDate.toString() + " " + tv_start.getText().toString(), "yyyy-MM-dd HH:mm");
+                Date date1 = DateUtils.str2Date(RecordFragment.currentDate.toString() + " " + tv_endtime.getText().toString(), "yyyy-MM-dd HH:mm");
                 if (date1.getTime() < date.getTime()) {
                     EasyToast.showShort(context, "结束时间不能小于开始时间");
                     return;
@@ -120,7 +120,9 @@ public class AddFetaMovementActivity extends BaseActivity {
 
                 if (Utils.isConnected(context)) {
                     dialog = Utils.showLoadingDialog(context);
-                    dialog.show();
+                    if (!dialog.isShowing()) {
+                        dialog.show();
+                    }
                     suckleFetusDoadd(tv_start.getText().toString(), tv_endtime.getText().toString(), tv_size.getText().toString());
                 } else {
                     EasyToast.showShort(context, "网络未连接");

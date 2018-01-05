@@ -85,7 +85,9 @@ public class AddStaffManagmentActivity extends BaseActivity {
     }
 
     public void getData() {
-        dialog.show();
+        if (!dialog.isShowing()){
+            dialog.show();
+        }
         if (Utils.isConnected(context)) {
             wangQb_list();
         } else {

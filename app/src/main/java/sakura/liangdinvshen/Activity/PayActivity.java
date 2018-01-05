@@ -182,7 +182,9 @@ public class PayActivity extends BaseActivity implements View.OnClickListener {
     protected void initData() {
         if (Utils.isConnected(context)) {
             dialog = Utils.showLoadingDialog(context);
-            dialog.show();
+            if (!dialog.isShowing()) {
+                dialog.show();
+            }
             orderPay();
         } else {
             finish();
@@ -195,7 +197,9 @@ public class PayActivity extends BaseActivity implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.btn_paynow:
                 if (Utils.isConnected(context)) {
-                    dialog.show();
+                    if (!dialog.isShowing()) {
+                        dialog.show();
+                    }
                     if (Choosedalipay.isChecked()) {
                         orderalipay();
                     } else if (Choosedweixin.isChecked()) {

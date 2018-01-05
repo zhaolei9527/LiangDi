@@ -293,7 +293,9 @@ public class AddAdressActivity extends BaseActivity implements View.OnClickListe
         // TODO validate success, do something
         if (Utils.isConnected(context)) {
             dialog = Utils.showLoadingDialog(context);
-            dialog.show();
+            if (!dialog.isShowing()){
+                dialog.show();
+            }
             if (!TextUtils.isEmpty(id)) {
                 addressDoedit();
             } else {

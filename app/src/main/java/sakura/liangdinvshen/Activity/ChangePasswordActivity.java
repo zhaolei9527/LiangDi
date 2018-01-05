@@ -103,7 +103,9 @@ public class ChangePasswordActivity extends BaseActivity implements View.OnClick
 
         if (Utils.isConnected(context)) {
             dialog = Utils.showLoadingDialog(context);
-            dialog.show();
+            if (!dialog.isShowing()){
+                dialog.show();
+            }
             changpasswordIndex();
         } else {
             EasyToast.showShort(context, "网络未连接");

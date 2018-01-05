@@ -106,7 +106,9 @@ public class ChouChouActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         if (Utils.isConnected(context)) {
-            dialog.show();
+            if (!dialog.isShowing()){
+                dialog.show();
+            }
             suckleSmelly();
         } else {
             EasyToast.showShort(context, "网络未连接");

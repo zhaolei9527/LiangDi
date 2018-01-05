@@ -73,7 +73,9 @@ public class AskListActivity extends BaseActivity {
     }
 
     public void getData() {
-        dialog.show();
+        if (!dialog.isShowing()){
+            dialog.show();
+        }
         if (Utils.isConnected(context)) {
             problemGetProblem();
         } else {

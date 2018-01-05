@@ -1,5 +1,7 @@
 package sakura.liangdinvshen.other;
 
+import android.util.Log;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
@@ -78,14 +80,16 @@ public class MultipartRequestUpload extends Request<String> {
         this.listener = listener;
         this.mFileParts = files;
         this.mParams = params;
-        System.out.println(filePartName + "-" + files + "-" + params);
+        String s = filePartName + "-" + files + "-" + params;
+        Log.e("MultipartRequestUpload", "----:" + s);
         buildMultipartEntity();
     }
 
     private void buildMultipartEntity() {
         if (mFileParts != null && mFileParts.size() > 0) {
-            for (File file : mFileParts) {
-                entity.addPart(mFilePartName, new FileBody(file));
+            for (int i = 0; i < mFileParts.size(); i++) {
+                Log.e("MultipartRequestUpload", "----:" + mFileParts.get(i).getAbsolutePath());
+                entity.addPart(mFilePartName + i, new FileBody(mFileParts.get(i)));
             }
         }
 

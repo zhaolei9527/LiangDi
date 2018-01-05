@@ -81,7 +81,7 @@ public class AddBankCardActivity extends BaseActivity implements View.OnClickLis
         bank = intent.getStringExtra("bank");
         banknumber = intent.getStringExtra("banknumber");
 
-        if ("save".equals(type)){
+        if ("save".equals(type)) {
             et_bank.setText(bank);
             et_bank_number.setText(banknumber);
             et_bank_number2.setText(banknumber);
@@ -135,7 +135,8 @@ public class AddBankCardActivity extends BaseActivity implements View.OnClickLis
         if (Utils.isConnected(context)) {
             // TODO validate success, do something
             dialog = Utils.showLoadingDialog(context);
-            dialog.show();
+            if (!dialog.isShowing())
+                dialog.show();
             if ("add".equals(type)) {
                 bankAdd_bank();
             } else if ("save".equals(type)) {
