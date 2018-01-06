@@ -155,8 +155,6 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                             dialog.dismiss();
                         } else {
                             dialog.dismiss();
-
-
                             if (Utils.isConnected(context)) {
                                 final Dialog dialog1 = Utils.showLoadingDialog(context);
                                 dialog1.show();
@@ -200,7 +198,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 startActivity(new Intent(context, ChangePasswordActivity.class));
                 break;
             case R.id.tv_upapp:
-                getupdata();
+              //  getupdata();
                 break;
             case R.id.tv_lookus:
                 startActivity(new Intent(context, WhitUsDetailsActivity.class).putExtra("type", "withus"));

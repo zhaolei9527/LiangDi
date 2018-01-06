@@ -1,7 +1,7 @@
 package sakura.liangdinvshen.Activity;
 
 import android.app.Dialog;
-import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
@@ -149,7 +149,7 @@ public class BabySymptomActivity extends BaseActivity {
                 StringBuilder stringBuilder = new StringBuilder();
                 for (int i = 0; i < checkBoxes.size(); i++) {
                     if (checkBoxes.get(i).isChecked()) {
-                        if (i == 0) {
+                        if (stringBuilder.length() == 0) {
                             stringBuilder.append(checkBoxes.get(i).getText().toString());
                         } else {
                             stringBuilder.append(",");
@@ -159,7 +159,7 @@ public class BabySymptomActivity extends BaseActivity {
                 }
                 if (Utils.isConnected(context)) {
                     dialog = Utils.showLoadingDialog(context);
-                    if (!dialog.isShowing()){
+                    if (!dialog.isShowing()) {
                         dialog.show();
                     }
                     lifeAddSick(stringBuilder.toString());
@@ -182,6 +182,23 @@ public class BabySymptomActivity extends BaseActivity {
 
     @Override
     protected void initData() {
+        String zhengzhuang = getIntent().getStringExtra("babyzhengzhuang");
+
+        if (!TextUtils.isEmpty(zhengzhuang)) {
+
+            String[] split = zhengzhuang.split(",");
+
+            for (int i = 0; i < split.length; i++) {
+                for (int i1 = 0; i1 < checkBoxes.size(); i1++) {
+                    if (split[i].equals(checkBoxes.get(i1).getText())) {
+                        checkBoxes.get(i1).setChecked(true);
+                    }
+                }
+            }
+
+        }
+
+
     }
 
     /**
@@ -224,9 +241,4 @@ public class BabySymptomActivity extends BaseActivity {
         });
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) and run LayoutCreator again
-    }
 }

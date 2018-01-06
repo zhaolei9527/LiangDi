@@ -1,6 +1,8 @@
 package sakura.liangdinvshen.Activity;
 
+import android.app.Dialog;
 import android.graphics.Color;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -26,6 +28,7 @@ import sakura.liangdinvshen.R;
 import sakura.liangdinvshen.Utils.EasyToast;
 import sakura.liangdinvshen.Utils.SpUtil;
 import sakura.liangdinvshen.Utils.UrlUtils;
+import sakura.liangdinvshen.Utils.Utils;
 import sakura.liangdinvshen.Volley.VolleyInterface;
 import sakura.liangdinvshen.Volley.VolleyRequest;
 
@@ -56,6 +59,8 @@ public class YJxiangqingActivity extends BaseActivity {
     ArrayList<String> jingxieList = new ArrayList<>();
     private TextView tv_jingxie;
     private TextView tv_xuese;
+    private TextView tv_submit;
+    private Dialog dialog;
 
     @Override
     protected int setthislayout() {
@@ -77,6 +82,7 @@ public class YJxiangqingActivity extends BaseActivity {
         rl_xuese = (RelativeLayout) findViewById(R.id.rl_xuese);
         img_jingxie = (ImageView) findViewById(R.id.img_jingxie);
         rl_jingxie = (RelativeLayout) findViewById(R.id.rl_jingxie);
+        tv_submit = (TextView) findViewById(R.id.tv_submit);
     }
 
     @Override
@@ -114,6 +120,44 @@ public class YJxiangqingActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 ShowPickerView("血色", "3", xueseList);
+            }
+        });
+
+
+        tv_submit.setOnClickListener(new View.OnClickListener() {
+
+
+            @Override
+            public void onClick(View v) {
+
+                if (TextUtils.isEmpty(tv_jingxie.getText())) {
+                    EasyToast.showShort(context, "请选择经血");
+                    return;
+                }
+                if (TextUtils.isEmpty(tv_tongjing.getText())) {
+                    EasyToast.showShort(context, "请选择痛经");
+                    return;
+                }
+                if (TextUtils.isEmpty(tv_xuese.getText())) {
+                    EasyToast.showShort(context, "请选择血色");
+                    return;
+                }
+                if (TextUtils.isEmpty(tv_liuliang.getText())) {
+                    EasyToast.showShort(context, "请选择流量");
+                    return;
+                }
+
+                if (Utils.isConnected(context)) {
+                    dialog = Utils.showLoadingDialog(context);
+                    dialog.show();
+                    EventBus.getDefault().post(
+                            new BankEvent(tv_jingxie.getText().toString() + "," + tv_liuliang.getText().toString() + "," + tv_xuese.getText().toString() + "," + tv_tongjing.getText().toString()));
+                    lifeDoPeriodDetail(tv_tongjing.getText().toString(), tv_liuliang.getText().toString(), tv_xuese.getText().toString(), tv_jingxie.getText().toString());
+                } else {
+                    EasyToast.showShort(context, "网络未连接");
+                }
+
+
             }
         });
 
@@ -187,6 +231,7 @@ public class YJxiangqingActivity extends BaseActivity {
             @Override
             public void onMySuccess(String result) {
                 Log.e("RegisterActivity", result);
+                dialog.dismiss();
                 try {
                     StuBean stuBean = new Gson().fromJson(result, StuBean.class);
                     if ("1".equals(String.valueOf(stuBean.getStu()))) {
@@ -204,19 +249,11 @@ public class YJxiangqingActivity extends BaseActivity {
 
             @Override
             public void onMyError(VolleyError error) {
+                dialog.dismiss();
                 error.printStackTrace();
                 Toast.makeText(context, getString(R.string.Abnormalserver), Toast.LENGTH_SHORT).show();
             }
         });
     }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        EventBus.getDefault().post(
-                new BankEvent(tv_jingxie.getText().toString() + "," + tv_liuliang.getText().toString() + "," + tv_xuese.getText().toString() + "," + tv_tongjing.getText().toString()));
-        lifeDoPeriodDetail(tv_tongjing.getText().toString(), tv_liuliang.getText().toString(), tv_xuese.getText().toString(), tv_jingxie.getText().toString());
-    }
-
 
 }

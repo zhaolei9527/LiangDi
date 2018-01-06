@@ -91,7 +91,7 @@ public class DueDateActivity extends BaseActivity implements View.OnClickListene
                 .setBackgroundId(0x00FFFFFF) //设置外部遮罩颜色
                 .setDecorView(null)
                 .build();
-
+        pvTime.show();
     }
 
     @Override

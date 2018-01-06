@@ -378,6 +378,11 @@ public class MyOrderDetailsActivity extends BaseActivity implements View.OnClick
                             btn_change_price.setVisibility(View.GONE);
                         }
 
+                        if ("-1".equals(stu)) {
+                            btn_isget_order.setVisibility(View.GONE);
+                            btn_change_price.setVisibility(View.GONE);
+                        }
+
 
                         ll_orders.addView(item_oreder_details_layout);
                     }

@@ -103,10 +103,25 @@ public class DiaryActivity extends BaseActivity {
 
         String s2 = String.valueOf(RecordFragment.currentDate.getDay());
 
+        int day = RecordFragment.currentDate.getDay();
+
+        if (day < 10) {
+            s2 = "0" + RecordFragment.currentDate.getDay();
+        } else {
+            s2 = String.valueOf(RecordFragment.currentDate.getDay());
+        }
+
+        String s3 = s + s1 + s2;
+
+        Log.e("DiaryActivity", s3);
+
+
         tv_week.setText(DateUtils.getWeekByDateStr(s + s1 + s2));
+
+
         if (Utils.isConnected(context)) {
             dialog = Utils.showLoadingDialog(context);
-            if (!dialog.isShowing()){
+            if (!dialog.isShowing()) {
                 dialog.show();
             }
             lifeShowDiary();
@@ -124,7 +139,7 @@ public class DiaryActivity extends BaseActivity {
             return;
         }
         if (Utils.isConnected(context)) {
-            if (!dialog.isShowing()){
+            if (!dialog.isShowing()) {
                 dialog.show();
             }
             lifeDiary(content);

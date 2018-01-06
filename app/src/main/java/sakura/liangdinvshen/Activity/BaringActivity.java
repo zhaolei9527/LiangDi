@@ -143,6 +143,8 @@ public class BaringActivity extends BaseActivity {
                         Toast.makeText(context, R.string.Thepermissionapplicationisrejected, Toast.LENGTH_SHORT).show();
                     }
                 });
+
+
     }
 
     @Override
@@ -172,6 +174,9 @@ public class BaringActivity extends BaseActivity {
                 }
 
                 if (!datas.isEmpty()) {
+                    if (!dialog.isShowing()) {
+                        dialog.show();
+                    }
                     orderDoretreat(datas);
                 } else {
                     EasyToast.showShort(context, "请选择图片");
@@ -185,7 +190,7 @@ public class BaringActivity extends BaseActivity {
     protected void initData() {
         if (Utils.isConnected(context)) {
             dialog = Utils.showLoadingDialog(context);
-            if (!dialog.isShowing()){
+            if (!dialog.isShowing()) {
                 dialog.show();
             }
             ddpicIndex();
@@ -208,6 +213,7 @@ public class BaringActivity extends BaseActivity {
             @Override
             public void onMySuccess(String result) {
                 Log.e("RegisterActivity", result);
+                dialog.dismiss();
                 try {
                     CodeBean codeBean = new Gson().fromJson(result, CodeBean.class);
                     if ("1".equals(String.valueOf(codeBean.getCode()))) {
@@ -226,6 +232,7 @@ public class BaringActivity extends BaseActivity {
 
             @Override
             public void onMyError(VolleyError error) {
+                dialog.dismiss();
                 error.printStackTrace();
             }
         });
@@ -250,6 +257,7 @@ public class BaringActivity extends BaseActivity {
                         final ArrayList<String> paths = new ArrayList<String>();
                         for (int i = 0; i < ddpicIndexBean.getRes().getBelly_photo().size(); i++) {
                             final int finalI = i;
+                            final DdpicIndexBean finalDdpicIndexBean = ddpicIndexBean;
                             ImageRequest imageRequest = new ImageRequest(
                                     UrlUtils.URL + ddpicIndexBean.getRes().getBelly_photo().get(i),
                                     new Response.Listener<Bitmap>() {
@@ -279,6 +287,9 @@ public class BaringActivity extends BaseActivity {
                                                             @Override
                                                             public void run() {
                                                                 recyclerView.showPics(paths);
+                                                                if (finalI == finalDdpicIndexBean.getRes().getBelly_photo().size()-1) {
+                                                                    dialog.dismiss();
+                                                                }
                                                             }
                                                         });
                                                     } catch (Exception e) {
@@ -294,6 +305,7 @@ public class BaringActivity extends BaseActivity {
                             });
                             App.getQueues().add(imageRequest);
                         }
+                    } else {
                         dialog.dismiss();
                     }
                     ddpicIndexBean = null;
@@ -320,7 +332,5 @@ public class BaringActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         App.getQueues().cancelAll("ddpic/index");
-        App.getQueues().cancelAll("ddpic/index");
-        deleteDir(Environment.getExternalStorageDirectory().getPath() + "/cache");
     }
 }

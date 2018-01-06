@@ -107,7 +107,8 @@ public class AskListActivity extends BaseActivity {
         params.put("key", UrlUtils.KEY);
         params.put("uid", String.valueOf(SpUtil.get(context, "uid", "")));
         params.put("time", RecordFragment.currentDate.toString());
-        VolleyRequest.RequestPost(context, UrlUtils.BASE_URL + "problem/get_problem", "problem/get_problem", params, new VolleyInterface(context) {
+        Log.e("AskListActivity", "params:" + params);
+        VolleyRequest.RequestPost(context, UrlUtils.BASE_URL + "problem/pro_list", "problem/pro_list", params, new VolleyInterface(context) {
             @Override
             public void onMySuccess(String result) {
                 dialog.dismiss();

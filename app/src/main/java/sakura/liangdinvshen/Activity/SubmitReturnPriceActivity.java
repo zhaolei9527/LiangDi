@@ -107,8 +107,6 @@ public class SubmitReturnPriceActivity extends BaseActivity implements View.OnCl
         super.onDestroy();
         App.getQueues().cancelAll("order/retreat");
         App.getQueues().cancelAll("order/doretreat");
-        deleteDir(Environment.getExternalStorageDirectory().getPath() + "/ScreenCapture");
-
     }
 
     @Override

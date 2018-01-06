@@ -10,14 +10,15 @@ import java.util.List;
  * 功能描述：
  */
 public class ProblemGetProblemBean {
+
     /**
      * stu : 1
-     * status : 1
-     * res : [{"id":"7","problem":"您今天运动了吗","answer":3}]
+     * status : 2
+     * res : [{"id":"15","problem_title":"吃药了吗？","pregnancy_time":"239","add_time":"1515245285","save_time":"1515245285","status":"1","answer":3}]
      */
 
     private int stu;
-    private int status;
+    private String status;
     private List<ResBean> res;
 
     public int getStu() {
@@ -28,11 +29,11 @@ public class ProblemGetProblemBean {
         this.stu = stu;
     }
 
-    public int getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
@@ -46,13 +47,21 @@ public class ProblemGetProblemBean {
 
     public static class ResBean {
         /**
-         * id : 7
-         * problem : 您今天运动了吗
+         * id : 15
+         * problem_title : 吃药了吗？
+         * pregnancy_time : 239
+         * add_time : 1515245285
+         * save_time : 1515245285
+         * status : 1
          * answer : 3
          */
 
         private String id;
-        private String problem;
+        private String problem_title;
+        private String pregnancy_time;
+        private String add_time;
+        private String save_time;
+        private String status;
         private int answer;
 
         public String getId() {
@@ -63,12 +72,44 @@ public class ProblemGetProblemBean {
             this.id = id;
         }
 
-        public String getProblem() {
-            return problem;
+        public String getProblem_title() {
+            return problem_title;
         }
 
-        public void setProblem(String problem) {
-            this.problem = problem;
+        public void setProblem_title(String problem_title) {
+            this.problem_title = problem_title;
+        }
+
+        public String getPregnancy_time() {
+            return pregnancy_time;
+        }
+
+        public void setPregnancy_time(String pregnancy_time) {
+            this.pregnancy_time = pregnancy_time;
+        }
+
+        public String getAdd_time() {
+            return add_time;
+        }
+
+        public void setAdd_time(String add_time) {
+            this.add_time = add_time;
+        }
+
+        public String getSave_time() {
+            return save_time;
+        }
+
+        public void setSave_time(String save_time) {
+            this.save_time = save_time;
+        }
+
+        public String getStatus() {
+            return status;
+        }
+
+        public void setStatus(String status) {
+            this.status = status;
         }
 
         public int getAnswer() {

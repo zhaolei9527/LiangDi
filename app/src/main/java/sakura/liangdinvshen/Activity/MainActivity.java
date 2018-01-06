@@ -82,8 +82,6 @@ public class MainActivity extends BaseActivity {
         if (!io.vov.vitamio.LibsChecker.checkVitamioLibs(this)) {
             return;
         }
-
-
     }
 
     @Override

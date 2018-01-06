@@ -253,6 +253,7 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
         HashMap<String, String> params = new HashMap<>(1);
         params.put("key", UrlUtils.KEY);
         params.put("uid", uid);
+        Log.e("NewsFragment", params.toString());
         VolleyRequest.RequestPost(getActivity(), UrlUtils.BASE_URL + "index/index", "index/index", params, new VolleyInterface(getActivity()) {
             @Override
             public void onMySuccess(String result) {
@@ -260,7 +261,7 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
                     dialog.dismiss();
                 }
                 String decode = result;
-                Log.e("NewsFragment", decode);
+                Log.e("RegisterActivity", decode);
                 try {
                     NewsIndexBean newsIndexBean = new Gson().fromJson(decode, NewsIndexBean.class);
                     //头部展示数据处理

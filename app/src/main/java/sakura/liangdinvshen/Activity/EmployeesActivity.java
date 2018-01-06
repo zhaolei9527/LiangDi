@@ -3,6 +3,7 @@ package sakura.liangdinvshen.Activity;
 import android.content.Intent;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -29,6 +30,8 @@ public class EmployeesActivity extends BaseActivity implements View.OnClickListe
     private TextView tv_xiaofeiguanli;
     private TextView tv_yuangong;
     private TextView tv_shezhi;
+    private RelativeLayout rl_yuangong;
+    private RelativeLayout rl_shezhi;
 
     @Override
     protected int setthislayout() {
@@ -38,6 +41,11 @@ public class EmployeesActivity extends BaseActivity implements View.OnClickListe
     @Override
     protected void initview() {
         rl_back = (FrameLayout) findViewById(R.id.rl_back);
+
+        rl_yuangong = (RelativeLayout) findViewById(R.id.rl_yuangong);
+        rl_shezhi = (RelativeLayout) findViewById(R.id.rl_shezhi);
+
+
         SimpleDraweeView = (SimpleDraweeView) findViewById(R.id.SimpleDraweeView);
         tv_name = (TextView) findViewById(R.id.tv_name);
         tv_xiaofei = (TextView) findViewById(R.id.tv_xiaofei);
@@ -65,11 +73,11 @@ public class EmployeesActivity extends BaseActivity implements View.OnClickListe
 
         String role = (String) SpUtil.get(context, "Role", "");
         if ("2".equals(role)) {
-            tv_yuangong.setVisibility(View.GONE);
-            tv_shezhi.setVisibility(View.GONE);
+            rl_yuangong.setVisibility(View.GONE);
+            rl_shezhi.setVisibility(View.GONE);
         } else {
-            tv_yuangong.setVisibility(View.VISIBLE);
-            tv_shezhi.setVisibility(View.VISIBLE);
+            rl_yuangong.setVisibility(View.VISIBLE);
+            rl_shezhi.setVisibility(View.VISIBLE);
         }
 
     }

@@ -1,6 +1,8 @@
 package sakura.liangdinvshen.Activity;
 
+import android.app.Dialog;
 import android.graphics.Color;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -21,11 +23,13 @@ import java.util.HashMap;
 import sakura.liangdinvshen.Base.BaseActivity;
 import sakura.liangdinvshen.Bean.BankEvent;
 import sakura.liangdinvshen.Bean.StuBean;
+import sakura.liangdinvshen.Bean.SuckleGrowBean;
 import sakura.liangdinvshen.Fragment.RecordFragment;
 import sakura.liangdinvshen.R;
 import sakura.liangdinvshen.Utils.EasyToast;
 import sakura.liangdinvshen.Utils.SpUtil;
 import sakura.liangdinvshen.Utils.UrlUtils;
+import sakura.liangdinvshen.Utils.Utils;
 import sakura.liangdinvshen.Volley.VolleyInterface;
 import sakura.liangdinvshen.Volley.VolleyRequest;
 
@@ -63,6 +67,8 @@ public class GrowthRecordActivity extends BaseActivity {
     private int minshengao = 40;
     private int mintouwei = 3;
     private int min = 11;
+    private TextView tv_submit;
+    private Dialog dialog;
 
     @Override
     protected int setthislayout() {
@@ -81,6 +87,42 @@ public class GrowthRecordActivity extends BaseActivity {
         img_xuese = (ImageView) findViewById(R.id.img_xuese);
         tv_touwei = (TextView) findViewById(R.id.tv_touwei);
         rl_touwei = (RelativeLayout) findViewById(R.id.rl_touwei);
+
+        tv_submit = (TextView) findViewById(R.id.tv_submit);
+
+        tv_submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                if (TextUtils.isEmpty(tv_shengao.getText())) {
+                    EasyToast.showShort(context, "请选择身高");
+                    return;
+                }
+
+                if (TextUtils.isEmpty(tv_shengao.getText())) {
+                    EasyToast.showShort(context, "请选择体重");
+                    return;
+                }
+
+                if (TextUtils.isEmpty(tv_shengao.getText())) {
+                    EasyToast.showShort(context, "请选择头围");
+                    return;
+                }
+
+
+                if (Utils.isConnected(context)) {
+                    dialog = Utils.showLoadingDialog(context);
+                    dialog.show();
+                    suckleDoGrow(tv_shengao.getText().toString(), tv_tizhong.getText().toString(), tv_touwei.getText().toString());
+                    EventBus.getDefault().post(
+                            new BankEvent(tv_shengao.getText().toString() + tv_tizhong.getText().toString() + tv_touwei.getText().toString(), "chengzhang"));
+                }
+
+            }
+        });
+
+
     }
 
     @Override
@@ -165,29 +207,31 @@ public class GrowthRecordActivity extends BaseActivity {
             tizhongminList.add("." + String.valueOf(i) + "kg");
         }
 
+        suckleGrow();
+
     }
+
 
     /**
      * 生长记录
      */
-    private void suckleDoGrow(String height, String weight, String head) {
+    private void suckleGrow() {
         HashMap<String, String> params = new HashMap<>(1);
         params.put("key", UrlUtils.KEY);
         params.put("uid", String.valueOf(SpUtil.get(context, "uid", "")));
-        params.put("height", height);
-        params.put("weight", weight);
-        params.put("head", head);
         params.put("time", RecordFragment.currentDate.toString());
-        VolleyRequest.RequestPost(context, UrlUtils.BASE_URL + "suckle/do_grow", "suckle/do_grow", params, new VolleyInterface(context) {
+        VolleyRequest.RequestPost(context, UrlUtils.BASE_URL + "suckle/grow", "suckle/grow", params, new VolleyInterface(context) {
             @Override
             public void onMySuccess(String result) {
                 Log.e("RegisterActivity", result);
                 try {
-                    StuBean stuBean = new Gson().fromJson(result, StuBean.class);
-                    if ("1".equals(String.valueOf(stuBean.getStu()))) {
-                    } else {
-                        EasyToast.showShort(context, "提交失败");
+                    SuckleGrowBean suckleGrowBean = new Gson().fromJson(result, SuckleGrowBean.class);
+                    if ("1".equals(String.valueOf(suckleGrowBean.getStu()))) {
+                        tv_touwei.setText(suckleGrowBean.getRes().getHead());
+                        tv_tizhong.setText(suckleGrowBean.getRes().getWeight());
+                        tv_shengao.setText(suckleGrowBean.getRes().getHeight());
                     }
+                    suckleGrowBean = null;
                     result = null;
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -203,11 +247,45 @@ public class GrowthRecordActivity extends BaseActivity {
         });
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        suckleDoGrow(tv_shengao.getText().toString(), tv_tizhong.getText().toString(), tv_touwei.getText().toString());
-        EventBus.getDefault().post(
-                new BankEvent(tv_shengao.getText().toString() + tv_tizhong.getText().toString() + tv_touwei.getText().toString(), "chengzhang"));
+
+    /**
+     * 生长记录
+     */
+    private void suckleDoGrow(String height, String weight, String head) {
+        HashMap<String, String> params = new HashMap<>(6);
+        params.put("key", UrlUtils.KEY);
+        params.put("uid", String.valueOf(SpUtil.get(context, "uid", "")));
+        params.put("height", height);
+        params.put("weight", weight);
+        params.put("head", head);
+        params.put("time", RecordFragment.currentDate.toString());
+        VolleyRequest.RequestPost(context, UrlUtils.BASE_URL + "suckle/do_grow", "suckle/do_grow", params, new VolleyInterface(context) {
+            @Override
+            public void onMySuccess(String result) {
+                Log.e("RegisterActivity", result);
+                dialog.dismiss();
+                try {
+                    StuBean stuBean = new Gson().fromJson(result, StuBean.class);
+                    if ("1".equals(String.valueOf(stuBean.getStu()))) {
+                        EasyToast.showShort(context, "保存成功");
+                        finish();
+                    } else {
+                        EasyToast.showShort(context, "提交失败");
+                    }
+                    result = null;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(context, getString(R.string.Abnormalserver), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onMyError(VolleyError error) {
+                dialog.dismiss();
+                error.printStackTrace();
+                Toast.makeText(context, getString(R.string.Abnormalserver), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
+
 }

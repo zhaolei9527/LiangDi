@@ -105,10 +105,10 @@ public class CalendarsAdapter extends RecyclerView.Adapter<CalendarsAdapter.View
                 viewHolder.ll_jilu_baby.setVisibility(View.GONE);
                 viewHolder.ll_jilu_huaiyun.setVisibility(View.VISIBLE);
             } else if ("4".equals(jieduan)) {
-                viewHolder.ll_mingcijieshi.setVisibility(View.GONE);
-                viewHolder.ll_body.setVisibility(View.GONE);
-                viewHolder.ll_jilu_baby.setVisibility(View.GONE);
-                viewHolder.ll_jilu_huaiyun.setVisibility(View.VISIBLE);
+                viewHolder.ll_mingcijieshi.setVisibility(View.VISIBLE);
+                viewHolder.ll_body.setVisibility(View.VISIBLE);
+                viewHolder.ll_jilu_baby.setVisibility(View.VISIBLE);
+                viewHolder.ll_jilu_huaiyun.setVisibility(View.GONE);
             }
         } else {
             //其他
@@ -221,7 +221,7 @@ public class CalendarsAdapter extends RecyclerView.Adapter<CalendarsAdapter.View
         holder.ll_huaiyun_tizhong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ShowPickerView("体重", "tizhong", tizhongList, holder.tv_body_tizhong, 250);
+                ShowPickerView("体重", "tizhong", tizhongList, holder.tv_huaiyun_tizhong, 250);
             }
         });
 
@@ -262,7 +262,7 @@ public class CalendarsAdapter extends RecyclerView.Adapter<CalendarsAdapter.View
         holder.ll_body_zhengzhuang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity(new Intent(context, SymptomActivity.class));
+                context.startActivity(new Intent(context, SymptomActivity.class).putExtra("zhengzhuang", holder.tv_body_zhengzhuang.getText().toString()));
                 //注册EventBus
                 if (!EventBus.getDefault().isRegistered(CalendarsAdapter.this)) {
                     EventBus.getDefault().register(CalendarsAdapter.this);
@@ -270,14 +270,13 @@ public class CalendarsAdapter extends RecyclerView.Adapter<CalendarsAdapter.View
             }
         });
 
-
         /**
          *怀孕身体症状
          * */
         holder.ll_huaiyun_zhengzhuang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity(new Intent(context, SymptomActivity.class));
+                context.startActivity(new Intent(context, SymptomActivity.class).putExtra("zhengzhuang", holder.tv_huaiyun_zhengzhuang.getText().toString()));
                 //注册EventBus
                 if (!EventBus.getDefault().isRegistered(CalendarsAdapter.this)) {
                     EventBus.getDefault().register(CalendarsAdapter.this);
@@ -291,7 +290,7 @@ public class CalendarsAdapter extends RecyclerView.Adapter<CalendarsAdapter.View
         holder.ll_baby_bushufu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity(new Intent(context, BabySymptomActivity.class));
+                context.startActivity(new Intent(context, BabySymptomActivity.class).putExtra("babyzhengzhuang", holder.tv_baby_bushufu.getText()));
                 //注册EventBus
                 if (!EventBus.getDefault().isRegistered(CalendarsAdapter.this)) {
                     EventBus.getDefault().register(CalendarsAdapter.this);
@@ -753,7 +752,7 @@ public class CalendarsAdapter extends RecyclerView.Adapter<CalendarsAdapter.View
         params.put("key", UrlUtils.KEY);
         params.put("uid", String.valueOf(SpUtil.get(context, "uid", "")));
         params.put("time", date);
-        Log.e("CalendarsAdapter", "params:" + params);
+        Log.e("RegisterActivity", "params:" + params);
         VolleyRequest.RequestPost(context, UrlUtils.BASE_URL + "life/user_days", "life/user_days", params, new VolleyInterface(context) {
             @Override
             public void onMySuccess(String result) {
@@ -791,10 +790,10 @@ public class CalendarsAdapter extends RecyclerView.Adapter<CalendarsAdapter.View
                             viewHolder.ll_jilu_baby.setVisibility(View.GONE);
                             viewHolder.ll_jilu_huaiyun.setVisibility(View.VISIBLE);
                         } else if ("4".equals(data.getLive_stage())) {
-                            viewHolder.ll_mingcijieshi.setVisibility(View.GONE);
-                            viewHolder.ll_body.setVisibility(View.GONE);
-                            viewHolder.ll_jilu_baby.setVisibility(View.GONE);
-                            viewHolder.ll_jilu_huaiyun.setVisibility(View.VISIBLE);
+                            viewHolder.ll_mingcijieshi.setVisibility(View.VISIBLE);
+                            viewHolder.ll_body.setVisibility(View.VISIBLE);
+                            viewHolder.ll_jilu_baby.setVisibility(View.VISIBLE);
+                            viewHolder.ll_jilu_huaiyun.setVisibility(View.GONE);
                         }
 
                         if ("1".equals(data.getIs_yuejing())) {
@@ -844,9 +843,15 @@ public class CalendarsAdapter extends RecyclerView.Adapter<CalendarsAdapter.View
                         viewHolder.tv_huaiyun_zhengzhuang.setText(data.getZheng_zhuang());
 
                         if (!"未记录".equals(data.getTai_dong())) {
-                            viewHolder.tv_huaiyun_taidong.setText(data.getTai_dong() + "次");
+                            viewHolder.tv_huaiyun_taidong.setText("查看");
                         }
-                        viewHolder.tv_huaiyun_wenti.setText(data.getTi_wen());
+
+                        if ("1".equals(String.valueOf(data.getQuestion()))) {
+                            viewHolder.tv_huaiyun_wenti.setText("查看");
+                        } else {
+                            viewHolder.tv_huaiyun_wenti.setText(data.getDa_du_pic());
+                        }
+
                     }
                     result = null;
                 } catch (Exception e) {

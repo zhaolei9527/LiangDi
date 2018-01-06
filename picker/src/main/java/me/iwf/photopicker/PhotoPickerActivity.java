@@ -68,7 +68,6 @@ public class PhotoPickerActivity extends AppCompatActivity {
 
     fragmentManager = getSupportFragmentManager();
 
-
     maxCount = getIntent().getIntExtra(EXTRA_MAX_COUNT, DEFAULT_MAX_COUNT);
     columnNumber = getIntent().getIntExtra(EXTRA_GRID_COLUMN, DEFAULT_COLUMN_NUMBER);
     originalPhotos = getIntent().getStringArrayListExtra(EXTRA_ORIGINAL_PHOTOS);

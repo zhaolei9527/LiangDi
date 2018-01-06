@@ -88,9 +88,7 @@ public class MultiPickResultView extends FrameLayout {
         if (action == MultiPickResultView.ACTION_ONLY_SHOW){//当只用作显示图片时,一行显示3张
             recyclerView.setLayoutManager(new StaggeredGridLayoutManager(3, OrientationHelper.VERTICAL));
         }
-
         selectedPhotos = new ArrayList<>();
-
         this.action = action;
         if (photos != null && photos.size() >0){
             selectedPhotos.addAll(photos);

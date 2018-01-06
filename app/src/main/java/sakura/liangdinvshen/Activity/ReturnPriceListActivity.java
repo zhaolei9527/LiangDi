@@ -110,6 +110,12 @@ public class ReturnPriceListActivity extends BaseActivity implements View.OnClic
                 Log.e("RegisterActivity", result);
                 try {
                     OrderThindexBean orderThindexBean = new Gson().fromJson(result, OrderThindexBean.class);
+
+                    if ("0".equals(String.valueOf(orderThindexBean.getStu()))) {
+                        ll_empty.setVisibility(View.VISIBLE);
+                        return;
+                    }
+
                     if (p == 1) {
                         if ("1".equals(String.valueOf(orderThindexBean.getStu()))) {
                             returnPriceAdapter = new ReturnPriceAdapter(orderThindexBean.getRes(), context);

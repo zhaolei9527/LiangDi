@@ -26,6 +26,7 @@ import com.hyphenate.helpdesk.model.AgentInfo;
 import com.hyphenate.helpdesk.model.MessageHelper;
 import com.hyphenate.helpdesk.util.Log;
 import com.mob.MobApplication;
+import com.tencent.bugly.crashreport.CrashReport;
 import com.tencent.smtt.sdk.QbSdk;
 
 import org.lzh.framework.updatepluginlib.UpdateConfig;
@@ -66,6 +67,7 @@ public class App extends MobApplication {
     public void onCreate() {
         super.onCreate();
 
+        CrashReport.initCrashReport(getApplicationContext(), "bb84798cff", false);
 
         //后面可以设置其他属性
         queues = Volley.newRequestQueue(getApplicationContext());
@@ -107,11 +109,11 @@ public class App extends MobApplication {
                             // 此apk包的版本号
                             update.setVersionCode(Integer.parseInt(getVersionCode.getRes().getAz().getVersion()));
                             // 此apk包的版本名称
-                            //update.setVersionName(object.optString("update_ver_name"));
+                            update.setVersionName(getVersionCode.getRes().getAz().getVersion());
                             // 此apk包的更新内容
                             update.setUpdateContent(getVersionCode.getRes().getAz().getContent());
                             // 此apk包是否为强制更新
-                            //  update.setForced(false);
+                            update.setForced(true);
                             // 是否显示忽略此次版本更新按钮
                             //  update.setIgnore(object.optBoolean("ignore_able",false));
                         } else {

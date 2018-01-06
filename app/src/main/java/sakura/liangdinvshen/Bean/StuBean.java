@@ -22,6 +22,17 @@ public class StuBean {
     private int code;
     private String error_msg;
 
+    public String getQiandao_jifen() {
+        return qiandao_jifen;
+    }
+
+    public void setQiandao_jifen(String qiandao_jifen) {
+        this.qiandao_jifen = qiandao_jifen;
+    }
+
+    private String qiandao_jifen;
+
+
     public String getRes() {
         return res;
     }

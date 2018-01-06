@@ -170,6 +170,7 @@ public class PayActivity extends BaseActivity implements View.OnClickListener {
 
         api = WXAPIFactory.createWXAPI(this, Constants.APP_ID, false);
         api.registerApp(Constants.APP_ID);
+        dialog = Utils.showLoadingDialog(context);
     }
 
     @Override
@@ -181,10 +182,6 @@ public class PayActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void initData() {
         if (Utils.isConnected(context)) {
-            dialog = Utils.showLoadingDialog(context);
-            if (!dialog.isShowing()) {
-                dialog.show();
-            }
             orderPay();
         } else {
             finish();
@@ -294,7 +291,7 @@ public class PayActivity extends BaseActivity implements View.OnClickListener {
                         req.packageValue = "Sign=WXPay";
                         req.nonceStr = orderWxpayBean.getData().getNonceStr();
                         req.timeStamp = orderWxpayBean.getData().getTimeStamp();
-                        req.sign = "Sign=WXPay";
+                        req.sign = orderWxpayBean.getData().getSign();
                         api.sendReq(req);
                     }
                     orderWxpayBean = null;

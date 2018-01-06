@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import sakura.liangdinvshen.Activity.AskListActivity;
 import sakura.liangdinvshen.Bean.BankEvent;
 import sakura.liangdinvshen.Bean.ProblemGetProblemBean;
 import sakura.liangdinvshen.Bean.StuBean;
@@ -82,8 +83,7 @@ public class AskListAdapter extends RecyclerView.Adapter<AskListAdapter.ViewHold
             }
         });
 
-        holder.tv_title.setText(String.valueOf(position + 1) + "、" + resBean.getProblem());
-
+        holder.tv_title.setText(String.valueOf(position + 1) + "、" + resBean.getProblem_title());
 
         if ("1".equals(String.valueOf(resBean.getAnswer()))) {
             holder.btnIsChoosed.setChecked(true);
@@ -120,10 +120,10 @@ public class AskListAdapter extends RecyclerView.Adapter<AskListAdapter.ViewHold
     }
 
     /**
-     * 免责声明获取
+     * 问题提交
      */
     private void problemSubmitProblem(final Context context, ArrayList<ProblemGetProblemBean.ResBean> datas) {
-        HashMap<String, String> params = new HashMap<>(1);
+        HashMap<String, String> params = new HashMap<>(3);
         params.put("key", UrlUtils.KEY);
         params.put("uid", String.valueOf(SpUtil.get(context, "uid", "")));
         params.put("time", RecordFragment.currentDate.toString());
@@ -150,6 +150,12 @@ public class AskListAdapter extends RecyclerView.Adapter<AskListAdapter.ViewHold
                         EasyToast.showShort(context, "提交成功");
                         EventBus.getDefault().post(
                                 new BankEvent("ask", "ask"));
+                        try {
+                            AskListActivity context1 = (AskListActivity) context;
+                            context1.finish();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     } else {
                         EasyToast.showShort(context, "提交失败");
                     }

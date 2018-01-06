@@ -1,5 +1,6 @@
 package sakura.liangdinvshen.Fragment;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -48,8 +49,6 @@ import sakura.liangdinvshen.View.QiandaoDialog;
 import sakura.liangdinvshen.Volley.VolleyInterface;
 import sakura.liangdinvshen.Volley.VolleyRequest;
 
-import static sakura.liangdinvshen.R.style.dialog;
-
 /**
  * Created by 赵磊 on 2017/9/19.
  */
@@ -91,6 +90,7 @@ public class MyFragment extends Fragment implements View.OnClickListener {
     private ImageView mImg12;
     private RelativeLayout mRlWangdian;
     private TextView mTvQiandao;
+    private Dialog dialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -147,7 +147,7 @@ public class MyFragment extends Fragment implements View.OnClickListener {
         }
 
         mTvName.setText(String.valueOf(SpUtil.get(getActivity(), "username", "")));
-        mTvJifen.setText("可用/冻结" + String.valueOf(SpUtil.get(getActivity(), "jifen", "0"))+String.valueOf(SpUtil.get(getActivity(),"dongjie","0")));
+        mTvJifen.setText("可用/冻结" + String.valueOf(SpUtil.get(getActivity(), "jifen", "0")) + String.valueOf(SpUtil.get(getActivity(), "dongjie", "0")));
         mTvYue.setText("余额￥" + String.valueOf(SpUtil.get(getActivity(), "money", "")));
 
         mRlMyService.setOnClickListener(this);
@@ -268,7 +268,10 @@ public class MyFragment extends Fragment implements View.OnClickListener {
             case R.id.ll_qiandao:
                 if ("签到".equals(mTvQiandao.getText().toString())) {
                     if (Utils.isConnected(getActivity())) {
-
+                        dialog = Utils.showLoadingDialog(getActivity());
+                        if (!dialog.isShowing()) {
+                            dialog.show();
+                        }
                         singlePageCheckIn();
                     } else {
                         EasyToast.showShort(getActivity(), "网络未连接");
@@ -297,6 +300,16 @@ public class MyFragment extends Fragment implements View.OnClickListener {
                 try {
                     UserInfoBean userInfoBean = new Gson().fromJson(result, UserInfoBean.class);
                     if ("1".equals(String.valueOf(userInfoBean.getCode()))) {
+
+                        String img = (String) SpUtil.get(getActivity(), "img", "");
+                        if (img.equals(userInfoBean.getList().getImg())) {
+                        } else {
+                            if (img.startsWith("http://")) {
+                                mSdvTouxiang.setImageURI(img);
+                            } else {
+                                mSdvTouxiang.setImageURI(UrlUtils.URL + String.valueOf(SpUtil.get(getActivity(), "img", "")));
+                            }
+                        }
                         SpUtil.putAndApply(getActivity(), "img", userInfoBean.getList().getImg());
                         SpUtil.putAndApply(getActivity(), "account", userInfoBean.getList().getTel());
                         SpUtil.putAndApply(getActivity(), "username", userInfoBean.getList().getNi_name());
@@ -305,12 +318,6 @@ public class MyFragment extends Fragment implements View.OnClickListener {
                         SpUtil.putAndApply(getActivity(), "Role", userInfoBean.getList().getRole());
                         SpUtil.putAndApply(getActivity(), "jieduan", userInfoBean.getList().getStu());
                         SpUtil.putAndApply(getActivity(), "qiandao", userInfoBean.getList().getIs_qian());
-                        String img = (String) SpUtil.get(getActivity(), "img", "");
-                        if (img.startsWith("http://")) {
-                            mSdvTouxiang.setImageURI(img);
-                        } else {
-                            mSdvTouxiang.setImageURI(UrlUtils.URL + String.valueOf(SpUtil.get(getActivity(), "img", "")));
-                        }
 
                         if ("0".equals(String.valueOf(userInfoBean.getList().getIs_qian()))) {
                             mTvQiandao.setText("签到");
@@ -320,7 +327,7 @@ public class MyFragment extends Fragment implements View.OnClickListener {
 
                         mTvName.setText(String.valueOf(SpUtil.get(getActivity(), "username", "")));
 
-                        mTvJifen.setText("可用/冻结" + String.valueOf(SpUtil.get(getActivity(), "jifen", "0"))+String.valueOf(SpUtil.get(getActivity(),"dongjie","0")));
+                        mTvJifen.setText("可用/冻结：" + String.valueOf(SpUtil.get(getActivity(), "jifen", "0")) + String.valueOf(SpUtil.get(getActivity(), "dongjie", "0")));
 
                         mTvYue.setText("余额￥" + String.valueOf(SpUtil.get(getActivity(), "money", "")));
                         String jieduan = (String) SpUtil.get(getActivity(), "jieduan", "");
@@ -361,7 +368,7 @@ public class MyFragment extends Fragment implements View.OnClickListener {
 
 
     /**
-     * 免责声明获取
+     * 签到
      */
     private void singlePageCheckIn() {
         HashMap<String, String> params = new HashMap<>(1);
@@ -371,14 +378,15 @@ public class MyFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onMySuccess(String result) {
                 Log.e("RegisterActivity", result);
+                dialog.dismiss();
                 try {
                     StuBean stuBean = new Gson().fromJson(result, StuBean.class);
                     if ("1".equals(String.valueOf(stuBean.getStu()))) {
                         mTvQiandao.setText("已签到");
                         String jifen = (String) SpUtil.get(getActivity(), "jifen", "");
                         int i = Integer.parseInt(jifen);
-                        i = ++i;
-                        new QiandaoDialog(getActivity(), dialog, "当前积分" + i).show();
+                        i = i + Integer.parseInt(stuBean.getQiandao_jifen());
+                        new QiandaoDialog(getActivity(), R.style.dialog, "当前积分" + i, "+" + stuBean.getQiandao_jifen()).show();
                         userInfo();
                     } else {
                         mTvQiandao.setText("已签到");
@@ -394,6 +402,7 @@ public class MyFragment extends Fragment implements View.OnClickListener {
 
             @Override
             public void onMyError(VolleyError error) {
+                dialog.dismiss();
                 error.printStackTrace();
                 Toast.makeText(getActivity(), getString(R.string.Abnormalserver), Toast.LENGTH_SHORT).show();
             }

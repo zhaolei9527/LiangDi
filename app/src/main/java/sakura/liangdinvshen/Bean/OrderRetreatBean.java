@@ -17,7 +17,7 @@ public class OrderRetreatBean {
 
     private int code;
     private String msg;
-    private int tkmoney;
+    private double tkmoney;
     private String type;
 
     public int getCode() {
@@ -36,11 +36,11 @@ public class OrderRetreatBean {
         this.msg = msg;
     }
 
-    public int getTkmoney() {
+    public double getTkmoney() {
         return tkmoney;
     }
 
-    public void setTkmoney(int tkmoney) {
+    public void setTkmoney(double tkmoney) {
         this.tkmoney = tkmoney;
     }
 

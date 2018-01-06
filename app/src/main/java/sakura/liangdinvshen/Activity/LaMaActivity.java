@@ -293,6 +293,11 @@ public class LaMaActivity extends BaseActivity implements View.OnClickListener {
                     return;
                 }
 
+                if ("请选择经期时间".equals(tv_jingqishijian.getText())) {
+                    EasyToast.showShort(context, "请选择经期时间");
+                    return;
+                }
+
                 if (Utils.isConnected(context)) {
                     dialog = Utils.showLoadingDialog(context);
                     dialog.show();

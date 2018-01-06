@@ -21,7 +21,7 @@ public class RecommendActivity extends BaseActivity {
 
     @Override
     protected int setthislayout() {
-        return R.layout.activity_message_list_layout;
+        return R.layout.activity_recommend_list_layout;
     }
 
     @Override
