@@ -37,6 +37,7 @@ public class PhaseActivity extends BaseActivity implements View.OnClickListener 
     private CheckBox Choosed_beiyun;
     private CheckBox Choosed_huanyun;
     private CheckBox Choosed_lama;
+    private String type;
 
     @Override
     protected int setthislayout() {
@@ -84,11 +85,18 @@ public class PhaseActivity extends BaseActivity implements View.OnClickListener 
             }
         }
 
-
     }
 
     @Override
     protected void initData() {
+        type = getIntent().getStringExtra("type");
+        if (!TextUtils.isEmpty(type)) {
+            if ("chage".equals(type)) {
+                rl_back.setVisibility(View.GONE);
+            }
+        } else {
+            rl_back.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -104,8 +112,13 @@ public class PhaseActivity extends BaseActivity implements View.OnClickListener 
                 Choosed_jingqi.setChecked(true);
                 tv_jiedaun.setText("人生阶段：只记经期");
                 SpUtil.putAndApply(context, "jieduan", "1");
-                context.startActivity(new Intent(context, MenstrualPeriodActivity.class)
-                        .putExtra("type", "jingqi"));
+                if (!TextUtils.isEmpty(type)) {
+                    context.startActivity(new Intent(context, MenstrualPeriodActivity.class)
+                            .putExtra("type", "jingqi").putExtra("type", "change"));
+                } else {
+                    context.startActivity(new Intent(context, MenstrualPeriodActivity.class)
+                            .putExtra("type", "jingqi"));
+                }
                 break;
             case R.id.Choosed_beiyun:
                 Choosed_jingqi.setChecked(false);
@@ -114,8 +127,13 @@ public class PhaseActivity extends BaseActivity implements View.OnClickListener 
                 Choosed_beiyun.setChecked(true);
                 tv_jiedaun.setText("人生阶段：我在备孕");
                 SpUtil.putAndApply(context, "jieduan", "2");
-                context.startActivity(new Intent(context, MenstrualPeriodActivity.class)
-                        .putExtra("type", "beiyun"));
+                if (!TextUtils.isEmpty(type)) {
+                    context.startActivity(new Intent(context, MenstrualPeriodActivity.class)
+                            .putExtra("type", "beiyun").putExtra("type", "change"));
+                } else {
+                    context.startActivity(new Intent(context, MenstrualPeriodActivity.class)
+                            .putExtra("type", "beiyun"));
+                }
                 break;
             case R.id.Choosed_huanyun:
                 Choosed_jingqi.setChecked(false);
@@ -124,7 +142,13 @@ public class PhaseActivity extends BaseActivity implements View.OnClickListener 
                 Choosed_huanyun.setChecked(true);
                 tv_jiedaun.setText("人生阶段：我怀孕了");
                 SpUtil.putAndApply(context, "jieduan", "3");
-                context.startActivity(new Intent(context, DueDateActivity.class));
+
+                if (!TextUtils.isEmpty(type)) {
+                    context.startActivity(new Intent(context, DueDateActivity.class)
+                            .putExtra("type", "change"));
+                } else {
+                    context.startActivity(new Intent(context, DueDateActivity.class));
+                }
                 break;
             case R.id.Choosed_lama:
                 Choosed_jingqi.setChecked(false);
@@ -133,7 +157,12 @@ public class PhaseActivity extends BaseActivity implements View.OnClickListener 
                 Choosed_lama.setChecked(true);
                 tv_jiedaun.setText("人生阶段：我是辣妈");
                 SpUtil.putAndApply(context, "jieduan", "4");
-                context.startActivity(new Intent(context, LaMaActivity.class));
+                if (!TextUtils.isEmpty(type)) {
+                    context.startActivity(new Intent(context, LaMaActivity.class)
+                            .putExtra("type", "change"));
+                } else {
+                    context.startActivity(new Intent(context, LaMaActivity.class));
+                }
                 break;
             default:
                 break;

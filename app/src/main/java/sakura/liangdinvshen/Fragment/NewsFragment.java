@@ -27,7 +27,9 @@ import java.util.List;
 import sakura.liangdinvshen.Adapter.NewsPageAdapter;
 import sakura.liangdinvshen.App;
 import sakura.liangdinvshen.Bean.NewsIndexBean;
+import sakura.liangdinvshen.Bean.StuBean;
 import sakura.liangdinvshen.R;
+import sakura.liangdinvshen.Utils.EasyToast;
 import sakura.liangdinvshen.Utils.SpUtil;
 import sakura.liangdinvshen.Utils.UrlUtils;
 import sakura.liangdinvshen.Utils.Utils;
@@ -113,7 +115,91 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
             } else if ("4".equals(jieduan)) {
             }
         }
+
+
+        /**
+         * 是否经期
+         * */
+        sb_nofade.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (sb_nofade.isChecked()) {
+                    lifePeriodStart();
+                } else {
+                    lifePeriodEnd();
+                }
+            }
+        });
+
+
     }
+
+    /**
+     * 经期开始
+     */
+    private void lifePeriodStart() {
+        HashMap<String, String> params = new HashMap<>(3);
+        params.put("key", UrlUtils.KEY);
+        params.put("uid", String.valueOf(SpUtil.get(getActivity(), "uid", "")));
+        params.put("time", RecordFragment.currentDate.toString());
+        VolleyRequest.RequestPost(getActivity(), UrlUtils.BASE_URL + "life/period_start", "life/period_start", params, new VolleyInterface(getActivity()) {
+            @Override
+            public void onMySuccess(String result) {
+                Log.e("RegisterActivity", result);
+                try {
+                    StuBean stuBean = new Gson().fromJson(result, StuBean.class);
+                    if (!"1".equals(String.valueOf(stuBean.getStu()))) {
+                        EasyToast.showShort(getActivity(), "操作失败");
+                    }
+                    stuBean = null;
+                    result = null;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(getActivity(), getActivity().getString(R.string.Abnormalserver), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onMyError(VolleyError error) {
+                error.printStackTrace();
+                Toast.makeText(getActivity(), getActivity().getString(R.string.Abnormalserver), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    /**
+     * 经期结束
+     */
+    private void lifePeriodEnd() {
+        HashMap<String, String> params = new HashMap<>(3);
+        params.put("key", UrlUtils.KEY);
+        params.put("uid", String.valueOf(SpUtil.get(getActivity(), "uid", "")));
+        params.put("time", RecordFragment.currentDate.toString());
+        VolleyRequest.RequestPost(getActivity(), UrlUtils.BASE_URL + "life/period_end", "life/period_end", params, new VolleyInterface(getActivity()) {
+            @Override
+            public void onMySuccess(String result) {
+                Log.e("RegisterActivity", result);
+                try {
+                    StuBean stuBean = new Gson().fromJson(result, StuBean.class);
+                    if (!"1".equals(String.valueOf(stuBean.getStu()))) {
+                        EasyToast.showShort(getActivity(), "操作失败");
+                    }
+                    stuBean = null;
+                    result = null;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(getActivity(), getActivity().getString(R.string.Abnormalserver), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onMyError(VolleyError error) {
+                error.printStackTrace();
+                Toast.makeText(getActivity(), getActivity().getString(R.string.Abnormalserver), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 
     private void getCache() {
         String index = (String) SpUtil.get(getActivity(), "index", "");
@@ -231,6 +317,7 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.sb_nofade:
+
 
                 break;
             default:

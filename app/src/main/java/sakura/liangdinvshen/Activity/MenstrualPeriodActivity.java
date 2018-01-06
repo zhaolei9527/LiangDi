@@ -1,6 +1,7 @@
 package sakura.liangdinvshen.Activity;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.View;
@@ -239,7 +240,13 @@ public class MenstrualPeriodActivity extends BaseActivity implements View.OnClic
                     dialog.dismiss();
                     StuBean stuBean = new Gson().fromJson(result, StuBean.class);
                     if ("1".equals(String.valueOf(stuBean.getStu()))) {
-                        EasyToast.showShort(context, "切换成功");
+                        if ("change".equals(getIntent().getStringExtra("type"))) {
+                            startActivity(new Intent(context, MainActivity.class));
+                            finish();
+                        } else {
+                            EasyToast.showShort(context, "切换成功");
+                        }
+                        SpUtil.putAndApply(context, "jieduan", getIntent().getStringExtra("type"));
                     }
                     stuBean = null;
                     result = null;

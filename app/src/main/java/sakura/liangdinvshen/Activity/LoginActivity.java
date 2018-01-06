@@ -112,8 +112,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
 
     private void gotoMain() {
-        startActivity(new Intent(context, MainActivity.class));
-        finish();
+        if ("-1".equals(String.valueOf(SpUtil.get(context, "jieduan", "")))) {
+            startActivity(new Intent(context, PhaseActivity.class).putExtra("type", "chage"));
+            finish();
+        } else {
+            startActivity(new Intent(context, MainActivity.class));
+            finish();
+        }
     }
 
 
@@ -274,6 +279,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 String decode = result;
                 Log.e("LoginActivity", decode);
                 try {
+
                     LoginBean loginBean = new Gson().fromJson(decode, LoginBean.class);
                     if ("1".equals(loginBean.getCode())) {
                         Toast.makeText(LoginActivity.this, loginBean.getMsg(), Toast.LENGTH_SHORT).show();

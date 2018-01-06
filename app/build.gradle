@@ -83,4 +83,5 @@ dependencies {
     compile project(':calendar')
     compile 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
     compile project(':kefu-easeui')
+    compile "com.github.yjfnypeu:UpdatePlugin:2.8.0"
 }

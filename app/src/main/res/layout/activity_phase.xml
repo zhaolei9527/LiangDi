@@ -50,7 +50,7 @@
             android:layout_marginLeft="@dimen/x10"
             android:background="#EEEEEE"
             android:gravity="center_vertical"
-            android:text="人生阶段：只记经期"
+            android:text="人生阶段："
             android:textColor="#333"
             android:textSize="@dimen/x13" />
 

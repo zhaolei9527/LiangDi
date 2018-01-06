@@ -12,6 +12,7 @@ import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.google.gson.Gson;
 import com.hyphenate.chat.ChatClient;
 import com.hyphenate.chat.ChatManager;
 import com.hyphenate.chat.Conversation;
@@ -27,10 +28,17 @@ import com.hyphenate.helpdesk.util.Log;
 import com.mob.MobApplication;
 import com.tencent.smtt.sdk.QbSdk;
 
+import org.lzh.framework.updatepluginlib.UpdateConfig;
+import org.lzh.framework.updatepluginlib.base.UpdateParser;
+import org.lzh.framework.updatepluginlib.model.CheckEntity;
+import org.lzh.framework.updatepluginlib.model.Update;
+
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.PriorityBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
+import sakura.liangdinvshen.Bean.GetVersionCode;
 import sakura.liangdinvshen.Utils.PausableThreadPoolExecutor;
 import sakura.liangdinvshen.Utils.SpUtil;
 import sakura.liangdinvshen.Utils.UrlUtils;
@@ -57,22 +65,70 @@ public class App extends MobApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-        ChatClient.Options options = new ChatClient.Options();
-        options.setAppkey("1186171221178397#liangdinvshen");//必填项，appkey获取地址：kefu.easemob.com，“管理员模式 > 渠道管理 > 手机APP”页面的关联的“AppKey”
-        options.setTenantId("51178");//必填项，tenantId获取地址：kefu.easemob.com，“管理员模式 > 设置 > 企业信息”页面的“租户ID”
-        // Kefu SDK 初始化
-        if (!ChatClient.getInstance().init(this, options)) {
-            return;
-        }
-        // Kefu EaseUI的初始化
-        UIProvider.getInstance().init(this);
+
+
         //后面可以设置其他属性
         queues = Volley.newRequestQueue(getApplicationContext());
         QbSdk.initX5Environment(this, null);
         Fresco.initialize(this);
         pausableThreadPoolExecutor = new PausableThreadPoolExecutor(1, 1, 0L, TimeUnit.SECONDS, new PriorityBlockingQueue<Runnable>());
-        ChatClient.getInstance().init(this, new ChatClient.Options().setConsoleLog(true));
+
+        // Kefu SDK 初始化
+        ChatClient.Options options = new ChatClient.Options();
+        options.setAppkey("1186171221178397#liangdinvshen");//必填项，appkey获取地址：kefu.easemob.com，“管理员模式 > 渠道管理 > 手机APP”页面的关联的“AppKey”
+        options.setTenantId("51178");//必填项，tenantId获取地址：kefu.easemob.com，“管理员模式 > 设置 > 企业信息”页面的“租户ID”
+        if (!ChatClient.getInstance().init(getApplicationContext(), options)) {
+            return;
+        }
+        // Kefu EaseUI的初始化
+        UIProvider.getInstance().init(getApplicationContext());
+        ChatClient.getInstance().init(getApplicationContext(), new ChatClient.Options().setConsoleLog(true));
         setGlobalListeners();
+
+        HashMap<String, String> params = new HashMap<>(1);
+        params.put("key", UrlUtils.KEY);
+        UpdateConfig.getConfig()
+                // 必填：数据更新接口,url与checkEntity两种方式任选一种填写
+                //.setUrl(UrlUtils.BASE_URL + "user/app_version")
+                .setCheckEntity(new CheckEntity().setMethod("POST").setParams(params).setUrl(UrlUtils.BASE_URL + "user/app_version"))
+                // 必填：用于从数据更新接口获取的数据response中。解析出Update实例。以便框架内部处理
+                .setUpdateParser(new UpdateParser() {
+                    @Override
+                    public Update parse(String response) throws Exception {
+                        /* 此处根据上面url或者checkEntity设置的检查更新接口的返回数据response解析出
+                         * 一个update对象返回即可。更新启动时框架内部即可根据update对象的数据进行处理
+                         */
+                        GetVersionCode getVersionCode = new Gson().fromJson(response, GetVersionCode.class);
+                        Update update = new Update();
+                        Log.e("App", response);
+                        if ("1".equals(String.valueOf(getVersionCode.getCode()))) {
+                            // 此apk包的下载地址
+                            update.setUpdateUrl(getVersionCode.getRes().getAz().getUrl());
+                            // 此apk包的版本号
+                            update.setVersionCode(Integer.parseInt(getVersionCode.getRes().getAz().getVersion()));
+                            // 此apk包的版本名称
+                            //update.setVersionName(object.optString("update_ver_name"));
+                            // 此apk包的更新内容
+                            update.setUpdateContent(getVersionCode.getRes().getAz().getContent());
+                            // 此apk包是否为强制更新
+                            //  update.setForced(false);
+                            // 是否显示忽略此次版本更新按钮
+                            //  update.setIgnore(object.optBoolean("ignore_able",false));
+                        } else {
+                            // 此apk包的下载地址
+                            update.setUpdateUrl("");
+                            // 此apk包的版本号
+                            update.setVersionCode(1);
+                            // 此apk包的版本名称
+                            update.setVersionName("1.1.1");
+                            // 此apk包的更新内容
+                            update.setUpdateContent("");
+                        }
+                        return update;
+                    }
+                });
+
+
     }
 
     private void setGlobalListeners() {

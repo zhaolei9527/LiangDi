@@ -1,5 +1,6 @@
 package sakura.liangdinvshen.Activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.text.TextUtils;
 import android.util.Log;
@@ -170,7 +171,14 @@ public class DueDateActivity extends BaseActivity implements View.OnClickListene
                 try {
                     StuBean stuBean = new Gson().fromJson(result, StuBean.class);
                     if ("1".equals(String.valueOf(stuBean.getStu()))) {
-                        EasyToast.showShort(context, "切换成功");
+                        if ("change".equals(getIntent().getStringExtra("type"))) {
+                            startActivity(new Intent(context, MainActivity.class));
+                            finish();
+                        } else {
+                            EasyToast.showShort(context, "切换成功");
+                        }
+                        SpUtil.putAndApply(context, "jieduan", "3");
+
                     } else {
                         EasyToast.showShort(context, "设置失败");
                     }

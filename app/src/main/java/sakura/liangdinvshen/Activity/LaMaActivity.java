@@ -1,6 +1,7 @@
 package sakura.liangdinvshen.Activity;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.text.TextUtils;
 import android.util.Log;
@@ -327,7 +328,13 @@ public class LaMaActivity extends BaseActivity implements View.OnClickListener {
                     dialog.dismiss();
                     StuBean stuBean = new Gson().fromJson(result, StuBean.class);
                     if ("1".equals(String.valueOf(stuBean.getStu()))) {
-                        EasyToast.showShort(context, "切换成功");
+                        if ("change".equals(getIntent().getStringExtra("type"))) {
+                            startActivity(new Intent(context, MainActivity.class));
+                            finish();
+                        } else {
+                            EasyToast.showShort(context, "切换成功");
+                        }
+                        SpUtil.putAndApply(context, "jieduan", "4");
                     }
                     stuBean = null;
                     result = null;
