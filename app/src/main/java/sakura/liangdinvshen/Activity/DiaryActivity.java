@@ -157,6 +157,7 @@ public class DiaryActivity extends BaseActivity {
         params.put("uid", String.valueOf(SpUtil.get(context, "uid", "")));
         params.put("time", RecordFragment.currentDate.toString());
         params.put("diary", diary);
+
         VolleyRequest.RequestPost(context, UrlUtils.BASE_URL + "life/diary", "life/diary", params, new VolleyInterface(context) {
             @Override
             public void onMySuccess(String result) {
@@ -194,6 +195,7 @@ public class DiaryActivity extends BaseActivity {
         params.put("key", UrlUtils.KEY);
         params.put("uid", String.valueOf(SpUtil.get(context, "uid", "")));
         params.put("time", RecordFragment.currentDate.toString());
+        Log.e("DiaryActivity", "params:" + params);
         VolleyRequest.RequestPost(context, UrlUtils.BASE_URL + "life/show_diary", "life/show_diary", params, new VolleyInterface(context) {
             @Override
             public void onMySuccess(String result) {

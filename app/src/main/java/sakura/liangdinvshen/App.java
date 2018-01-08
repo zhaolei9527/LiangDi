@@ -3,6 +3,8 @@ package sakura.liangdinvshen;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.support.multidex.MultiDex;
+import android.support.multidex.MultiDexApplication;
 import android.text.TextUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -25,7 +27,7 @@ import com.hyphenate.helpdesk.easeui.util.IntentBuilder;
 import com.hyphenate.helpdesk.model.AgentInfo;
 import com.hyphenate.helpdesk.model.MessageHelper;
 import com.hyphenate.helpdesk.util.Log;
-import com.mob.MobApplication;
+import com.mob.MobSDK;
 import com.tencent.bugly.crashreport.CrashReport;
 import com.tencent.smtt.sdk.QbSdk;
 
@@ -49,7 +51,7 @@ import sakura.liangdinvshen.other.CallReceiver;
  * Created by 赵磊 on 2017/7/12.
  */
 
-public class App extends MobApplication {
+public class App extends MultiDexApplication {
     /**
      * 先创建一个请求队列，因为这个队列是全局的，所以在Application中声明这个队列
      */
@@ -62,10 +64,20 @@ public class App extends MobApplication {
 
     private CallReceiver callReceiver;
 
+    protected String getAppkey() {
+        return null;
+    }
+
+    protected String getAppSecret() {
+        return null;
+    }
 
     @Override
     public void onCreate() {
         super.onCreate();
+
+        MultiDex.install(this);
+        MobSDK.init(this, this.getAppkey(), this.getAppSecret());
 
         CrashReport.initCrashReport(getApplicationContext(), "bb84798cff", false);
 

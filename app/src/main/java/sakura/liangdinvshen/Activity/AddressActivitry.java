@@ -196,7 +196,7 @@ public class AddressActivitry extends BaseActivity implements View.OnClickListen
                                             intent.putExtra("id", addressIndexBean.getList().get(i1).getId());
                                             intent.putExtra("name", addressIndexBean.getList().get(i1).getName());
                                             intent.putExtra("tel", addressIndexBean.getList().get(i1).getTel());
-                                            intent.putExtra("address", addressIndexBean.getList().get(i1).getTel());
+                                            intent.putExtra("address", addressIndexBean.getList().get(i1).getAddress());
                                             intent.putExtra("province", addressIndexBean.getList().get(i1).getProvince());
                                             intent.putExtra("city", addressIndexBean.getList().get(i1).getCity());
                                             intent.putExtra("country", addressIndexBean.getList().get(i1).getCountry());

@@ -300,15 +300,11 @@ public class MyFragment extends Fragment implements View.OnClickListener {
                 try {
                     UserInfoBean userInfoBean = new Gson().fromJson(result, UserInfoBean.class);
                     if ("1".equals(String.valueOf(userInfoBean.getCode()))) {
-
                         String img = (String) SpUtil.get(getActivity(), "img", "");
-                        if (img.equals(userInfoBean.getList().getImg())) {
+                        if (img.startsWith("http://")) {
+                            mSdvTouxiang.setImageURI(img);
                         } else {
-                            if (img.startsWith("http://")) {
-                                mSdvTouxiang.setImageURI(img);
-                            } else {
-                                mSdvTouxiang.setImageURI(UrlUtils.URL + String.valueOf(SpUtil.get(getActivity(), "img", "")));
-                            }
+                            mSdvTouxiang.setImageURI(UrlUtils.URL + String.valueOf(SpUtil.get(getActivity(), "img", "")));
                         }
                         SpUtil.putAndApply(getActivity(), "img", userInfoBean.getList().getImg());
                         SpUtil.putAndApply(getActivity(), "account", userInfoBean.getList().getTel());

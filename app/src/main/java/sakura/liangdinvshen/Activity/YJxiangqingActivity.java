@@ -20,6 +20,7 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import sakura.liangdinvshen.App;
 import sakura.liangdinvshen.Base.BaseActivity;
 import sakura.liangdinvshen.Bean.BankEvent;
 import sakura.liangdinvshen.Bean.StuBean;
@@ -235,7 +236,7 @@ public class YJxiangqingActivity extends BaseActivity {
                 try {
                     StuBean stuBean = new Gson().fromJson(result, StuBean.class);
                     if ("1".equals(String.valueOf(stuBean.getStu()))) {
-
+                        finish();
                     } else {
                         EasyToast.showShort(context, "提交失败");
                     }
@@ -256,4 +257,10 @@ public class YJxiangqingActivity extends BaseActivity {
         });
     }
 
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        App.getQueues().cancelAll("life/do_period_detail");
+    }
 }

@@ -28,46 +28,46 @@
         android:roundIcon="@mipmap/icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activity.FlashActivity">
+        <activity android:name="sakura.liangdinvshen.Activity.FlashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".Activity.MainActivity"
+            android:name="sakura.liangdinvshen.Activity.MainActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan|stateHidden|adjustResize" />
         <activity
-            android:name=".Activity.PriceDetailsActivity"
+            android:name="sakura.liangdinvshen.Activity.PriceDetailsActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan|stateHidden|adjustResize" />
         <activity
-            android:name=".Activity.PurchaseRecordsActivity"
+            android:name="sakura.liangdinvshen.Activity.PurchaseRecordsActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan|stateHidden|adjustResize" />
         <activity
-            android:name=".Activity.EvaluationActivity"
+            android:name="sakura.liangdinvshen.Activity.EvaluationActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan|stateHidden|adjustResize" />
         <activity
-            android:name=".Activity.ShopCarActivity"
+            android:name="sakura.liangdinvshen.Activity.ShopCarActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan|stateHidden|adjustResize" />
         <activity
-            android:name=".Activity.OrderActivity"
+            android:name="sakura.liangdinvshen.Activity.OrderActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan|stateHidden|adjustResize" />
         <activity
-            android:name=".Activity.AddressActivitry"
+            android:name="sakura.liangdinvshen.Activity.AddressActivitry"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan|stateHidden|adjustResize" />
         <activity
-            android:name=".Activity.AddAdressActivity"
+            android:name="sakura.liangdinvshen.Activity.AddAdressActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan|stateHidden|adjustResize" />
         <activity
-            android:name=".Activity.PayActivity"
+            android:name="sakura.liangdinvshen.Activity.PayActivity"
             android:exported="true"
             android:launchMode="singleTop">
             <intent-filter>
@@ -78,101 +78,101 @@
         </activity>
 
         <activity
-            android:name=".Activity.GoodPayActivity"
+            android:name="sakura.liangdinvshen.Activity.GoodPayActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan|stateHidden|adjustResize" />
         <activity
-            android:name=".Activity.RegisterActivity"
+            android:name="sakura.liangdinvshen.Activity.RegisterActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan|stateHidden|adjustResize" />
         <activity
-            android:name=".Activity.LoginActivity"
+            android:name="sakura.liangdinvshen.Activity.LoginActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan|stateHidden|adjustResize" />
         <activity
-            android:name=".Activity.MyServiceActivity"
+            android:name="sakura.liangdinvshen.Activity.MyServiceActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan|stateHidden|adjustResize" />
         <activity
-            android:name=".Activity.MyServiceDetailsActivity"
+            android:name="sakura.liangdinvshen.Activity.MyServiceDetailsActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan|stateHidden|adjustResize" />
         <activity
-            android:name=".Activity.MyOrderActivity"
+            android:name="sakura.liangdinvshen.Activity.MyOrderActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan|stateHidden|adjustResize" />
         <activity
-            android:name=".Activity.MyOrderDetailsActivity"
+            android:name="sakura.liangdinvshen.Activity.MyOrderDetailsActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan|stateHidden|adjustResize" />
         <activity
-            android:name=".Activity.MyPersonalDataActivity"
+            android:name="sakura.liangdinvshen.Activity.MyPersonalDataActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan|stateHidden|adjustResize" />
         <activity
-            android:name=".Activity.PhaseActivity"
+            android:name="sakura.liangdinvshen.Activity.PhaseActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan|stateHidden|adjustResize" />
         <activity
-            android:name=".Activity.MenstrualPeriodActivity"
+            android:name="sakura.liangdinvshen.Activity.MenstrualPeriodActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan|stateHidden|adjustResize" />
         <activity
-            android:name=".Activity.DueDateActivity"
+            android:name="sakura.liangdinvshen.Activity.DueDateActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan|stateHidden|adjustResize" />
         <activity
-            android:name=".Activity.LaMaActivity"
+            android:name="sakura.liangdinvshen.Activity.LaMaActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan|stateHidden|adjustResize" />
         <activity
-            android:name=".Activity.ReturnPriceListActivity"
+            android:name="sakura.liangdinvshen.Activity.ReturnPriceListActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan|stateHidden|adjustResize" />
         <activity
-            android:name=".Activity.ReturnPriceDetailsActivity"
+            android:name="sakura.liangdinvshen.Activity.ReturnPriceDetailsActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan|stateHidden|adjustResize">
 
         </activity>
         <activity
-            android:name=".Activity.SubmitReturnPriceActivity"
+            android:name="sakura.liangdinvshen.Activity.SubmitReturnPriceActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan|stateHidden|adjustResize">
 
         </activity>
         <activity
-            android:name=".Activity.ForgetActivity"
+            android:name="sakura.liangdinvshen.Activity.ForgetActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan|stateHidden|adjustResize">
 
         </activity>
         <activity
-            android:name=".Activity.CollectionActivity"
+            android:name="sakura.liangdinvshen.Activity.CollectionActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan|stateHidden|adjustResize">
 
         </activity>
         <activity
-            android:name=".Activity.PriceCommentsActivity"
+            android:name="sakura.liangdinvshen.Activity.PriceCommentsActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan|stateHidden|adjustResize">
 
         </activity>
         <activity
-            android:name=".Activity.MessageActivity"
+            android:name="sakura.liangdinvshen.Activity.MessageActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan|stateHidden|adjustResize">
 
         </activity>
         <activity
-            android:name=".Activity.RecommendActivity"
+            android:name="sakura.liangdinvshen.Activity.RecommendActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan|stateHidden|adjustResize">
 
         </activity>
         <activity
-            android:name=".Activity.MessageDetailsActivity"
+            android:name="sakura.liangdinvshen.Activity.MessageDetailsActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan|stateHidden|adjustResize">
 
@@ -180,7 +180,7 @@
 
 
         <activity
-            android:name=".Activity.NewsDetailsActivity"
+            android:name="sakura.liangdinvshen.Activity.NewsDetailsActivity"
             android:configChanges="orientation|keyboardHidden|screenLayout|screenSize"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
@@ -191,7 +191,7 @@
             android:launchMode="singleTop"
             android:theme="@android:style/Theme.NoTitleBar"
             android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity android:name=".Activity.NewsCommentsActivity"></activity>
+        <activity android:name="sakura.liangdinvshen.Activity.NewsCommentsActivity"></activity>
         <activity
             android:name="me.iwf.photopicker.PhotoPickerActivity"
             android:theme="@style/customTheme" />
@@ -200,132 +200,132 @@
             android:name="me.iwf.photopicker.PhotoPagerActivity"
             android:theme="@style/customTheme" />
         <activity
-            android:name=".Activity.FinancialActiivity"
+            android:name="sakura.liangdinvshen.Activity.FinancialActiivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan|stateHidden|adjustResize" />
 
         <activity
-            android:name=".Activity.IntegralActiivity"
+            android:name="sakura.liangdinvshen.Activity.IntegralActiivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan|stateHidden|adjustResize"></activity>
 
         <activity
-            android:name=".Activity.BankCardActivity"
+            android:name="sakura.liangdinvshen.Activity.BankCardActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan|stateHidden|adjustResize"></activity>
 
         <activity
-            android:name=".Activity.AddBankCardActivity"
+            android:name="sakura.liangdinvshen.Activity.AddBankCardActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan|stateHidden|adjustResize"></activity>
 
         <activity
-            android:name=".Activity.WithdrawalActivity"
+            android:name="sakura.liangdinvshen.Activity.WithdrawalActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan|stateHidden|adjustResize"></activity>
         <activity
-            android:name=".Activity.WithdrawlListActivity"
+            android:name="sakura.liangdinvshen.Activity.WithdrawlListActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan|stateHidden|adjustResize"></activity>
         <activity
-            android:name=".Activity.SettingActivity"
+            android:name="sakura.liangdinvshen.Activity.SettingActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan|stateHidden|adjustResize"></activity>
         <activity
-            android:name=".Activity.ChangePasswordActivity"
+            android:name="sakura.liangdinvshen.Activity.ChangePasswordActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan|stateHidden|adjustResize"></activity>
         <activity
-            android:name=".Activity.WhitUsDetailsActivity"
+            android:name="sakura.liangdinvshen.Activity.WhitUsDetailsActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan|stateHidden|adjustResize"></activity>
         <activity
-            android:name=".Activity.EmployeesActivity"
+            android:name="sakura.liangdinvshen.Activity.EmployeesActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan|stateHidden|adjustResize"></activity>
         <activity
-            android:name=".Activity.ConsumptionActivity"
+            android:name="sakura.liangdinvshen.Activity.ConsumptionActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan|stateHidden|adjustResize"></activity>
         <activity
-            android:name=".Activity.XfListActivity"
+            android:name="sakura.liangdinvshen.Activity.XfListActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan|stateHidden|adjustResize"></activity>
         <activity
-            android:name=".Activity.XfDetailsActivity"
+            android:name="sakura.liangdinvshen.Activity.XfDetailsActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan|stateHidden|adjustResize"></activity>
         <activity
-            android:name=".Activity.StaffManagementActivity"
+            android:name="sakura.liangdinvshen.Activity.StaffManagementActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan|stateHidden|adjustResize"></activity>
         <activity
-            android:name=".Activity.AddStaffManagmentActivity"
+            android:name="sakura.liangdinvshen.Activity.AddStaffManagmentActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan|stateHidden|adjustResize"></activity>
         <activity
-            android:name=".Activity.ServiceSettingActivity"
-            android:launchMode="singleTop"
-            android:windowSoftInputMode="adjustPan|stateHidden|adjustResize"></activity>
-
-        <activity
-            android:name=".Activity.RankingActivity"
-            android:launchMode="singleTop"
-            android:windowSoftInputMode="adjustPan|stateHidden|adjustResize"></activity>
-        <activity
-            android:name=".Activity.YJxiangqingActivity"
+            android:name="sakura.liangdinvshen.Activity.ServiceSettingActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan|stateHidden|adjustResize"></activity>
 
         <activity
-            android:name=".Activity.SymptomActivity"
+            android:name="sakura.liangdinvshen.Activity.RankingActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan|stateHidden|adjustResize"></activity>
         <activity
-            android:name=".Activity.BabySymptomActivity"
-            android:launchMode="singleTop"
-            android:windowSoftInputMode="adjustPan|stateHidden|adjustResize"></activity>
-        <activity
-            android:name=".Activity.BreastFeedActivity"
-            android:launchMode="singleTop"
-            android:windowSoftInputMode="adjustPan|stateHidden|adjustResize"></activity>
-        <activity
-            android:name=".Activity.AddBreastFeedActivity"
-            android:launchMode="singleTop"
-            android:windowSoftInputMode="adjustPan|stateHidden|adjustResize"></activity>
-        <activity
-            android:name=".Activity.DiaryActivity"
-            android:launchMode="singleTop"
-            android:windowSoftInputMode="adjustPan|stateHidden|adjustResize"></activity>
-        <activity
-            android:name=".Activity.ChouChouActivity"
+            android:name="sakura.liangdinvshen.Activity.YJxiangqingActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan|stateHidden|adjustResize"></activity>
 
         <activity
-            android:name=".Activity.AddChouChouActivity"
+            android:name="sakura.liangdinvshen.Activity.SymptomActivity"
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="adjustPan|stateHidden|adjustResize"></activity>
+        <activity
+            android:name="sakura.liangdinvshen.Activity.BabySymptomActivity"
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="adjustPan|stateHidden|adjustResize"></activity>
+        <activity
+            android:name="sakura.liangdinvshen.Activity.BreastFeedActivity"
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="adjustPan|stateHidden|adjustResize"></activity>
+        <activity
+            android:name="sakura.liangdinvshen.Activity.AddBreastFeedActivity"
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="adjustPan|stateHidden|adjustResize"></activity>
+        <activity
+            android:name="sakura.liangdinvshen.Activity.DiaryActivity"
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="adjustPan|stateHidden|adjustResize"></activity>
+        <activity
+            android:name="sakura.liangdinvshen.Activity.ChouChouActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan|stateHidden|adjustResize"></activity>
 
         <activity
-            android:name=".Activity.GrowthRecordActivity"
+            android:name="sakura.liangdinvshen.Activity.AddChouChouActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan|stateHidden|adjustResize"></activity>
 
         <activity
-            android:name=".Activity.FetalMovementActivity"
+            android:name="sakura.liangdinvshen.Activity.GrowthRecordActivity"
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="adjustPan|stateHidden|adjustResize"></activity>
+
+        <activity
+            android:name="sakura.liangdinvshen.Activity.FetalMovementActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan|stateHidden|adjustResize"></activity>
         <activity
-            android:name=".Activity.AddFetaMovementActivity"
+            android:name="sakura.liangdinvshen.Activity.AddFetaMovementActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan|stateHidden|adjustResize"></activity>
         <activity
-            android:name=".Activity.AskListActivity"
+            android:name="sakura.liangdinvshen.Activity.AskListActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan|stateHidden|adjustResize"></activity>
         <activity
-            android:name=".Activity.BaringActivity"
+            android:name="sakura.liangdinvshen.Activity.BaringActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan|stateHidden|adjustResize"></activity>
 
@@ -337,7 +337,7 @@
 
         <!-- 填写您从Mob开发者后台中得到的Appkey和AppSecret -->
         <activity
-            android:name=".wxapi.WXEntryActivity"
+            android:name="sakura.liangdinvshen.wxapi.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"

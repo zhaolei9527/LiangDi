@@ -3,6 +3,8 @@ package sakura.liangdinvshen.Activity;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
@@ -36,11 +38,11 @@ public class FlashActivity extends BaseActivity {
     @Override
     protected void ready() {
         super.ready();
-//       /*set it to be no title*/
-//        requestWindowFeature(Window.FEATURE_NO_TITLE);
-//       /*set it to be full screen*/
-//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-//                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+       /*set it to be no title*/
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+       /*set it to be full screen*/
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 
     @Override
@@ -107,7 +109,7 @@ public class FlashActivity extends BaseActivity {
                 try {
                     LoginBean loginBean = new Gson().fromJson(decode, LoginBean.class);
                     if ("1".equals(loginBean.getCode())) {
-                        Toast.makeText(context, loginBean.getMsg(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "登录成功", Toast.LENGTH_SHORT).show();
                         SpUtil.putAndApply(context, "account", tel);
                         SpUtil.putAndApply(context, "password", password);
                         SpUtil.putAndApply(context, "uid", loginBean.getRes().getId());
@@ -210,8 +212,15 @@ public class FlashActivity extends BaseActivity {
     }
 
     private void gotoMain() {
-        startActivity(new Intent(context, MainActivity.class));
-        finish();
+
+        if ("-1".equals(String.valueOf(SpUtil.get(context, "jieduan", "")))) {
+            startActivity(new Intent(context, PhaseActivity.class).putExtra("type", "chage"));
+            finish();
+        } else {
+            startActivity(new Intent(context, MainActivity.class));
+            finish();
+        }
+
     }
 
     private void gotoLogin() {

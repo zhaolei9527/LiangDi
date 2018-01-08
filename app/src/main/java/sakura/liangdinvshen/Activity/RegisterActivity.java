@@ -36,6 +36,7 @@ import sakura.liangdinvshen.Bean.QQBean;
 import sakura.liangdinvshen.Bean.WXBean;
 import sakura.liangdinvshen.R;
 import sakura.liangdinvshen.Utils.CodeUtils;
+import sakura.liangdinvshen.Utils.EasyToast;
 import sakura.liangdinvshen.Utils.SpUtil;
 import sakura.liangdinvshen.Utils.UrlUtils;
 import sakura.liangdinvshen.Utils.Utils;
@@ -169,7 +170,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     @Override
                     public void onCancel(Platform arg0, int arg1) {
                         // TODO Auto-generated method stub
-
+                        dialog.dismiss();
+                        EasyToast.showShort(context,"授权取消");
                     }
                 });
                 weChat.showUser(null);//授权并获取用户信息
@@ -213,7 +215,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     @Override
                     public void onCancel(Platform arg0, int arg1) {
                         // TODO Auto-generated method stub
-
+                        dialog.dismiss();
+                        EasyToast.showShort(context,"授权取消");
                     }
                 });
                 qq.showUser(null);//授权并获取用户信息

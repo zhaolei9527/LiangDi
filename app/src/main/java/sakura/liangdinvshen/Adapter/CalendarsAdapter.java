@@ -201,7 +201,9 @@ public class CalendarsAdapter extends RecyclerView.Adapter<CalendarsAdapter.View
             public void onClick(View v) {
                 context.startActivity(new Intent(context, YJxiangqingActivity.class));
                 //注册EventBus
-                EventBus.getDefault().register(CalendarsAdapter.this);
+                if (!EventBus.getDefault().isRegistered(CalendarsAdapter.this)) {
+                    EventBus.getDefault().register(CalendarsAdapter.this);
+                }
             }
         });
 
@@ -812,7 +814,11 @@ public class CalendarsAdapter extends RecyclerView.Adapter<CalendarsAdapter.View
 
                         viewHolder.tv_body_tiwen.setText(data.getTi_wen());
 
-                        viewHolder.tv_body_tizhong.setText(data.getTi_zhong());
+                        if (data.getTi_zhong().contains("记录")) {
+                            viewHolder.tv_body_tizhong.setText(data.getTi_zhong());
+                        } else {
+                            viewHolder.tv_body_tizhong.setText(data.getTi_zhong() + "kg");
+                        }
 
                         viewHolder.tv_body_xinqing.setText(data.getXin_qing());
 
@@ -838,7 +844,7 @@ public class CalendarsAdapter extends RecyclerView.Adapter<CalendarsAdapter.View
                             viewHolder.tv_huaiyun_daduzhao.setText(data.getDa_du_pic());
                         }
 
-                        viewHolder.tv_huaiyun_tizhong.setText(data.getTi_zhong());
+                        viewHolder.tv_huaiyun_tizhong.setText(data.getTi_zhong() + "kg");
 
                         viewHolder.tv_huaiyun_zhengzhuang.setText(data.getZheng_zhuang());
 

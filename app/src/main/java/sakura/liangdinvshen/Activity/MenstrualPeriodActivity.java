@@ -191,10 +191,21 @@ public class MenstrualPeriodActivity extends BaseActivity implements View.OnClic
                     EasyToast.showShort(context, "请选择周期长度");
                     return;
                 }
+                if ("".equals(tv_zhouchang.getText())) {
+                    EasyToast.showShort(context, "请选择周期长度");
+                    return;
+                }
+
                 if ("请选择经期长度".equals(tv_changdu.getText())) {
                     EasyToast.showShort(context, "请选择经期长度");
                     return;
                 }
+
+                if ("".equals(tv_changdu.getText())) {
+                    EasyToast.showShort(context, "请选择经期长度");
+                    return;
+                }
+
                 if ("请选择经期时间".equals(tv_jingqishijian.getText())) {
                     EasyToast.showShort(context, "请选择经期时间");
                     return;
@@ -240,7 +251,7 @@ public class MenstrualPeriodActivity extends BaseActivity implements View.OnClic
                     dialog.dismiss();
                     StuBean stuBean = new Gson().fromJson(result, StuBean.class);
                     if ("1".equals(String.valueOf(stuBean.getStu()))) {
-                        if ("change".equals(getIntent().getStringExtra("type"))) {
+                        if ("change".equals(getIntent().getStringExtra("type2"))) {
                             startActivity(new Intent(context, MainActivity.class));
                             finish();
                         } else {

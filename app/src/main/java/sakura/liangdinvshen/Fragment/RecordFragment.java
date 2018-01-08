@@ -285,7 +285,7 @@ public class RecordFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-
+        App.getQueues().cancelAll("life/user_slq");
     }
 
     /**

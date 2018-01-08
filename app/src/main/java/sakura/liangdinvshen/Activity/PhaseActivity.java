@@ -114,7 +114,7 @@ public class PhaseActivity extends BaseActivity implements View.OnClickListener 
                 SpUtil.putAndApply(context, "jieduan", "1");
                 if (!TextUtils.isEmpty(type)) {
                     context.startActivity(new Intent(context, MenstrualPeriodActivity.class)
-                            .putExtra("type", "jingqi").putExtra("type", "change"));
+                            .putExtra("type", "jingqi").putExtra("type2", "change"));
                 } else {
                     context.startActivity(new Intent(context, MenstrualPeriodActivity.class)
                             .putExtra("type", "jingqi"));
@@ -129,7 +129,7 @@ public class PhaseActivity extends BaseActivity implements View.OnClickListener 
                 SpUtil.putAndApply(context, "jieduan", "2");
                 if (!TextUtils.isEmpty(type)) {
                     context.startActivity(new Intent(context, MenstrualPeriodActivity.class)
-                            .putExtra("type", "beiyun").putExtra("type", "change"));
+                            .putExtra("type", "beiyun").putExtra("type2", "change"));
                 } else {
                     context.startActivity(new Intent(context, MenstrualPeriodActivity.class)
                             .putExtra("type", "beiyun"));

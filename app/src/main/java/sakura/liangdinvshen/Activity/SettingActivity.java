@@ -159,30 +159,41 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                                 final Dialog dialog1 = Utils.showLoadingDialog(context);
                                 dialog1.show();
                                 //第一个参数为是否解绑推送的devicetoken
-                                ChatClient.getInstance().logout(true, new Callback() {
-                                    @Override
-                                    public void onSuccess() {
-                                        dialog1.dismiss();
-                                        SpUtil.clear(context);
-                                        Intent intent = new Intent(context, LoginActivity.class);
-                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                        startActivity(intent);
-                                    }
 
-                                    @Override
-                                    public void onError(int i, String s) {
-                                        dialog1.dismiss();
-                                        SpUtil.clear(context);
-                                        Intent intent = new Intent(context, LoginActivity.class);
-                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                        startActivity(intent);
-                                    }
 
-                                    @Override
-                                    public void onProgress(int i, String s) {
+                                try {
+                                    ChatClient.getInstance().logout(true, new Callback() {
+                                        @Override
+                                        public void onSuccess() {
+                                            dialog1.dismiss();
+                                            SpUtil.clear(context);
+                                            Intent intent = new Intent(context, LoginActivity.class);
+                                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                            startActivity(intent);
+                                        }
 
-                                    }
-                                });
+                                        @Override
+                                        public void onError(int i, String s) {
+                                            dialog1.dismiss();
+                                            SpUtil.clear(context);
+                                            Intent intent = new Intent(context, LoginActivity.class);
+                                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                            startActivity(intent);
+                                        }
+
+                                        @Override
+                                        public void onProgress(int i, String s) {
+
+                                        }
+                                    });
+                                } catch (Exception e) {
+                                    dialog1.dismiss();
+                                    SpUtil.clear(context);
+                                    Intent intent = new Intent(context, LoginActivity.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    startActivity(intent);
+                                }
+
                             } else {
                                 EasyToast.showShort(context, "网络未连接");
                             }
@@ -198,7 +209,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 startActivity(new Intent(context, ChangePasswordActivity.class));
                 break;
             case R.id.tv_upapp:
-              //  getupdata();
+                //  getupdata();
                 break;
             case R.id.tv_lookus:
                 startActivity(new Intent(context, WhitUsDetailsActivity.class).putExtra("type", "withus"));

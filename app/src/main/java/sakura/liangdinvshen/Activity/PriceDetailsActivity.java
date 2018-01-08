@@ -229,7 +229,7 @@ public class PriceDetailsActivity extends BaseActivity implements View.OnClickLi
                                 .price(mTvPrice.getText().toString()) //显示价格
                                 .desc(mTvTitle.getText().toString()) //描述
                                 .imageUrl(UrlUtils.URL + keFuImageUrl);//显示图片
-                        final Message message = Message.createTxtSendMessage("", "liangdinvshen");
+                        final Message message = Message.createTxtSendMessage("我正在看," + mTvTitle.getText().toString(), "liangdinvshen");
                         message.addContent(track);
                         ChatClient.getInstance().chatManager().sendMessage(message, new Callback() {
                             @Override

@@ -2,6 +2,7 @@ package sakura.liangdinvshen.Fragment;
 
 import android.app.Dialog;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
@@ -29,6 +30,7 @@ import sakura.liangdinvshen.App;
 import sakura.liangdinvshen.Bean.NewsIndexBean;
 import sakura.liangdinvshen.Bean.StuBean;
 import sakura.liangdinvshen.R;
+import sakura.liangdinvshen.Utils.DateUtils;
 import sakura.liangdinvshen.Utils.EasyToast;
 import sakura.liangdinvshen.Utils.SpUtil;
 import sakura.liangdinvshen.Utils.UrlUtils;
@@ -76,7 +78,6 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
-        getCache();
     }
 
     @Override
@@ -102,6 +103,9 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
         tv_stu_title = (TextView) view.findViewById(R.id.tv_stu_title);
         tv_yun_lv = (TextView) view.findViewById(R.id.tv_yun_lv);
         sb_nofade = (SwitchButton) view.findViewById(R.id.sb_nofade);
+
+        getCache();
+
         if (!TextUtils.isEmpty(uid)) {
             getIndex(uid);
         }
@@ -115,7 +119,6 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
             } else if ("4".equals(jieduan)) {
             }
         }
-
 
         /**
          * 是否经期
@@ -131,17 +134,17 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
             }
         });
 
-
     }
 
     /**
      * 经期开始
      */
+    @Nullable
     private void lifePeriodStart() {
         HashMap<String, String> params = new HashMap<>(3);
         params.put("key", UrlUtils.KEY);
         params.put("uid", String.valueOf(SpUtil.get(getActivity(), "uid", "")));
-        params.put("time", RecordFragment.currentDate.toString());
+        params.put("time", DateUtils.getDay(System.currentTimeMillis()));
         VolleyRequest.RequestPost(getActivity(), UrlUtils.BASE_URL + "life/period_start", "life/period_start", params, new VolleyInterface(getActivity()) {
             @Override
             public void onMySuccess(String result) {
@@ -174,7 +177,7 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
         HashMap<String, String> params = new HashMap<>(3);
         params.put("key", UrlUtils.KEY);
         params.put("uid", String.valueOf(SpUtil.get(getActivity(), "uid", "")));
-        params.put("time", RecordFragment.currentDate.toString());
+        params.put("time", DateUtils.getDay(System.currentTimeMillis()));
         VolleyRequest.RequestPost(getActivity(), UrlUtils.BASE_URL + "life/period_end", "life/period_end", params, new VolleyInterface(getActivity()) {
             @Override
             public void onMySuccess(String result) {

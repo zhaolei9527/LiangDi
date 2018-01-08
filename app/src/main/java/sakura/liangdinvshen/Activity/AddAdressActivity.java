@@ -13,12 +13,16 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.android.volley.VolleyError;
 import com.bigkoo.pickerview.OptionsPickerView;
 import com.google.gson.Gson;
+
 import org.json.JSONArray;
+
 import java.util.ArrayList;
 import java.util.HashMap;
+
 import sakura.liangdinvshen.App;
 import sakura.liangdinvshen.Base.BaseActivity;
 import sakura.liangdinvshen.Bean.CodeBean;
@@ -211,7 +215,7 @@ public class AddAdressActivity extends BaseActivity implements View.OnClickListe
         if (!TextUtils.isEmpty(getIntent().getStringExtra("id"))) {
             id = getIntent().getStringExtra("id");
             IsChoosed = getIntent().getStringExtra("IsChoosed");
-            if (TextUtils.equals("1", IsChoosed)) {
+            if (TextUtils.equals("1", String.valueOf(IsChoosed))) {
                 btnIsChoosed.setChecked(true);
             } else {
                 btnIsChoosed.setChecked(false);
@@ -293,7 +297,7 @@ public class AddAdressActivity extends BaseActivity implements View.OnClickListe
         // TODO validate success, do something
         if (Utils.isConnected(context)) {
             dialog = Utils.showLoadingDialog(context);
-            if (!dialog.isShowing()){
+            if (!dialog.isShowing()) {
                 dialog.show();
             }
             if (!TextUtils.isEmpty(id)) {

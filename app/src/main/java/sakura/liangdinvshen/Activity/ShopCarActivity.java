@@ -102,8 +102,9 @@ public class ShopCarActivity extends BaseActivity {
         });
 
         dialog = Utils.showLoadingDialog(context);
-        dialog.show();
-
+        if (!dialog.isShowing()) {
+            dialog.show();
+        }
     }
 
     @Override

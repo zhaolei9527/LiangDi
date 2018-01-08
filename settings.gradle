@@ -1,1 +1,1 @@
-include ':app', ':pickerview', ':vitamio', ':picker', ':fresco', ':calendar', ':kefu-easeui'
+include ':app', ':pickerview', ':vitamio', ':picker', ':fresco', ':calendar', ':kefu-easeui', ':updatepluginlib'

@@ -33,6 +33,7 @@ import sakura.liangdinvshen.Bean.LoginBean;
 import sakura.liangdinvshen.Bean.QQBean;
 import sakura.liangdinvshen.Bean.WXBean;
 import sakura.liangdinvshen.R;
+import sakura.liangdinvshen.Utils.EasyToast;
 import sakura.liangdinvshen.Utils.SpUtil;
 import sakura.liangdinvshen.Utils.UrlUtils;
 import sakura.liangdinvshen.Utils.Utils;
@@ -123,6 +124,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
 
     @Override
+    protected void onResume() {
+        super.onResume();
+
+
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_login:
@@ -166,7 +174,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     @Override
                     public void onCancel(Platform arg0, int arg1) {
                         // TODO Auto-generated method stub
-
+                        dialog.dismiss();
+                        EasyToast.showShort(context, "授权取消");
                     }
                 });
                 weChat.showUser(null);//授权并获取用户信息
@@ -201,7 +210,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     @Override
                     public void onCancel(Platform arg0, int arg1) {
                         // TODO Auto-generated method stub
-
+                        dialog.dismiss();
+                        EasyToast.showShort(context, "授权取消");
                     }
                 });
                 qq.showUser(null);//授权并获取用户信息
@@ -282,7 +292,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
                     LoginBean loginBean = new Gson().fromJson(decode, LoginBean.class);
                     if ("1".equals(loginBean.getCode())) {
-                        Toast.makeText(LoginActivity.this, loginBean.getMsg(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
                         SpUtil.putAndApply(context, "account", tel);
                         SpUtil.putAndApply(context, "password", password);
                         SpUtil.putAndApply(context, "uid", loginBean.getRes().getId());
@@ -309,9 +319,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         ChatClient.getInstance().register(loginBean.getRes().getId(), loginBean.getRes().getId(), new Callback() {
                             @Override
                             public void onSuccess() {
-                                dialog.dismiss();
                                 if (ChatClient.getInstance().isLoggedInBefore()) {
                                     //已经登录，可以直接进入
+                                    dialog.dismiss();
                                     gotoMain();
                                 } else {
                                     //未登录，需要登录后，再进入
@@ -319,11 +329,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                                             , new Callback() {
                                                 @Override
                                                 public void onSuccess() {
+                                                    dialog.dismiss();
                                                     gotoMain();
                                                 }
 
                                                 @Override
                                                 public void onError(int i, String s) {
+                                                    dialog.dismiss();
                                                     gotoMain();
                                                 }
 
