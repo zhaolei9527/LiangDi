@@ -1,7 +1,6 @@
 package sakura.printersakura.Activity;
 
-import android.os.Bundle;
-
+import sakura.printersakura.R;
 import sakura.printersakura.base.BaseActivity;
 
 /**
@@ -21,7 +20,7 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     protected int setthislayout() {
-        return 0;
+        return R.layout.activcity_login;
     }
 
     @Override

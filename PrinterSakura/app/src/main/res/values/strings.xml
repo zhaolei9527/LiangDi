@@ -8,4 +8,6 @@
     <string name="toast_success">连接成功</string>
     <string name="toast_fail">连接失败</string>
     <string name="toast_notconnect">请先连接打印机</string>
+    <string name="loading">加载中......</string>
+
 </resources>
