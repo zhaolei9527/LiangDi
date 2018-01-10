@@ -9,9 +9,13 @@ import java.io.UnsupportedEncodingException;
 
 import sakura.printersakura.R;
 import sakura.printersakura.base.BaseActivity;
+import sakura.printersakura.httprequset.HTTP;
 import sakura.printersakura.myprinter.Global;
 import sakura.printersakura.myprinter.WorkService;
 import sakura.printersakura.utils.DataUtils;
+import sakura.printersakura.utils.SPUtil;
+
+import static sakura.printersakura.myprinter.WorkService.workThread;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
 
@@ -24,6 +28,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private TextView tv_day;
     private TextView tv_refresh;
     private TextView tv_log;
+    private HTTP http;
+    private String account;
+    private String userid;
+    private String qishu;
 
     @Override
     protected int setthislayout() {
@@ -34,10 +42,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     protected void initListener() {
         initView();
         tv_log.setOnClickListener(this);
+        tv_refresh.setOnClickListener(this);
     }
 
     @Override
     protected void initData() {
+        http = new HTTP();
+        account = (String) SPUtil.get(context, "account", "");
+        userid = (String) SPUtil.get(context, "userid", "");
+        qishu = (String) SPUtil.get(context, "qishu", "");
+        http.lists(userid, account, qishu, context);
     }
 
     private void initView() {
@@ -50,6 +64,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         tv_day = (TextView) findViewById(R.id.tv_day);
         tv_refresh = (TextView) findViewById(R.id.tv_refresh);
         tv_log = (TextView) findViewById(R.id.tv_log);
+
+
     }
 
     void PrintTest() {
@@ -76,7 +92,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         try {
             buf = DataUtils.byteArraysToBytes(new byte[][]{
                     tmp2, str.getBytes("GBK"), tmp2});
-            if (WorkService.workThread.isConnected()) {
+            if (workThread.isConnected()) {
                 Bundle data = new Bundle();
                 Bundle dataAlign = new Bundle();
                 Bundle dataTextOut = new Bundle();
@@ -84,14 +100,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 dataTextOut.putString(Global.STRPARA1, title);
                 dataTextOut.putString(Global.STRPARA2, "GBK");
                 dataTextOut.putInt(Global.INTPARA1, 0);
-                dataTextOut.putInt(Global.INTPARA2, 1);
-                dataTextOut.putInt(Global.INTPARA3, 1);
+                dataTextOut.putInt(Global.INTPARA2, 0);
+                dataTextOut.putInt(Global.INTPARA3, 0);
                 dataTextOut.putInt(Global.INTPARA4, 0);
                 dataTextOut2.putString(Global.STRPARA1, bottom);
                 dataTextOut2.putString(Global.STRPARA2, "GBK");
                 dataTextOut2.putInt(Global.INTPARA1, 0);
-                dataTextOut2.putInt(Global.INTPARA2, 1);
-                dataTextOut2.putInt(Global.INTPARA3, 1);
+                dataTextOut2.putInt(Global.INTPARA2, 0);
+                dataTextOut2.putInt(Global.INTPARA3, 0);
                 dataTextOut2.putInt(Global.INTPARA4, 0);
 
                 // data.putByteArray(Global.BYTESPARA1, buf);
@@ -99,21 +115,21 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 data.putString(Global.STRPARA2, "GBK");
                 data.putInt(Global.INTPARA1, 0);
                 data.putInt(Global.INTPARA2, 0);
-                data.putInt(Global.INTPARA3, 1);
+                data.putInt(Global.INTPARA3, 0);
                 data.putInt(Global.INTPARA4, 0);
                 // data.putInt(Global.INTPARA2, buf.length);
 
                 dataAlign.putInt(Global.INTPARA1, 1);
 
-                WorkService.workThread.handleCmd(Global.CMD_POS_SALIGN,
+                workThread.handleCmd(Global.CMD_POS_SALIGN,
                         dataAlign);
 
-                WorkService.workThread.handleCmd(Global.CMD_POS_STEXTOUT,
+                workThread.handleCmd(Global.CMD_POS_STEXTOUT,
                         dataTextOut);
 
-                WorkService.workThread.handleCmd(Global.CMD_POS_STEXTOUT, data);
+                workThread.handleCmd(Global.CMD_POS_STEXTOUT, data);
 
-                WorkService.workThread.handleCmd(Global.CMD_POS_STEXTOUT,
+                workThread.handleCmd(Global.CMD_POS_STEXTOUT,
                         dataTextOut2);
             } else {
                 Toast.makeText(context, Global.toast_notconnect,
@@ -125,11 +141,28 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     }
 
+
+    @Override
+    protected void onDestroy() {
+        workThread.disconnectBt();
+        workThread.disconnectBle();
+        workThread.disconnectNet();
+        workThread.disconnectUsb();
+        workThread.quit();
+        workThread = null;
+        super.onDestroy();
+    }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_log:
                 PrintTest();
+                break;
+            case R.id.tv_refresh:
+                http.lists(userid, account, qishu, context);
+                break;
+            default:
                 break;
         }
     }

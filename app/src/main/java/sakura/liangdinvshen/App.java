@@ -109,7 +109,7 @@ public class App extends MultiDexApplication {
                 .setUpdateParser(new UpdateParser() {
                     @Override
                     public Update parse(String response) throws Exception {
-                        /* 此处根据上面url或者checkEntity设置的检查更新接口的返回数据response解析出
+                        /* 此处根据上面url或者checkEntity设置的检查更新接口的返回数据response解析出/
                          * 一个update对象返回即可。更新启动时框架内部即可根据update对象的数据进行处理
                          */
                         GetVersionCode getVersionCode = new Gson().fromJson(response, GetVersionCode.class);
@@ -125,7 +125,7 @@ public class App extends MultiDexApplication {
                             // 此apk包的更新内容
                             update.setUpdateContent(getVersionCode.getRes().getAz().getContent());
                             // 此apk包是否为强制更新
-                            update.setForced(true);
+                            update.setForced(false);
                             // 是否显示忽略此次版本更新按钮
                             //  update.setIgnore(object.optBoolean("ignore_able",false));
                         } else {

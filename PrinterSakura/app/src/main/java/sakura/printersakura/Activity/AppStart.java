@@ -190,21 +190,25 @@ public class AppStart extends Activity {
                     startActivity(intent);
                     AppStart.this.finish();
                 } else {
-                    // TODO Auto-generated method stub
-                    WorkService.workThread.disconnectBt();
-                    // 只有没有连接且没有在用，这个才能改变状态
-                    dialog.setMessage(Global.toast_connecting + " "
-                            + address);
-                    dialog.setIndeterminate(true);
-                    dialog.setCancelable(false);
-                    dialog.show();
-                    WorkService.workThread.connectBt(address);
+                    connectBT(address);
                 }
             }
         }, 1000);
     }
 
-    static class MHandler extends Handler {
+    private void connectBT(String address) {
+        // TODO Auto-generated method stub
+        WorkService.workThread.disconnectBt();
+        // 只有没有连接且没有在用，这个才能改变状态
+        dialog.setMessage(Global.toast_connecting + " "
+                + address);
+        dialog.setIndeterminate(true);
+        dialog.setCancelable(false);
+        dialog.show();
+        WorkService.workThread.connectBt(address);
+    }
+
+    class MHandler extends Handler {
         WeakReference<AppStart> mActivity;
 
         MHandler(AppStart activity) {
@@ -230,12 +234,13 @@ public class AppStart extends Activity {
                         new CommomDialog(theActivity, R.style.dialog, "请确认已开启蓝牙打印设备？", new CommomDialog.OnCloseListener() {
                             @Override
                             public void onClick(Dialog dialog, boolean confirm) {
-                                if (confirm) {
+                                if (!confirm) {
                                     dialog.dismiss();
-                                    theActivity.finish();
+                                    finish();
                                 } else {
                                     dialog.dismiss();
-                                    theActivity.finish();
+                                    String address = (String) SPUtil.get(AppStart.this, "address", "");
+                                    connectBT(address);
                                 }
                             }
                         }).setTitle("提示").show();

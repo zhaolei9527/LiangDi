@@ -44,7 +44,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/x9"
-        android:text="川江女子养生会馆 \n汗蒸刮痧排毒"
         android:textColor="#555"
         android:textSize="@dimen/x15" />
 

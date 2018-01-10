@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#fff"
     tools:context="sakura.printersakura.Activity.MainActivity">
 
     <LinearLayout
@@ -33,12 +34,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
-
-
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/y42">
-
+                    android:layout_height="@dimen/y32">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -63,7 +61,7 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/y42">
+                    android:layout_height="@dimen/y32">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -90,7 +88,7 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/y42">
+                    android:layout_height="@dimen/y32">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -116,7 +114,7 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/y42">
+                    android:layout_height="@dimen/y32">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -140,16 +138,11 @@
 
                 </RelativeLayout>
 
-
-                <include layout="@layout/item_layout"></include>
-
-                <include layout="@layout/item_layout"></include>
-
                 <include layout="@layout/item_layout"></include>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/y42">
+                    android:layout_height="@dimen/y32">
 
                     <TextView
                         android:id="@+id/tv_caipiao_max"
@@ -181,13 +174,11 @@
                         android:textColor="#444444"
                         android:textSize="@dimen/x15" />
 
-
                 </RelativeLayout>
-
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/y42">
+                    android:layout_height="@dimen/y32">
 
                     <TextView
                         android:id="@+id/tv_day"

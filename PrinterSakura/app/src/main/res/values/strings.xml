@@ -9,5 +9,7 @@
     <string name="toast_fail">连接失败</string>
     <string name="toast_notconnect">请先连接打印机</string>
     <string name="loading">加载中......</string>
+    <string name="Networkexception">网络未连接</string>
+    <string name="Abnormalserver">服务器异常</string>
 
 </resources>

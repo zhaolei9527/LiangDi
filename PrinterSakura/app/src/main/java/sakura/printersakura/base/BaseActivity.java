@@ -8,6 +8,8 @@ import android.view.WindowManager;
 
 import com.badoo.mobile.util.WeakHandler;
 
+import butterknife.ButterKnife;
+
 
 /**
  * ━━━━━━神兽保佑━━━━━━
@@ -49,6 +51,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         ready();
         setContentView(setthislayout());
+        ButterKnife.bind(this);
         context = this;
         mHandler = new WeakHandler();
         initListener();

@@ -66,6 +66,13 @@ public class PriceCommentsActivity extends BaseActivity {
         et_priceComments = (EditText) findViewById(R.id.et_priceComments);
         tv_newsComments_commit = (TextView) findViewById(R.id.tv_newsComments_commit);
         tv_title.setText(getIntent().getStringExtra("title"));
+
+        img_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     @Override
