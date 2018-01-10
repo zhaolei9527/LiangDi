@@ -331,6 +331,7 @@
                     android:visibility="visible" />
 
                 <RelativeLayout
+                    android:id="@+id/rl4"
                     android:layout_width="@dimen/x264"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
@@ -358,6 +359,7 @@
                 </RelativeLayout>
 
                 <LinearLayout
+                    android:id="@+id/rl5"
                     android:layout_width="@dimen/x264"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"

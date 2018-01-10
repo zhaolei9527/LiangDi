@@ -208,6 +208,7 @@ public class AddressActivitry extends BaseActivity implements View.OnClickListen
                             });
 
                             if (!TextUtils.isEmpty(type)) {
+                                ll_delete_address.setVisibility(View.INVISIBLE);
                                 item_address.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {

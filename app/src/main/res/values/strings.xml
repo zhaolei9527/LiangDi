@@ -1,5 +1,6 @@
 <resources>
-    <string name="app_name">靓蒂女神</string>
+
+    <string name="app_name">靓帝女神</string>
     <string name="loading">加载中......</string>
     <string name="requstPerminssions">权限申请</string>
     <string name="Thepermissionapplicationisrejected">应用需要这些权限保证功能</string>

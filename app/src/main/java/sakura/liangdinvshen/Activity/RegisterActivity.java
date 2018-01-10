@@ -13,6 +13,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -56,7 +57,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private TextView tv_xieyi;
     private TextView tv_shengming;
     private Button btn_register;
-    private RelativeLayout rl4;
     private ImageView img_weixin;
     private ImageView img_qq;
     private String code;
@@ -77,6 +77,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private String openid = "";
     private String type = "";
     private Dialog dialog;
+    private RelativeLayout rl4;
+    private LinearLayout rl5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +100,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void initView() {
+        rl4 = (RelativeLayout) findViewById(R.id.rl4);
+        rl5 = (LinearLayout) findViewById(R.id.rl5);
         et_account = (EditText) findViewById(R.id.et_account);
         et_code = (EditText) findViewById(R.id.et_code);
         image = (ImageView) findViewById(R.id.image);
@@ -108,7 +112,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         tv_xieyi = (TextView) findViewById(R.id.tv_xieyi);
         tv_shengming = (TextView) findViewById(R.id.tv_shengming);
         btn_register = (Button) findViewById(R.id.btn_register);
-        rl4 = (RelativeLayout) findViewById(R.id.rl4);
         img_weixin = (ImageView) findViewById(R.id.img_weixin);
         img_qq = (ImageView) findViewById(R.id.img_qq);
         codeUtils = CodeUtils.getInstance();
@@ -139,7 +142,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     public void onError(Platform arg0, int arg1, Throwable arg2) {
                         // TODO Auto-generated method stub
                         arg2.printStackTrace();
-
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                dialog.dismiss();
+                            }
+                        });
                     }
 
                     @Override
@@ -148,37 +156,37 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         //输出所有授权信息
                         String s = arg0.getDb().exportData();
                         Log.e("LoginActivity", s);
-                        try {
-                            WXBean wxBean = new Gson().fromJson(s, WXBean.class);
-                            openid = wxBean.getUserID();
-                            type = "1";
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    dialog.dismiss();
-                                    btn_register.setText("微信授权注册");
-                                    img_weixin.setVisibility(View.GONE);
-                                    img_qq.setVisibility(View.GONE);
-                                }
-                            });
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-
+                        WXBean wxBean = new Gson().fromJson(s, WXBean.class);
+                        openid = wxBean.getUnionid();
+                        type = "2";
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                rl4.setVisibility(View.GONE);
+                                rl5.setVisibility(View.GONE);
+                                dialog.dismiss();
+                                btn_register.setText("微信授权注册");
+                            }
+                        });
                     }
 
                     @Override
                     public void onCancel(Platform arg0, int arg1) {
                         // TODO Auto-generated method stub
-                        dialog.dismiss();
-                        EasyToast.showShort(context,"授权取消");
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                dialog.dismiss();
+                                EasyToast.showShort(context, "授权取消");
+                            }
+                        });
                     }
                 });
                 weChat.showUser(null);//授权并获取用户信息
                 break;
             case R.id.img_qq:
                 dialog.show();
-
                 final Platform qq = ShareSDK.getPlatform(QQ.NAME);
 //回调信息，可以在这里获取基本的授权返回的信息，但是注意如果做提示和UI操作要传到主线程handler里去执行
                 qq.setPlatformActionListener(new PlatformActionListener() {
@@ -186,7 +194,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     public void onError(Platform arg0, int arg1, Throwable arg2) {
                         // TODO Auto-generated method stub
                         arg2.printStackTrace();
-
+                        dialog.dismiss();
                     }
 
                     @Override
@@ -194,29 +202,26 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         // TODO Auto-generated method stub
                         //输出所有授权信息
                         String s = arg0.getDb().exportData();
-                        try {
-                            QQBean qqBean = new Gson().fromJson(s, QQBean.class);
-                            openid = qqBean.getUserID();
-                            type = "1";
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    dialog.dismiss();
-                                    btn_register.setText("QQ授权注册");
-                                    img_weixin.setVisibility(View.GONE);
-                                    img_qq.setVisibility(View.GONE);
-                                }
-                            });
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
+                        Log.e("LoginActivity", s);
+                        QQBean qqBean = new Gson().fromJson(s, QQBean.class);
+                        openid = qqBean.getUserID();
+                        type = "1";
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                rl4.setVisibility(View.GONE);
+                                rl5.setVisibility(View.GONE);
+                                dialog.dismiss();
+                                btn_register.setText("QQ授权注册");
+                            }
+                        });
                     }
 
                     @Override
                     public void onCancel(Platform arg0, int arg1) {
                         // TODO Auto-generated method stub
                         dialog.dismiss();
-                        EasyToast.showShort(context,"授权取消");
+                        EasyToast.showShort(context, "授权取消");
                     }
                 });
                 qq.showUser(null);//授权并获取用户信息

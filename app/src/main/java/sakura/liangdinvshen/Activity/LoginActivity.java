@@ -151,6 +151,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     public void onError(Platform arg0, int arg1, Throwable arg2) {
                         // TODO Auto-generated method stub
                         arg2.printStackTrace();
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                dialog.dismiss();
+                            }
+                        });
                     }
 
                     @Override
@@ -159,23 +165,22 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         //输出所有授权信息
                         String s = arg0.getDb().exportData();
                         Log.e("LoginActivity", s);
-                        try {
-                            WXBean wxBean = new Gson().fromJson(s, WXBean.class);
-                            openid = wxBean.getUserID();
-                            type = "2";
-                            getLogin("", "", openid, type);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-
-
+                        WXBean wxBean = new Gson().fromJson(s, WXBean.class);
+                        openid = wxBean.getUnionid();
+                        type = "2";
+                        getLogin("", "", openid, type);
                     }
 
                     @Override
                     public void onCancel(Platform arg0, int arg1) {
                         // TODO Auto-generated method stub
-                        dialog.dismiss();
-                        EasyToast.showShort(context, "授权取消");
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                dialog.dismiss();
+                                EasyToast.showShort(context, "授权取消");
+                            }
+                        });
                     }
                 });
                 weChat.showUser(null);//授权并获取用户信息
@@ -189,6 +194,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     public void onError(Platform arg0, int arg1, Throwable arg2) {
                         // TODO Auto-generated method stub
                         arg2.printStackTrace();
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                dialog.dismiss();
+                            }
+                        });
                     }
 
                     @Override
@@ -197,21 +208,22 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         //输出所有授权信息
                         String s = arg0.getDb().exportData();
                         Log.e("LoginActivity", s);
-                        try {
-                            QQBean qqBean = new Gson().fromJson(s, QQBean.class);
-                            openid = qqBean.getUserID();
-                            type = "1";
-                            getLogin("", "", openid, type);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
+                        QQBean qqBean = new Gson().fromJson(s, QQBean.class);
+                        openid = qqBean.getUserID();
+                        type = "1";
+                        getLogin("", "", openid, type);
                     }
 
                     @Override
                     public void onCancel(Platform arg0, int arg1) {
                         // TODO Auto-generated method stub
-                        dialog.dismiss();
-                        EasyToast.showShort(context, "授权取消");
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                dialog.dismiss();
+                                EasyToast.showShort(context, "授权取消");
+                            }
+                        });
                     }
                 });
                 qq.showUser(null);//授权并获取用户信息
@@ -384,6 +396,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     } else if ("215".equals(loginBean.getCode())) {
                         dialog.dismiss();
                         btn_login.setText("授权登录");
+                        rl4.setVisibility(View.GONE);
+                        rl5.setVisibility(View.GONE);
                     } else {
                         dialog.dismiss();
                         Toast.makeText(LoginActivity.this, loginBean.getMsg(), Toast.LENGTH_SHORT).show();

@@ -89,13 +89,21 @@ public class OrderActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == addressCode) {
-            String name = data.getStringExtra("name");
-            mTvName.setText(name);
-            String phone = data.getStringExtra("phone");
-            mTvPhone.setText(phone);
-            String address = data.getStringExtra("address");
-            mTvDizhi.setText(address);
-            addressID = data.getStringExtra("addressid");
+            if (data == null) {
+
+            } else {
+                mTvAddDizhi.setVisibility(View.INVISIBLE);
+                mTvName.setVisibility(View.VISIBLE);
+                mTvDizhi.setVisibility(View.VISIBLE);
+                mTvPhone.setVisibility(View.VISIBLE);
+                String name = data.getStringExtra("name");
+                mTvName.setText(name);
+                String phone = data.getStringExtra("phone");
+                mTvPhone.setText(phone);
+                String address = data.getStringExtra("address");
+                mTvDizhi.setText(address);
+                addressID = data.getStringExtra("addressid");
+            }
         }
     }
 
@@ -161,6 +169,14 @@ public class OrderActivity extends BaseActivity {
                     stringBuilder.append(datas.get(i).getId() + "_");
                     stringBuilder.append(datas.get(i).getNumber());
                 }
+
+                if (TextUtils.isEmpty(addressID)) {
+                    dialog.dismiss();
+                    EasyToast.showShort(context, "请填写收货地址");
+                    return;
+                }
+
+
                 orderOrder(addressID, stringBuilder.toString());
             }
         });
@@ -241,7 +257,7 @@ public class OrderActivity extends BaseActivity {
         } else {
             rl_yue.setVisibility(View.GONE);
         }
-        mTvPrice.setText(price);
+        mTvPrice.setText("￥" + price);
         Log.e("OrderActivity", order);
         String[] split = order.split("&");
 
@@ -311,42 +327,43 @@ public class OrderActivity extends BaseActivity {
                         mTvDizhi.setText(stringBuilder.toString());
                         mTvPhone.setVisibility(View.VISIBLE);
                         mTvPhone.setText(orderIndexBean.getAddress().getTel());
-                        mTvFreight.setText("￥" + orderIndexBean.getYunfei());
-                        String Price = mTvPrice.getText().toString().replace("￥", "");
-                        String Freight = mTvFreight.getText().toString().replace("￥", "");
-                        pricev = Double.parseDouble(Price);
-                        freightv1 = Double.parseDouble(Freight);
-                        double totol = pricev + freightv1;
-                        mTvTotal.setText("￥" + totol);
-                        mTvMoney.setText("￥" + totol);
                         //地址id
                         addressID = orderIndexBean.getAddress().getId();
-                        //积分抵扣
-                        jfdk = orderIndexBean.getJfdk();
-                        //积分条件
-                        String jf_tj = orderIndexBean.getJf_tj();
-                        double jftjv = Double.parseDouble(jf_tj);
-
-                        if (jftjv < totol) {
-                            rl_jifen.setVisibility(View.VISIBLE);
-                        } else {
-                            rl_jifen.setVisibility(View.GONE);
-                        }
-
-                        //矫正余额
-                        yue = orderIndexBean.getMoney();
-                        if (!TextUtils.isEmpty(yue)) {
-                            yuev = Double.parseDouble(yue);
-                            if (yuev == 0) {
-                                rl_yue.setVisibility(View.GONE);
-                            } else {
-                                rl_yue.setVisibility(View.VISIBLE);
-                                mTvBalance.setText(Utils.formatDouble(yuev));
-                            }
-                        } else {
-                            rl_yue.setVisibility(View.GONE);
-                        }
                     }
+                    mTvFreight.setText("￥" + orderIndexBean.getYunfei());
+                    String Price = mTvPrice.getText().toString().replace("￥", "");
+                    String Freight = mTvFreight.getText().toString().replace("￥", "");
+                    pricev = Double.parseDouble(Price);
+                    freightv1 = Double.parseDouble(Freight);
+                    double totol = pricev + freightv1;
+                    mTvTotal.setText("￥" + totol);
+                    mTvMoney.setText("￥" + totol);
+                    //积分抵扣
+                    jfdk = orderIndexBean.getJfdk();
+                    //积分条件
+                    String jf_tj = orderIndexBean.getJf_tj();
+                    double jftjv = Double.parseDouble(jf_tj);
+
+                    if (jftjv < totol) {
+                        rl_jifen.setVisibility(View.VISIBLE);
+                    } else {
+                        rl_jifen.setVisibility(View.GONE);
+                    }
+
+                    //矫正余额
+                    yue = orderIndexBean.getMoney();
+                    if (!TextUtils.isEmpty(yue)) {
+                        yuev = Double.parseDouble(yue);
+                        if (yuev == 0) {
+                            rl_yue.setVisibility(View.GONE);
+                        } else {
+                            rl_yue.setVisibility(View.VISIBLE);
+                            mTvBalance.setText(Utils.formatDouble(yuev));
+                        }
+                    } else {
+                        rl_yue.setVisibility(View.GONE);
+                    }
+
                     result = null;
                 } catch (Exception e) {
                     e.printStackTrace();
