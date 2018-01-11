@@ -113,7 +113,7 @@ public class XfListActivity extends BaseActivity {
                 if (TextUtils.isEmpty(s)) {
                     EasyToast.showShort(context, et_search.getHint().toString());
                 } else {
-                    lastKeywords = et_search.getHint().toString();
+                    lastKeywords = et_search.getText().toString();
                     if (Utils.isConnected(context)) {
                         getData();
                     } else {

@@ -53,6 +53,7 @@ import sakura.liangdinvshen.Volley.VolleyRequest;
 import sakura.liangdinvshen.other.PriorityRunnable;
 
 import static sakura.liangdinvshen.App.pausableThreadPoolExecutor;
+import static sakura.liangdinvshen.R.id.img;
 import static sakura.liangdinvshen.R.style.dialog;
 
 public class MyPersonalDataActivity extends BaseActivity implements View.OnClickListener {
@@ -73,6 +74,7 @@ public class MyPersonalDataActivity extends BaseActivity implements View.OnClick
     private TextView tv_shengao;
     private TextView tv_hunyin;
     private TextView tv_city;
+    private com.facebook.drawee.view.SimpleDraweeView tujianimg;
 
     @Override
     protected int setthislayout() {
@@ -97,6 +99,12 @@ public class MyPersonalDataActivity extends BaseActivity implements View.OnClick
         rl_change_hunyin = (RelativeLayout) findViewById(R.id.rl_change_hunyin);
         textView = (TextView) findViewById(R.id.textView);
         rl_change_address = (RelativeLayout) findViewById(R.id.rl_change_address);
+
+        String tujian = (String) SpUtil.get(context, "tuijian", "");
+
+        tujianimg = (SimpleDraweeView) findViewById(img);
+
+        tujianimg.setImageURI(UrlUtils.URL + tujian);
 
         String img = (String) SpUtil.get(context, "img", "");
 
@@ -642,7 +650,7 @@ public class MyPersonalDataActivity extends BaseActivity implements View.OnClick
 
             @Override
             public void onMyError(VolleyError error) {
-                EasyToast.showShort(context,"头像修改失败");
+                EasyToast.showShort(context, "头像修改失败");
                 dialogResult.dismiss();
                 error.printStackTrace();
             }

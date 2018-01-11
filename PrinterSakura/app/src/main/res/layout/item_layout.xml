@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="#fff"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -18,6 +19,7 @@
             android:textSize="@dimen/x15" />
 
         <TextView
+            android:id="@+id/tv_caipiao_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -34,6 +36,7 @@
         android:layout_height="@dimen/y42">
 
         <TextView
+            android:id="@+id/tv_caipiao_peilv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -43,6 +46,7 @@
             android:textSize="@dimen/x15" />
 
         <TextView
+            android:id="@+id/tv_caipiao_jine"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -56,9 +60,9 @@
 
 
     <View
-        android:background="#cccccc"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/x1"></View>
+        android:layout_height="@dimen/x1"
+        android:background="#cccccc"></View>
 
 
 </LinearLayout>

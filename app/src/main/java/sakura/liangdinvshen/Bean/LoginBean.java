@@ -45,6 +45,7 @@ public class LoginBean {
     }
 
     public static class ResBean {
+
         /**
          * id : 2
          * ni_name : tttttt

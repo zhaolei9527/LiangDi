@@ -101,6 +101,7 @@ public class FlashActivity extends BaseActivity {
         params.put("password", password);
         params.put("type", type);
         params.put("openid", openid);
+        Log.e("LoginActivity", "params:" + params);
         VolleyRequest.RequestPost(context, UrlUtils.BASE_URL + "login/login", "login/login", params, new VolleyInterface(context) {
             @Override
             public void onMySuccess(String result) {
@@ -126,7 +127,7 @@ public class FlashActivity extends BaseActivity {
                         SpUtil.putAndApply(context, "chengshi", loginBean.getRes().getCity());
                         SpUtil.putAndApply(context, "jieduan", loginBean.getRes().getStu());
                         SpUtil.putAndApply(context, "Level", loginBean.getRes().getLevel_name());
-
+                        SpUtil.putAndApply(context, "tuijian", loginBean.getRes().getErweima());
                         //注册
                         final LoginBean finalLoginBean = loginBean;
                         ChatClient.getInstance().register(loginBean.getRes().getId(), loginBean.getRes().getId(), new Callback() {

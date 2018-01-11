@@ -379,5 +379,14 @@
             android:exported="false"
             android:screenOrientation="behind"></activity>
 
+
+        <activity
+            android:name=".Activity.FuWuWangDianListActivity"
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="adjustPan|stateHidden|adjustResize"></activity>
+        <activity
+            android:name=".Activity.FuWuWangDianSearchActivity"
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="adjustPan|stateHidden|adjustResize"></activity>
     </application>
 </manifest>

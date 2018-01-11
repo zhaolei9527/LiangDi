@@ -56,9 +56,6 @@ public class RecommmendListAdapter extends RecyclerView.Adapter<RecommmendListAd
             holder.img.setImageURI(UrlUtils.URL + resBean.getImg());
         }
 
-
-
-
         holder.tv_time.setText(DateUtils.getMillon(Long.parseLong(resBean.getAdd_time()) * 1000));
         holder.tv_title.setText(resBean.getNi_name());
     }

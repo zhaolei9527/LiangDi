@@ -18,13 +18,11 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-import java.io.UnsupportedEncodingException;
 import java.lang.ref.WeakReference;
 
 import sakura.printersakura.R;
 import sakura.printersakura.myprinter.Global;
 import sakura.printersakura.myprinter.WorkService;
-import sakura.printersakura.utils.DataUtils;
 import sakura.printersakura.utils.FileUtils;
 import sakura.printersakura.utils.SPUtil;
 import sakura.printersakura.view.CommomDialog;

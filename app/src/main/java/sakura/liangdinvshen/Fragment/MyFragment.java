@@ -26,6 +26,7 @@ import sakura.liangdinvshen.Activity.BankCardActivity;
 import sakura.liangdinvshen.Activity.CollectionActivity;
 import sakura.liangdinvshen.Activity.EmployeesActivity;
 import sakura.liangdinvshen.Activity.FinancialActiivity;
+import sakura.liangdinvshen.Activity.FuWuWangDianListActivity;
 import sakura.liangdinvshen.Activity.IntegralActiivity;
 import sakura.liangdinvshen.Activity.MessageActivity;
 import sakura.liangdinvshen.Activity.MyOrderActivity;
@@ -91,6 +92,7 @@ public class MyFragment extends Fragment implements View.OnClickListener {
     private RelativeLayout mRlWangdian;
     private TextView mTvQiandao;
     private Dialog dialog;
+    private RelativeLayout rl_fuwuwangdian;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -114,6 +116,7 @@ public class MyFragment extends Fragment implements View.OnClickListener {
         mImgDot = (ImageView) view.findViewById(R.id.img_dot);
         mLlXiaoxi = (LinearLayout) view.findViewById(R.id.ll_xiaoxi);
         mImg1 = (ImageView) view.findViewById(R.id.img1);
+        rl_fuwuwangdian = (RelativeLayout) view.findViewById(R.id.rl_fuwuwangdian);
         mRlMyService = (RelativeLayout) view.findViewById(R.id.rl_myService);
         mImg2 = (ImageView) view.findViewById(R.id.img2);
         mRlJieduan = (RelativeLayout) view.findViewById(R.id.rl_jieduan);
@@ -147,9 +150,9 @@ public class MyFragment extends Fragment implements View.OnClickListener {
         }
 
         mTvName.setText(String.valueOf(SpUtil.get(getActivity(), "username", "")));
-        mTvJifen.setText("可用/冻结" + String.valueOf(SpUtil.get(getActivity(), "jifen", "0")) + String.valueOf(SpUtil.get(getActivity(), "dongjie", "0")));
+        mTvJifen.setText("可用/冻结：" + String.valueOf(SpUtil.get(getActivity(), "jifen", "0")) + String.valueOf(SpUtil.get(getActivity(), "dongjie", "0")));
         mTvYue.setText("余额￥" + String.valueOf(SpUtil.get(getActivity(), "money", "")));
-
+        rl_fuwuwangdian.setOnClickListener(this);
         mRlMyService.setOnClickListener(this);
         mLlDingdan.setOnClickListener(this);
         mRlZiliao.setOnClickListener(this);
@@ -217,6 +220,9 @@ public class MyFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.rl_fuwuwangdian:
+                startActivity(new Intent(getContext(), FuWuWangDianListActivity.class));
+                break;
             case R.id.rl_tixian:
                 startActivity(new Intent(getContext(), WithdrawalActivity.class));
                 break;

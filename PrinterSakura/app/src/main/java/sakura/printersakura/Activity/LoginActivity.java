@@ -17,9 +17,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import sakura.printersakura.App;
 import sakura.printersakura.Bean.CmdEvent;
-import sakura.printersakura.httprequset.HTTP;
 import sakura.printersakura.R;
 import sakura.printersakura.base.BaseActivity;
+import sakura.printersakura.httprequset.HTTP;
 import sakura.printersakura.utils.SPUtil;
 import sakura.printersakura.utils.Utils;
 

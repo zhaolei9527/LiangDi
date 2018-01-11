@@ -88,11 +88,9 @@ public class HTTP {
                 Log.e("RegisterActivity", result);
                 try {
                     ListsBean listsBean = new Gson().fromJson(result, ListsBean.class);
-                    if ("200".equals(listsBean.getCode())){
-
-
-
-
+                    if ("200".equals(String.valueOf(listsBean.getCode()))) {
+                        EventBus.getDefault().post(
+                                listsBean);
                     }
                     listsBean = null;
                     result = null;

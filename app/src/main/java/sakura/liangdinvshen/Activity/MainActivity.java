@@ -1,16 +1,22 @@
 package sakura.liangdinvshen.Activity;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
+import com.hyphenate.chat.ChatClient;
+import com.hyphenate.helpdesk.callback.Callback;
+import com.hyphenate.helpdesk.easeui.util.IntentBuilder;
+import com.hyphenate.helpdesk.model.ContentFactory;
 import com.mylhyl.acp.Acp;
 import com.mylhyl.acp.AcpListener;
 import com.mylhyl.acp.AcpOptions;
@@ -28,7 +34,10 @@ import sakura.liangdinvshen.Fragment.NewsFragment;
 import sakura.liangdinvshen.Fragment.RecordFragment;
 import sakura.liangdinvshen.Fragment.ShopFragment;
 import sakura.liangdinvshen.R;
+import sakura.liangdinvshen.Utils.EasyToast;
+import sakura.liangdinvshen.Utils.SpUtil;
 import sakura.liangdinvshen.Utils.UrlUtils;
+import sakura.liangdinvshen.Utils.Utils;
 import sakura.liangdinvshen.Volley.VolleyInterface;
 import sakura.liangdinvshen.Volley.VolleyRequest;
 
@@ -36,6 +45,8 @@ import sakura.liangdinvshen.Volley.VolleyRequest;
 public class MainActivity extends BaseActivity {
 
     private BottomTabBar BottomTabBar;
+    private ImageView img_zixun;
+    private Dialog dialog;
 
     @Override
     protected int setthislayout() {
@@ -44,6 +55,62 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initview() {
+        img_zixun = (ImageView) findViewById(R.id.img_zixun);
+        img_zixun.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (Utils.isConnected(context)) {
+                    if (ChatClient.getInstance().isLoggedInBefore()) {
+                        //已经登录，可以直接进入会话界面
+                        Intent intent = new IntentBuilder(context)
+                                .setServiceIMNumber("liangdinvshen") //获取地址：kefu.easemob.com，“管理员模式 > 渠道管理 > 手机APP”页面的关联的“IM服务号”
+                                .setTitleName("靓蒂女神客服")
+                                .setVisitorInfo(ContentFactory.createVisitorInfo(null)
+                                        .phone(String.valueOf(SpUtil.get(context, "account", "")))
+                                        .name(String.valueOf(SpUtil.get(context, "username", "")))
+                                        .nickName(String.valueOf(SpUtil.get(context, "username", ""))))
+                                .build();
+                        startActivity(intent);
+                    } else {
+                        //未登录，需要登录后，再进入会话界面
+                        dialog = Utils.showLoadingDialog(context);
+                        dialog.show();
+                        ChatClient.getInstance().login(String.valueOf(SpUtil.get(context, "uid", "")), String.valueOf(SpUtil.get(context, "uid", ""))
+                                , new Callback() {
+                                    @Override
+                                    public void onSuccess() {
+                                        dialog.dismiss();
+                                        Intent intent = new IntentBuilder(context)
+                                                .setServiceIMNumber("liangdinvshen") //获取地址：kefu.easemob.com，“管理员模式 > 渠道管理 > 手机APP”页面的关联的“IM服务号”
+                                                .setTitleName("靓蒂女神客服")
+                                                .setVisitorInfo(ContentFactory.createVisitorInfo(null)
+                                                        .phone(String.valueOf(SpUtil.get(context, "account", "")))
+                                                        .name(String.valueOf(SpUtil.get(context, "username", "")))
+                                                        .nickName(String.valueOf(SpUtil.get(context, "username", ""))))
+                                                .build();
+                                        startActivity(intent);
+                                    }
+
+                                    @Override
+                                    public void onError(int i, String s) {
+                                        dialog.dismiss();
+                                        EasyToast.showShort(context, "暂时无法访问客服");
+                                    }
+
+                                    @Override
+                                    public void onProgress(int i, String s) {
+
+                                    }
+                                });
+                    }
+                } else {
+                    EasyToast.showShort(context, "网络未连接");
+                }
+
+            }
+        });
+
+
         BottomTabBar = (BottomTabBar) findViewById(R.id.BottomTabBar);
         BottomTabBar.initFragmentorViewPager(getSupportFragmentManager())
                 .addReplaceLayout(R.id.Vp_context)

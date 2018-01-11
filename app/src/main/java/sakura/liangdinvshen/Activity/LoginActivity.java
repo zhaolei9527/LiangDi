@@ -322,6 +322,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         SpUtil.putAndApply(context, "jieduan", loginBean.getRes().getStu());
                         SpUtil.putAndApply(context, "Level", loginBean.getRes().getLevel_name());
 
+                        SpUtil.putAndApply(context, "tuijian", loginBean.getRes().getErweima());
+
+
                         if ("1".equals(type)) {
                             SpUtil.putAndApply(context, "qqopenid", openid);
                         } else if ("2".equals(type)) {

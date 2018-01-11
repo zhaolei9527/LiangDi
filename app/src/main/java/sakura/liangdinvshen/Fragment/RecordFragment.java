@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.bigkoo.pickerview.TimePickerView;
@@ -91,8 +90,7 @@ public class RecordFragment extends Fragment {
                 // 这里回调过来的v,就是show()方法里面所添加的 View 参数，如果show的时候没有添加参数，v则为null
                 String day = DateUtils.getDay(date.getTime());
                 String[] split = day.split("-");
-                CalendarDate today = new CalendarDate(Integer.parseInt(split[0]),Integer.parseInt(split[1]),Integer.parseInt(split[2]));
-                Toast.makeText(context, today.toString(), Toast.LENGTH_SHORT).show();
+                CalendarDate today = new CalendarDate(Integer.parseInt(split[0]), Integer.parseInt(split[1]), Integer.parseInt(split[2]));
                 calendarAdapter.notifyDataChanged(today);
                 tvYear.setText(today.getYear() + "年");
                 tvMonth.setText(today.getMonth() + "");
@@ -190,6 +188,8 @@ public class RecordFragment extends Fragment {
         initMonthPager();
     }
 
+    private boolean isfirst = true;
+
     /**
      * 初始化标记数据，HashMap的形式，可自定义
      * 如果存在异步的话，在使用setMarkData之后调用 calendarAdapter.notifyDataChanged();
@@ -199,7 +199,12 @@ public class RecordFragment extends Fragment {
             markData.put(list.get(i).getTime(), list.get(i).getStu());
         }
         calendarAdapter.setMarkData(markData);
-        calendarAdapter.notifyMonthDataChanged(date);
+        if (isfirst) {
+            calendarAdapter.notifyMonthDataChanged(date);
+            isfirst = false;
+        } else {
+            calendarAdapter.notifyDataSetChanged();
+        }
     }
 
     private void initListener() {
@@ -254,7 +259,7 @@ public class RecordFragment extends Fragment {
                     currentDate = date;
                     tvYear.setText(date.getYear() + "年");
                     tvMonth.setText(date.getMonth() + "");
-                    lifeUserSlq(date);
+                    lifeUserSlq(currentDate);
                 }
             }
 
@@ -273,10 +278,10 @@ public class RecordFragment extends Fragment {
                     calendarAdapter.notifyDataChanged(today);
                     tvYear.setText(today.getYear() + "年");
                     tvMonth.setText(today.getMonth() + "");
-                    lifeUserSlq(currentDate);
                     date = today;
                     App.getQueues().cancelAll("life/user_days");
                     adapter.setnow(DateUtils.getDay(System.currentTimeMillis()));
+                    lifeUserSlq(currentDate);
                 }
             });
         }
@@ -291,7 +296,7 @@ public class RecordFragment extends Fragment {
     /**
      * 月份数据获取
      */
-    private void lifeUserSlq(CalendarDate date) {
+    private void lifeUserSlq(final CalendarDate date) {
         HashMap<String, String> params = new HashMap<>(3);
         params.put("key", UrlUtils.KEY);
         params.put("uid", String.valueOf(SpUtil.get(context, "uid", "")));
@@ -303,7 +308,7 @@ public class RecordFragment extends Fragment {
                 try {
                     LifeUserSlqBean lifeUserSlqBean = new Gson().fromJson(result, LifeUserSlqBean.class);
                     if ("1".equals(String.valueOf(lifeUserSlqBean.getStu()))) {
-                        SpUtil.putAndApply(getActivity(), currentDate.getYear() + "-" + currentDate.getMonth(), result);
+                        SpUtil.putAndApply(getActivity(), date.getYear() + "-" + date.getMonth(), result);
                         initMarkData(lifeUserSlqBean.getData());
                     }
                     lifeUserSlqBean = null;

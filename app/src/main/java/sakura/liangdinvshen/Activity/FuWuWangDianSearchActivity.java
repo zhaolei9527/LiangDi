@@ -18,10 +18,10 @@ import com.google.gson.Gson;
 import java.util.HashMap;
 
 import me.fangx.haorefresh.LoadMoreListener;
-import sakura.liangdinvshen.Adapter.AddStaffManamentListAdapter;
+import sakura.liangdinvshen.Adapter.FuWuWangDianListAdapter;
 import sakura.liangdinvshen.App;
 import sakura.liangdinvshen.Base.BaseActivity;
-import sakura.liangdinvshen.Bean.WangQbListBean;
+import sakura.liangdinvshen.Bean.WangListBean;
 import sakura.liangdinvshen.R;
 import sakura.liangdinvshen.Utils.EasyToast;
 import sakura.liangdinvshen.Utils.SpUtil;
@@ -33,13 +33,13 @@ import sakura.liangdinvshen.View.SakuraLinearLayoutManager;
 import sakura.liangdinvshen.Volley.VolleyInterface;
 import sakura.liangdinvshen.Volley.VolleyRequest;
 
-public class AddStaffManagmentActivity extends BaseActivity {
+public class FuWuWangDianSearchActivity extends BaseActivity {
 
     private FrameLayout rl_back;
     private LiangDiRecycleView rv_purchaserecord;
     private SakuraLinearLayoutManager line;
     private int p = 1;
-    private AddStaffManamentListAdapter adapter;
+    private FuWuWangDianListAdapter adapter;
     private Dialog dialog;
     private EditText et_search;
     private ImageView img_search;
@@ -48,12 +48,12 @@ public class AddStaffManagmentActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        App.getQueues().cancelAll("wang/qb_list");
+        App.getQueues().cancelAll("wang/wang_list");
     }
 
     @Override
     protected int setthislayout() {
-        return R.layout.activity_addstaffmanagment;
+        return R.layout.activity_fuwuwangdiansearch;
     }
 
     @Override
@@ -85,7 +85,7 @@ public class AddStaffManagmentActivity extends BaseActivity {
     }
 
     public void getData() {
-        if (!dialog.isShowing()){
+        if (!dialog.isShowing()) {
             dialog.show();
         }
         if (Utils.isConnected(context)) {
@@ -127,38 +127,38 @@ public class AddStaffManagmentActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        getData();
     }
 
     /**
-     * 消费记录管理
+     * 服务网点获取
      */
     private void wangQb_list() {
-        HashMap<String, String> params = new HashMap<>(3);
+        HashMap<String, String> params = new HashMap<>(4);
         params.put("key", UrlUtils.KEY);
         params.put("p", String.valueOf(p));
         params.put("keywords", lastKeywords);
         params.put("uid", String.valueOf(SpUtil.get(context, "uid", "")));
-        VolleyRequest.RequestPost(context, UrlUtils.BASE_URL + "wang/qb_list", "wang/qb_list", params, new VolleyInterface(context) {
+        Log.e("RegisterActivity", "params:" + params);
+        VolleyRequest.RequestPost(context, UrlUtils.BASE_URL + "wang/wang_list", "wang/wang_list", params, new VolleyInterface(context) {
             @Override
             public void onMySuccess(String result) {
                 dialog.dismiss();
                 Log.e("RegisterActivity", result);
                 try {
-                    WangQbListBean wangQbListBean = new Gson().fromJson(result, WangQbListBean.class);
+                    WangListBean wangListBean = new Gson().fromJson(result, WangListBean.class);
                     rv_purchaserecord.loadMoreComplete();
-                    if ("1".equals(String.valueOf(wangQbListBean.getCode()))) {
+                    if ("1".equals(String.valueOf(wangListBean.getCode()))) {
                         ll_empty.setVisibility(View.GONE);
                         if (p == 1) {
-                            adapter = new AddStaffManamentListAdapter(wangQbListBean.getList(), context);
+                            adapter = new FuWuWangDianListAdapter(wangListBean.getList(), context);
                             rv_purchaserecord.setAdapter(adapter);
                         } else {
-                            adapter.setDatas(wangQbListBean.getList());
+                            adapter.setDatas(wangListBean.getList());
                         }
                         if (rv_purchaserecord != null) {
                             rv_purchaserecord.loadMoreComplete();
                         }
-                        if (wangQbListBean.getList().size() < 10) {
+                        if (wangListBean.getList().size() < 10) {
                             rv_purchaserecord.setCanloadMore(false);
                             if (p != 1) {
                                 rv_purchaserecord.loadMoreEnd();

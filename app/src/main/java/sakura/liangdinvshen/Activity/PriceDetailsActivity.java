@@ -223,7 +223,6 @@ public class PriceDetailsActivity extends BaseActivity implements View.OnClickLi
                                         .nickName(String.valueOf(SpUtil.get(context, "username", ""))))
                                 .build();
                         startActivity(intent);
-
                         VisitorTrack track = ContentFactory.createVisitorTrack(null);
                         track.title("我正在看")  //显示标题
                                 .price(mTvPrice.getText().toString()) //显示价格
