@@ -143,6 +143,7 @@
                     android:textColor="#FFFFFF"
                     android:textSize="16dp"
                     app:kswFadeBack="false"
+                    android:checked="true"
                     app:kswTextOff="Off"
                     app:kswTextOn="On" />
 

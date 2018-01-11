@@ -1,8 +1,6 @@
 package sakura.printersakura.Activity;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -23,7 +21,6 @@ import sakura.printersakura.myprinter.Global;
 import sakura.printersakura.utils.DataUtils;
 import sakura.printersakura.utils.SPUtil;
 
-import static sakura.printersakura.R.id.tv;
 import static sakura.printersakura.myprinter.WorkService.workThread;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
