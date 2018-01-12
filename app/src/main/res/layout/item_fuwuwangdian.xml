@@ -81,13 +81,14 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:minHeight="@dimen/x30"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/x10"
-                android:layout_marginTop="@dimen/x10"
                 android:ellipsize="end"
                 android:text="电话："
                 android:textColor="@color/text333"
@@ -95,14 +96,46 @@
 
             <TextView
                 android:id="@+id/tv_tel"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/x10"
-                android:layout_marginTop="@dimen/x10"
                 android:ellipsize="end"
                 android:text="17629345001"
                 android:textColor="@color/text333"
                 android:textSize="@dimen/x14" />
+
+            <RelativeLayout
+                android:id="@+id/rl_tel"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/x25"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/x15"
+                    android:background="@mipmap/shanchu"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="@dimen/x20"
+                        android:layout_height="@dimen/x20"
+                        android:layout_marginLeft="@dimen/x5"
+                        android:background="@drawable/call" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/x5"
+                        android:text="立即咨询"
+                        android:textColor="@color/colorAccent" />
+
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
 
         </LinearLayout>
 

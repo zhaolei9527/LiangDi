@@ -21,6 +21,7 @@ import sakura.printersakura.myprinter.Global;
 import sakura.printersakura.utils.DataUtils;
 import sakura.printersakura.utils.SPUtil;
 
+import static sakura.printersakura.R.layout.item_layout;
 import static sakura.printersakura.myprinter.WorkService.workThread;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
@@ -44,6 +45,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     private int Delayed = 5000;
     private Runnable r;
+    private StringBuffer stringBuffer;
 
 
     @Override
@@ -102,32 +104,36 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             tv_money.setText("￥" + listsBean.getMoney());
             tv_day.setText("*第" + qishu + "期，3天内有效");
             ll_content.removeAllViews();
+
+            stringBuffer = new StringBuffer();
+
             for (int i = 0; i < listsBean.getData().size(); i++) {
-                View item_layout = View.inflate(context, R.layout.item_layout, null);
-                TextView tv_caipiao_number = item_layout.findViewById(R.id.tv_caipiao_number);
-                TextView tv_caipiao_peilv = item_layout.findViewById(R.id.tv_caipiao_peilv);
-                TextView tv_caipiao_jine = item_layout.findViewById(R.id.tv_caipiao_jine);
-                tv_caipiao_jine.setText("金额：" + listsBean.getData().get(i).getMoney());
+                View itemLayout = View.inflate(context, R.layout.item_layout, null);
+                TextView tv_caipiao_number = itemLayout.findViewById(R.id.tv_caipiao_number);
+                TextView tv_caipiao_peilv = itemLayout.findViewById(R.id.tv_caipiao_peilv);
+                TextView tv_caipiao_jine = itemLayout.findViewById(R.id.tv_caipiao_jine);
                 tv_caipiao_number.setText("" + listsBean.getData().get(i).getMingxi_2() + listsBean.getData().get(i).getMingxi_3());
                 tv_caipiao_peilv.setText("赔率1：" + listsBean.getData().get(i).getOdds());
-                ll_content.addView(item_layout);
+                tv_caipiao_jine.setText("金额：" + listsBean.getData().get(i).getMoney());
+                ll_content.addView(itemLayout);
+                stringBuffer.append(listsBean.getData().get(i).getMingxi_2() + listsBean.getData().get(i).getMingxi_3() + "       ");
+                stringBuffer.append(listsBean.getData().get(i).getOdds() + "       ");
+                stringBuffer.append(listsBean.getData().get(i).getMoney() + "\n");
             }
 
         }
     }
 
     void PrintTest() {
-        String title = "━━━七星彩━━━\n\n";
+        String title = "\n\n━━━七星彩━━━\n\n";
         String str =
                 "购买时间：" + tv_time.getText() + "\n\n" +
                         "会员名：" + tv_username.getText() + "\n\n" +
                         "编号：" + tv_number.getText() + "\n\n" +
                         "-------------------------------\n" +
-                        "号码       赔率       金额\n" +
+                        "  号码         赔率       金额\n" +
                         "-------------------------------\n" +
-                        "15235       1-6608       5\n" +
-                        "15235       1-6608       5\n" +
-                        "15235       1-6608       5\n" +
+                        stringBuffer.toString()+
                         "-------------------------------\n" +
                         tv_caipiao_max.getText() + "   总金额  " + tv_money.getText() + "\n" +
                         "-------------------------------\n";

@@ -1,10 +1,14 @@
 package sakura.liangdinvshen.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -46,7 +50,7 @@ public class FuWuWangDianListAdapter extends RecyclerView.Adapter<FuWuWangDianLi
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, final int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         WangListBean.ListBean listBean = datas.get(position);
         holder.img.setImageURI(UrlUtils.URL + listBean.getImg());
 
@@ -61,6 +65,17 @@ public class FuWuWangDianListAdapter extends RecyclerView.Adapter<FuWuWangDianLi
         holder.tv_tel.setText(listBean.getTel());
 
         holder.tv_name.setText(listBean.getTitle());
+
+        holder.rl_tel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!TextUtils.isEmpty(holder.tv_tel.getText())) {
+                    Intent dialIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + holder.tv_tel.getText()));//跳转到拨号界面，同时传递电话号码
+                    holder.tv_tel.getContext().startActivity(dialIntent);
+                }
+            }
+        });
+
     }
 
     @Override
@@ -76,6 +91,8 @@ public class FuWuWangDianListAdapter extends RecyclerView.Adapter<FuWuWangDianLi
         public TextView tv_address;
         public TextView tv_tel;
 
+        public RelativeLayout rl_tel;
+
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -84,6 +101,7 @@ public class FuWuWangDianListAdapter extends RecyclerView.Adapter<FuWuWangDianLi
             this.tv_name = (TextView) rootView.findViewById(R.id.tv_name);
             this.tv_address = (TextView) rootView.findViewById(R.id.tv_address);
             this.tv_tel = (TextView) rootView.findViewById(R.id.tv_tel);
+            this.rl_tel = (RelativeLayout) rootView.findViewById(R.id.rl_tel);
         }
     }
 

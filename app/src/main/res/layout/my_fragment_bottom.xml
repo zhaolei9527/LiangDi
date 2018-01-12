@@ -516,7 +516,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/x5"
             android:layout_toRightOf="@id/img12"
-            android:text="服务网点"
+            android:text="店长网点"
             android:textColor="#333"
             android:textSize="@dimen/x12" />
 
