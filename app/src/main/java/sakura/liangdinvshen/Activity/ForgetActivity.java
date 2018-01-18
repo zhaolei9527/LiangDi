@@ -179,7 +179,9 @@ public class ForgetActivity extends BaseActivity implements View.OnClickListener
                         time--;
                         btn_getSMScode.setText("" + time);
                         if (time < 0) {
-                            timer.cancel();
+                            if (timer != null) {
+                                timer.cancel();
+                            }
                             btn_getSMScode.setText("获取验证码");
                             btn_getSMScode.setEnabled(true);
                             time = 60;

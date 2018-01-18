@@ -1,5 +1,6 @@
 package sakura.printersakura.Activity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
@@ -27,8 +28,13 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.mylhyl.acp.Acp;
+import com.mylhyl.acp.AcpListener;
+import com.mylhyl.acp.AcpOptions;
+
 import java.io.UnsupportedEncodingException;
 import java.lang.ref.WeakReference;
+import java.util.List;
 
 import sakura.printersakura.R;
 import sakura.printersakura.myprinter.Global;
@@ -75,6 +81,24 @@ public class SearchBTActivity extends Activity implements OnClickListener {
         rotate.setFillAfter(true);//动画执行完后是否停留在执行完的状态
         rotate.setStartOffset(10);//执行前的等待时间
         img_search.setAnimation(rotate);
+
+
+        Acp.getInstance(this).request(new AcpOptions.Builder()
+                        .setPermissions(Manifest.permission.CHANGE_NETWORK_STATE, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
+                        .setDeniedMessage("权限申请")
+                        .build(),
+                new AcpListener() {
+                    @Override
+                    public void onGranted() {
+
+                    }
+                    @Override
+                    public void onDenied(List<String> permissions) {
+                        Toast.makeText(SearchBTActivity.this, "应用需要这些权限保证功能", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+
     }
 
     @Override

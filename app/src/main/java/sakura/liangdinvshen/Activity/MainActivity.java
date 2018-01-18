@@ -26,6 +26,7 @@ import org.lzh.framework.updatepluginlib.UpdateBuilder;
 import java.util.HashMap;
 import java.util.List;
 
+import me.leolin.shortcutbadger.ShortcutBadger;
 import sakura.bottomtabbar.BottomTabBar;
 import sakura.liangdinvshen.Base.BaseActivity;
 import sakura.liangdinvshen.Bean.GetVersionCode;
@@ -64,7 +65,7 @@ public class MainActivity extends BaseActivity {
                         //已经登录，可以直接进入会话界面
                         Intent intent = new IntentBuilder(context)
                                 .setServiceIMNumber("liangdinvshen") //获取地址：kefu.easemob.com，“管理员模式 > 渠道管理 > 手机APP”页面的关联的“IM服务号”
-                                .setTitleName("靓蒂女神客服")
+                                .setTitleName("靓帝女神客服")
                                 .setVisitorInfo(ContentFactory.createVisitorInfo(null)
                                         .phone(String.valueOf(SpUtil.get(context, "account", "")))
                                         .name(String.valueOf(SpUtil.get(context, "username", "")))
@@ -82,7 +83,7 @@ public class MainActivity extends BaseActivity {
                                         dialog.dismiss();
                                         Intent intent = new IntentBuilder(context)
                                                 .setServiceIMNumber("liangdinvshen") //获取地址：kefu.easemob.com，“管理员模式 > 渠道管理 > 手机APP”页面的关联的“IM服务号”
-                                                .setTitleName("靓蒂女神客服")
+                                                .setTitleName("靓帝女神客服")
                                                 .setVisitorInfo(ContentFactory.createVisitorInfo(null)
                                                         .phone(String.valueOf(SpUtil.get(context, "account", "")))
                                                         .name(String.valueOf(SpUtil.get(context, "username", "")))
@@ -131,7 +132,7 @@ public class MainActivity extends BaseActivity {
                 .commit();
 
         Acp.getInstance(context).request(new AcpOptions.Builder()
-                        .setPermissions(Manifest.permission.CAMERA, Manifest.permission.REQUEST_INSTALL_PACKAGES, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
+                        .setPermissions(Manifest.permission.CHANGE_NETWORK_STATE, Manifest.permission.CAMERA, Manifest.permission.REQUEST_INSTALL_PACKAGES, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
                         .setDeniedMessage(getString(R.string.requstPerminssions))
                         .build(),
                 new AcpListener() {
@@ -157,7 +158,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-
+        ShortcutBadger.removeCount(context); //for 1.1.4+
     }
 
     private int getversionCode() throws Exception {

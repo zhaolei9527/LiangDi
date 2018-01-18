@@ -168,6 +168,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         WXBean wxBean = new Gson().fromJson(s, WXBean.class);
                         openid = wxBean.getUnionid();
                         type = "2";
+                        SpUtil.putAndApply(context, "wxopenid", openid);
                         getLogin("", "", openid, type);
                     }
 
@@ -211,6 +212,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         QQBean qqBean = new Gson().fromJson(s, QQBean.class);
                         openid = qqBean.getUserID();
                         type = "1";
+                        SpUtil.putAndApply(context, "qqopenid", openid);
                         getLogin("", "", openid, type);
                     }
 
@@ -304,7 +306,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
                     LoginBean loginBean = new Gson().fromJson(decode, LoginBean.class);
                     if ("1".equals(loginBean.getCode())) {
-                        Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
                         SpUtil.putAndApply(context, "account", tel);
                         SpUtil.putAndApply(context, "password", password);
                         SpUtil.putAndApply(context, "uid", loginBean.getRes().getId());
@@ -321,21 +322,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         SpUtil.putAndApply(context, "chengshi", loginBean.getRes().getCity());
                         SpUtil.putAndApply(context, "jieduan", loginBean.getRes().getStu());
                         SpUtil.putAndApply(context, "Level", loginBean.getRes().getLevel_name());
-
                         SpUtil.putAndApply(context, "tuijian", loginBean.getRes().getErweima());
-
-
-                        if ("1".equals(type)) {
-                            SpUtil.putAndApply(context, "qqopenid", openid);
-                        } else if ("2".equals(type)) {
-                            SpUtil.putAndApply(context, "wxopenid", openid);
-                        }
                         final LoginBean finalLoginBean = loginBean;
                         ChatClient.getInstance().register(loginBean.getRes().getId(), loginBean.getRes().getId(), new Callback() {
                             @Override
                             public void onSuccess() {
                                 if (ChatClient.getInstance().isLoggedInBefore()) {
                                     //已经登录，可以直接进入
+                                    Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
                                     dialog.dismiss();
                                     gotoMain();
                                 } else {
@@ -344,16 +338,29 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                                             , new Callback() {
                                                 @Override
                                                 public void onSuccess() {
-                                                    dialog.dismiss();
-                                                    gotoMain();
+                                                    runOnUiThread(new Runnable() {
+                                                        @Override
+                                                        public void run() {
+                                                            Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
+                                                            dialog.dismiss();
+                                                            gotoMain();
+                                                        }
+                                                    });
+
                                                 }
 
                                                 @Override
                                                 public void onError(int i, String s) {
-                                                    dialog.dismiss();
-                                                    gotoMain();
-                                                }
+                                                    runOnUiThread(new Runnable() {
+                                                        @Override
+                                                        public void run() {
+                                                            Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
+                                                            dialog.dismiss();
+                                                            gotoMain();
+                                                        }
+                                                    });
 
+                                                }
                                                 @Override
                                                 public void onProgress(int i, String s) {
 
@@ -361,11 +368,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                                             });
                                 }
                             }
-
                             @Override
                             public void onError(int i, String s) {
-                                dialog.dismiss();
                                 if (ChatClient.getInstance().isLoggedInBefore()) {
+                                    Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
+                                    dialog.dismiss();
                                     //已经登录，可以直接进入
                                     gotoMain();
                                 } else {
@@ -374,12 +381,29 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                                             , new Callback() {
                                                 @Override
                                                 public void onSuccess() {
-                                                    gotoMain();
+                                                    runOnUiThread(new Runnable() {
+                                                        @Override
+                                                        public void run() {
+                                                            Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
+                                                            dialog.dismiss();
+                                                            gotoMain();
+                                                        }
+                                                    });
+
+
                                                 }
 
                                                 @Override
                                                 public void onError(int i, String s) {
-                                                    gotoMain();
+                                                    runOnUiThread(new Runnable() {
+                                                        @Override
+                                                        public void run() {
+                                                            Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
+                                                            dialog.dismiss();
+                                                            gotoMain();
+                                                        }
+                                                    });
+
                                                 }
 
                                                 @Override

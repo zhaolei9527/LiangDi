@@ -7,8 +7,8 @@ android {
         applicationId "sakura.liangdinvshen"
         minSdkVersion 19
         targetSdkVersion 26
-        versionCode 7
-        versionName "1.1.7"
+        versionCode 10
+        versionName "1.1.10"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         ndk {
@@ -16,6 +16,13 @@ android {
             abiFilters 'armeabi' ,  'armeabi-v7a'
         }
         useLibrary 'org.apache.http.legacy'
+
+        manifestPlaceholders = [
+                JPUSH_PKGNAME : applicationId,
+                JPUSH_APPKEY : "1e104097a27bff72cdf2a1cb", //JPush上注册的包名对应的appkey.
+                JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
+        ]
+
     }
 
     signingConfigs {
@@ -89,4 +96,8 @@ dependencies {
     compile 'com.tencent.bugly:nativecrashreport:latest.release'
     //其中latest.release指代最新Bugly NDK版本号，也可以指定明确的版本号，例如3.0
     compile project(':updatepluginlib')
+    compile 'cn.jiguang.sdk:jpush:3.1.1'  // 此处以JPush 3.1.1 版本为例。
+    compile 'cn.jiguang.sdk:jcore:1.1.9'  // 此处以JCore 1.1.9 版本为例。
+    compile "me.leolin:ShortcutBadger:1.1.19@aar"
+
 }

@@ -94,6 +94,37 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         initData();
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (timer != null) {
+            timer.cancel();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        App.getQueues().cancelAll("login/regsend");
+        App.getQueues().cancelAll("login/xieyi");
+        App.getQueues().cancelAll("login/sheng");
+        App.getQueues().cancelAll("login/regist");
+        codeUtils = null;
+        code = null;
+        bitmap = null;
+        task = null;
+        if (timer != null) {
+            timer = null;
+        }
+        account = null;
+        imgCode = null;
+        phonecode = null;
+        password = null;
+        passwordagain = null;
+        tuijian = null;
+        System.gc();
+    }
+
     private void initData() {
         getXieyi();
         getSheng();
@@ -504,7 +535,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         params.put("cfmpwd", password);
         params.put("openid", openid);
         params.put("type", type);
-        if (TextUtils.isEmpty(tel2)) {
+        if (!TextUtils.isEmpty(tel2)) {
             params.put("tel2", tel2);
         }
         VolleyRequest.RequestPost(context, UrlUtils.BASE_URL + "login/regist", "login/regist", params, new VolleyInterface(context) {
@@ -541,34 +572,4 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     }
 
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        App.getQueues().cancelAll("login/regsend");
-        App.getQueues().cancelAll("login/xieyi");
-        App.getQueues().cancelAll("login/sheng");
-        App.getQueues().cancelAll("login/regist");
-        codeUtils = null;
-        code = null;
-        bitmap = null;
-        task = null;
-        if (timer != null) {
-            timer = null;
-        }
-        account = null;
-        imgCode = null;
-        phonecode = null;
-        password = null;
-        passwordagain = null;
-        tuijian = null;
-        System.gc();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if (timer != null) {
-            timer.cancel();
-        }
-    }
 }

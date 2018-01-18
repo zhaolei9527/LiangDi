@@ -144,15 +144,16 @@ public class OrderContentFrameLayout extends LinearLayout {
                     final OrderListsBean orderListsBean = new Gson().fromJson(result, OrderListsBean.class);
                     if ("1111".equals(String.valueOf(orderListsBean.getStu()))) {
                         ll_empty.setVisibility(GONE);
-
                         if (p == 1) {
                             adapter = new MyOrderAdapter(orderListsBean.getRes(), context, OrderContentFrameLayout.this,ll_empty);
                             mRecyclerView.setAdapter(adapter);
                             mRecyclerView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                    context.startActivity(new Intent(context, MyOrderDetailsActivity.class)
-                                            .putExtra("orderid", orderListsBean.getRes().get(position).getId()));
+                                    if (position!=orderListsBean.getRes().size()){
+                                        context.startActivity(new Intent(context, MyOrderDetailsActivity.class)
+                                                .putExtra("orderid", orderListsBean.getRes().get(position).getId()));
+                                    }
                                 }
                             });
                         } else {

@@ -11,14 +11,17 @@ import java.util.List;
  */
 public class NewsIndexBean {
 
+
     /**
      * stu : 1
-     * cate : [{"id":"2","cate_name":"小说"},{"id":"5","cate_name":"大姨妈"},{"id":"4","cate_name":"育儿"},{"id":"1","cate_name":"情感"}]
-     * yun : {"id":"4","name":"妊娠期","yun_lv":"8%","stu_title":"极低","now_days":133,"is_yuejing":"2","stu":"3"}
+     * cate : [{"id":"1","cate_name":"细胞美容"},{"id":"10","cate_name":"养生"},{"id":"2","cate_name":"服饰"},{"id":"11","cate_name":"搞笑"},{"id":"8","cate_name":"情感"},{"id":"5","cate_name":"八卦"},{"id":"4","cate_name":"整形"}]
+     * yun : {"id":"1","name":"月经期","yun_lv":"6%","stu_title":"安全","now_days":2,"is_yuejing":"1","stu":"1"}
+     * topimg : /Public/uploads/ad/2018-01-16/5a5db9c21195d.png
      */
 
     private String stu;
     private YunBean yun;
+    private String topimg;
     private List<CateBean> cate;
 
     public String getStu() {
@@ -37,6 +40,14 @@ public class NewsIndexBean {
         this.yun = yun;
     }
 
+    public String getTopimg() {
+        return topimg;
+    }
+
+    public void setTopimg(String topimg) {
+        this.topimg = topimg;
+    }
+
     public List<CateBean> getCate() {
         return cate;
     }
@@ -47,13 +58,13 @@ public class NewsIndexBean {
 
     public static class YunBean {
         /**
-         * id : 4
-         * name : 妊娠期
-         * yun_lv : 8%
-         * stu_title : 极低
-         * now_days : 133
-         * is_yuejing : 2
-         * stu : 3
+         * id : 1
+         * name : 月经期
+         * yun_lv : 6%
+         * stu_title : 安全
+         * now_days : 2
+         * is_yuejing : 1
+         * stu : 1
          */
 
         private String id;
@@ -123,8 +134,8 @@ public class NewsIndexBean {
 
     public static class CateBean {
         /**
-         * id : 2
-         * cate_name : 小说
+         * id : 1
+         * cate_name : 细胞美容
          */
 
         private String id;

@@ -49,11 +49,14 @@ public class RecommmendListAdapter extends RecyclerView.Adapter<RecommmendListAd
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         MyRecommendIndexBean.ResBean resBean = datas.get(position);
-
-        if (resBean.getImg().startsWith("http://wx.qlogo.cn/")) {
-            holder.img.setImageURI(UrlUtils.URL + resBean.getImg());
-        } else {
-            holder.img.setImageURI(UrlUtils.URL + resBean.getImg());
+        try {
+            if (resBean.getImg().startsWith("http://")) {
+                holder.img.setImageURI(resBean.getImg());
+            } else {
+                holder.img.setImageURI(UrlUtils.URL + resBean.getImg());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         holder.tv_time.setText(DateUtils.getMillon(Long.parseLong(resBean.getAdd_time()) * 1000));

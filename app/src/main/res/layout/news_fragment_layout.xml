@@ -37,6 +37,11 @@
                 android:background="@mipmap/banner"
                 android:visibility="visible">
 
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/SimpleDraweeView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
                 <LinearLayout
                     android:id="@+id/banner_line1"
                     android:layout_width="wrap_content"
@@ -140,10 +145,10 @@
                     android:layout_height="@dimen/y20"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
+                    android:checked="true"
                     android:textColor="#FFFFFF"
                     android:textSize="16dp"
                     app:kswFadeBack="false"
-                    android:checked="true"
                     app:kswTextOff="Off"
                     app:kswTextOn="On" />
 

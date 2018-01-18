@@ -41,6 +41,7 @@ import java.util.List;
 import java.util.concurrent.PriorityBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
+import cn.jpush.android.api.JPushInterface;
 import sakura.liangdinvshen.Bean.GetVersionCode;
 import sakura.liangdinvshen.Utils.PausableThreadPoolExecutor;
 import sakura.liangdinvshen.Utils.SpUtil;
@@ -75,6 +76,9 @@ public class App extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        JPushInterface.setDebugMode(true);
+        JPushInterface.init(this);
 
         MultiDex.install(this);
         MobSDK.init(this, this.getAppkey(), this.getAppSecret());

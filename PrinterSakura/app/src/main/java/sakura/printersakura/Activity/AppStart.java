@@ -13,6 +13,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.support.v4.content.CursorLoader;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
@@ -183,7 +184,7 @@ public class AppStart extends Activity {
             @Override
             public void run() {
                 String address = (String) SPUtil.get(AppStart.this, "address", "");
-                if (address.isEmpty()) {
+                if (TextUtils.isEmpty(address)) {
                     Intent intent = new Intent(AppStart.this, SearchBTActivity.class);
                     startActivity(intent);
                     AppStart.this.finish();

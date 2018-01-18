@@ -56,6 +56,7 @@ public class RecommendListFragment extends Fragment {
         params.put("key", UrlUtils.KEY);
         params.put("p", String.valueOf(p));
         params.put("uid", String.valueOf(SpUtil.get(context, "uid", "")));
+        Log.e("RecommendListFragment", "params:" + params);
         VolleyRequest.RequestPost(context, UrlUtils.BASE_URL + "myrecommend/index", "myrecommend/index", params, new VolleyInterface(context) {
             @Override
             public void onMySuccess(String result) {

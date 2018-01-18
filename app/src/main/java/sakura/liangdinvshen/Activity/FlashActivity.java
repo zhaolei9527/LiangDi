@@ -84,7 +84,7 @@ public class FlashActivity extends BaseActivity {
         } else if (!TextUtils.isEmpty(qqopenid)) {
             getLogin("", "", "1", qqopenid);
         } else if (!TextUtils.isEmpty(wxopenid)) {
-            getLogin("", "", "2", qqopenid);
+            getLogin("", "", "2", wxopenid);
         } else {
             gotoLogin();
         }

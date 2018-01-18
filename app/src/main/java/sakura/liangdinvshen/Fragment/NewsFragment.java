@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.astuetz.PagerSlidingTabStrip;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.Gson;
 import com.kyleduo.switchbutton.SwitchButton;
 
@@ -59,6 +60,7 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
     private ViewPager VpNews_context;
     private Dialog dialog;
     private RelativeLayout rl_isyuejing;
+    private SimpleDraweeView simpleDraweeView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -103,7 +105,7 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
         tv_stu_title = (TextView) view.findViewById(R.id.tv_stu_title);
         tv_yun_lv = (TextView) view.findViewById(R.id.tv_yun_lv);
         sb_nofade = (SwitchButton) view.findViewById(R.id.sb_nofade);
-
+        simpleDraweeView = (SimpleDraweeView) view.findViewById(R.id.SimpleDraweeView);
         getCache();
 
         if (!TextUtils.isEmpty(uid)) {
@@ -215,6 +217,7 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
                 tv_stu_title.setText("(" + newsIndexBean.getYun().getStu_title() + ")");
                 tv_yun_lv.setText("怀孕几率" + String.valueOf(newsIndexBean.getYun().getYun_lv()));
 
+                simpleDraweeView.setImageURI(UrlUtils.URL+newsIndexBean.getTopimg());
 
                 if ("1".equals(newsIndexBean.getYun().getIs_yuejing())) {
                     sb_nofade.setChecked(true);
@@ -272,6 +275,8 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
                     tv_now_days.setText(String.valueOf(newsIndexBean.getYun().getNow_days()));
                     tv_stu_title.setText("(" + newsIndexBean.getYun().getStu_title() + ")");
                     tv_yun_lv.setText("怀孕几率" + String.valueOf(newsIndexBean.getYun().getYun_lv()));
+
+                    simpleDraweeView.setImageURI(UrlUtils.URL+newsIndexBean.getTopimg());
 
                     if ("1".equals(newsIndexBean.getYun().getIs_yuejing())) {
                         sb_nofade.setChecked(true);
