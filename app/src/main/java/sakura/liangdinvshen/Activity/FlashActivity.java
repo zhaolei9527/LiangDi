@@ -1,22 +1,44 @@
 package sakura.liangdinvshen.Activity;
 
+import android.Manifest;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
+import android.os.Environment;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.backends.pipeline.PipelineDraweeController;
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imagepipeline.request.BasePostprocessor;
+import com.facebook.imagepipeline.request.ImageRequest;
+import com.facebook.imagepipeline.request.ImageRequestBuilder;
+import com.facebook.imagepipeline.request.Postprocessor;
 import com.google.gson.Gson;
 import com.hyphenate.chat.ChatClient;
 import com.hyphenate.helpdesk.callback.Callback;
+import com.mylhyl.acp.Acp;
+import com.mylhyl.acp.AcpListener;
+import com.mylhyl.acp.AcpOptions;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.util.HashMap;
+import java.util.List;
 
 import sakura.liangdinvshen.App;
 import sakura.liangdinvshen.Base.BaseActivity;
 import sakura.liangdinvshen.Bean.LoginBean;
+import sakura.liangdinvshen.Bean.yinDaoBean;
 import sakura.liangdinvshen.R;
 import sakura.liangdinvshen.Utils.SpUtil;
 import sakura.liangdinvshen.Utils.UrlUtils;
@@ -34,6 +56,27 @@ public class FlashActivity extends BaseActivity {
     private String password;
     private String qqopenid;
     private String wxopenid;
+    private SimpleDraweeView img;
+    private ImageView img_yindao;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        App.queues.cancelAll("login/login");
+        account = null;
+        password = null;
+        System.gc();
+    }
 
     @Override
     protected void ready() {
@@ -52,6 +95,33 @@ public class FlashActivity extends BaseActivity {
 
     @Override
     protected void initview() {
+        img = (SimpleDraweeView) findViewById(R.id.img);
+        img_yindao = (ImageView) findViewById(R.id.img_yindao);
+
+        try {
+            Bitmap bmp = BitmapFactory.decodeFile(Environment.getExternalStorageDirectory()
+                    .getPath() + "/cache/yindao.jpg");
+            img_yindao.setBackground(new BitmapDrawable(bmp));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Acp.getInstance(context).request(new AcpOptions.Builder()
+                        .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
+                        .setDeniedMessage(getString(R.string.requstPerminssions))
+                        .build(),
+                new AcpListener() {
+                    @Override
+                    public void onGranted() {
+                        yinDao();
+                    }
+
+                    @Override
+                    public void onDenied(List<String> permissions) {
+                        Toast.makeText(context, R.string.Thepermissionapplicationisrejected, Toast.LENGTH_SHORT).show();
+                    }
+                });
+
 
     }
 
@@ -68,7 +138,7 @@ public class FlashActivity extends BaseActivity {
         } else {
             if (context != null) {
                 Toast.makeText(context, "网路未连接", Toast.LENGTH_SHORT).show();
-                gotoLogin();
+                delayGoToLogin();
             }
         }
     }
@@ -86,9 +156,8 @@ public class FlashActivity extends BaseActivity {
         } else if (!TextUtils.isEmpty(wxopenid)) {
             getLogin("", "", "2", wxopenid);
         } else {
-            gotoLogin();
+            delayGoToLogin();
         }
-
     }
 
     /**
@@ -193,7 +262,7 @@ public class FlashActivity extends BaseActivity {
 
                     } else {
                         Toast.makeText(context, loginBean.getMsg(), Toast.LENGTH_SHORT).show();
-                        gotoLogin();
+                        delayGoToLogin();
                     }
                     decode = null;
                     loginBean = null;
@@ -207,46 +276,105 @@ public class FlashActivity extends BaseActivity {
             public void onMyError(VolleyError error) {
                 error.printStackTrace();
                 Toast.makeText(context, getString(R.string.Abnormalserver), Toast.LENGTH_SHORT).show();
-                gotoLogin();
+                delayGoToLogin();
             }
         });
     }
 
+    /**
+     * 获取引导画面
+     */
+    private void yinDao() {
+        HashMap<String, String> params = new HashMap<>(1);
+        params.put("key", UrlUtils.KEY);
+        VolleyRequest.RequestPost(context, UrlUtils.BASE_URL + "index/yin_dao", "index/yin_dao", params, new VolleyInterface(context) {
+            @Override
+            public void onMySuccess(String result) {
+                Log.e("FlashActivity", result);
+                try {
+                    yinDaoBean yindaoBean = new Gson().fromJson(result, yinDaoBean.class);
+                    Postprocessor redMeshPostprocessor = new BasePostprocessor() {
+                        @Override
+                        public String getName() {
+                            return "redMeshPostprocessor";
+                        }
+
+                        @Override
+                        public void process(final Bitmap bitmap) {
+                            App.pausableThreadPoolExecutor.execute(new Runnable() {
+                                @Override
+                                public void run() {
+                                    File file = new File(Environment.getExternalStorageDirectory()
+                                            .getPath() + "/cache/");
+                                    file.mkdirs();
+                                    file = new File(Environment.getExternalStorageDirectory()
+                                            .getPath() + "/cache/yindao.jpg");// 保存到sdcard根目录下，文件名为share_pic.png
+                                    Log.i("CXC", Environment.getExternalStorageDirectory().getPath());
+                                    FileOutputStream fos = null;
+                                    try {
+                                        fos = new FileOutputStream(file);
+                                        bitmap.compress(Bitmap.CompressFormat.JPEG, 95, fos);
+                                    } catch (FileNotFoundException e) {
+                                        // TODO Auto-generated catch block
+                                        e.printStackTrace();
+                                    }
+                                    try {
+                                        fos.close();
+                                    } catch (Exception e) {
+                                        // TODO Auto-generated catch block
+                                        e.printStackTrace();
+                                    }
+                                }
+                            });
+                        }
+                    };
+                    ImageRequest request = ImageRequestBuilder.newBuilderWithSource(Uri.parse(UrlUtils.URL + yindaoBean.getYd_img()))
+                            .setPostprocessor(redMeshPostprocessor)
+                            .build();
+                    PipelineDraweeController controller = (PipelineDraweeController)
+                            Fresco.newDraweeControllerBuilder()
+                                    .setImageRequest(request)
+                                    .setOldController(img.getController())
+                                    .build();
+                    img.setController(controller);
+                } catch (Exception e) {
+
+                }
+            }
+
+            @Override
+            public void onMyError(VolleyError error) {
+                error.printStackTrace();
+
+            }
+        });
+    }
+
+
     private void gotoMain() {
-
-        if ("-1".equals(String.valueOf(SpUtil.get(context, "jieduan", "")))) {
-            startActivity(new Intent(context, PhaseActivity.class).putExtra("type", "chage"));
-            finish();
-        } else {
-            startActivity(new Intent(context, MainActivity.class));
-            finish();
-        }
-
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if ("-1".equals(String.valueOf(SpUtil.get(context, "jieduan", "")))) {
+                    startActivity(new Intent(context, PhaseActivity.class).putExtra("type", "chage"));
+                    finish();
+                } else {
+                    startActivity(new Intent(context, MainActivity.class));
+                    finish();
+                }
+            }
+        }, 2000);
     }
 
-    private void gotoLogin() {
-        startActivity(new Intent(context, LoginActivity.class));
-        finish();
+    private void delayGoToLogin() {
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                startActivity(new Intent(context, MainActivity.class));
+                finish();
+            }
+        }, 2000);
     }
 
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        App.queues.cancelAll("login/login");
-        account = null;
-        password = null;
-        System.gc();
-    }
 
 }

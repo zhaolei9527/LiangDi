@@ -98,6 +98,7 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
     private final int commentResult = 200;
     private ExecutorService singleThreadExecutor = Executors.newSingleThreadExecutor();
     private NewsDetailsBean newsDetailsBean;
+    private String uid;
 
     @Override
     protected void onDestroy() {
@@ -118,8 +119,16 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
         return R.layout.activity_news_details;
     }
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        uid = (String) SpUtil.get(context, "uid", "");
+    }
+
     @Override
     protected void initview() {
+        uid = (String) SpUtil.get(context, "uid", "");
         initView();
         dialog = Utils.showLoadingDialog(context);
         if (!dialog.isShowing()) {
@@ -360,9 +369,17 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
                 });
                 break;
             case R.id.tv_addPinglun:
+                if (TextUtils.isEmpty(uid)) {
+                    startActivity(new Intent(context, LoginActivity.class));
+                    return;
+                }
                 startActivityForResult(new Intent(context, NewsCommentsActivity.class).putExtra("id", id), commentResult);
                 break;
             case R.id.img_shoucang:
+                if (TextUtils.isEmpty(uid)) {
+                    startActivity(new Intent(context, LoginActivity.class));
+                    return;
+                }
                 if ("1".equals(newsDetailsBean.getRes().getIs_shou())) {
                     img_shoucang.setBackground(getResources().getDrawable(R.mipmap.new_sc1));
                     newsDetailsBean.getRes().setIs_shou("-1");

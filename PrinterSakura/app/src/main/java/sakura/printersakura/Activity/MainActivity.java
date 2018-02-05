@@ -1,6 +1,5 @@
 package sakura.printersakura.Activity;
 
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,7 +22,6 @@ import sakura.printersakura.httprequset.HTTP;
 import sakura.printersakura.myprinter.Global;
 import sakura.printersakura.myprinter.WorkService;
 import sakura.printersakura.utils.SPUtil;
-import sakura.printersakura.utils.Utils;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
 

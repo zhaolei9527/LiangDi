@@ -59,28 +59,12 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text=" 第"
-                        android:textColor="#8A63A0"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-
-                    <TextView
                         android:id="@+id/tv_now_days"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="6"
+                        android:text=" 第6天"
                         android:textColor="#8A63A0"
                         android:textSize="20sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="天"
-                        android:textColor="#8A63A0"
-                        android:textSize="18sp"
                         android:textStyle="bold" />
 
                     <TextView

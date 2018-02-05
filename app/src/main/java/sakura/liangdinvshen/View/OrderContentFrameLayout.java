@@ -88,7 +88,6 @@ public class OrderContentFrameLayout extends LinearLayout {
                 }
             }
         };
-        context.registerReceiver(receiver, new IntentFilter("OrderContentRefresh"));
     }
 
     public void onCreateView() {
@@ -145,12 +144,13 @@ public class OrderContentFrameLayout extends LinearLayout {
                     if ("1111".equals(String.valueOf(orderListsBean.getStu()))) {
                         ll_empty.setVisibility(GONE);
                         if (p == 1) {
-                            adapter = new MyOrderAdapter(orderListsBean.getRes(), context, OrderContentFrameLayout.this,ll_empty);
+                            adapter = new MyOrderAdapter(orderListsBean.getRes(), context, OrderContentFrameLayout.this, ll_empty);
                             mRecyclerView.setAdapter(adapter);
                             mRecyclerView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                    if (position!=orderListsBean.getRes().size()){
+                                    if (position != orderListsBean.getRes().size()) {
+                                        context.registerReceiver(receiver, new IntentFilter("OrderContentRefresh"));
                                         context.startActivity(new Intent(context, MyOrderDetailsActivity.class)
                                                 .putExtra("orderid", orderListsBean.getRes().get(position).getId()));
                                     }

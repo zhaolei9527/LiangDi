@@ -268,7 +268,6 @@ public class SubmitReturnPriceActivity extends BaseActivity implements View.OnCl
         }
     }
 
-
     /**
      * 提交退换货
      */

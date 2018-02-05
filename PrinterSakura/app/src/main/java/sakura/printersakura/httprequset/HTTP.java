@@ -46,9 +46,9 @@ public class HTTP {
                 Log.e("RegisterActivity", result);
                 try {
                     LoginBean loginBean = new Gson().fromJson(result, LoginBean.class);
-                    SPUtil.putAndApply(context, "qishu", loginBean.getQishu());
-                    SPUtil.putAndApply(context, "userid", loginBean.getUser().getUid());
                     if ("0".equals(loginBean.getCode())) {
+                        SPUtil.putAndApply(context, "qishu", loginBean.getQishu());
+                        SPUtil.putAndApply(context, "userid", loginBean.getUser().getUid());
                         EventBus.getDefault().post(
                                 new CmdEvent("appstart"));
                     } else {

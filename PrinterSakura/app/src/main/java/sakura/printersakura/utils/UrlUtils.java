@@ -12,7 +12,7 @@ public class UrlUtils {
     /**
      * url连接头
      */
-    public static final String BASE_URL = "http://lanya.l.100help.net/index.php/api/";
+    public static final String BASE_URL = "http://lanren111.a74.cnaaa16.com/index.php/api/";
 
     /**
      * 接口连接key

@@ -1,6 +1,7 @@
 package sakura.liangdinvshen.Fragment;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -26,6 +27,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import sakura.liangdinvshen.Activity.LoginActivity;
 import sakura.liangdinvshen.Adapter.NewsPageAdapter;
 import sakura.liangdinvshen.App;
 import sakura.liangdinvshen.Bean.NewsIndexBean;
@@ -61,6 +63,7 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
     private Dialog dialog;
     private RelativeLayout rl_isyuejing;
     private SimpleDraweeView simpleDraweeView;
+    private String uid;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -80,6 +83,7 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
+        uid = (String) SpUtil.get(getActivity(), "uid", "");
     }
 
     @Override
@@ -99,17 +103,20 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
         this.ll_head = (LinearLayout) view.findViewById(R.id.ll_head);
         rl_isyuejing = (RelativeLayout) view.findViewById(R.id.rl_isyuejing);
         tabs = (PagerSlidingTabStrip) view.findViewById(R.id.tabs);
-        String uid = (String) SpUtil.get(getActivity(), "uid", "");
+        uid = (String) SpUtil.get(getActivity(), "uid", "");
         tv_name = (TextView) view.findViewById(R.id.tv_name);
         tv_now_days = (TextView) view.findViewById(R.id.tv_now_days);
         tv_stu_title = (TextView) view.findViewById(R.id.tv_stu_title);
         tv_yun_lv = (TextView) view.findViewById(R.id.tv_yun_lv);
         sb_nofade = (SwitchButton) view.findViewById(R.id.sb_nofade);
         simpleDraweeView = (SimpleDraweeView) view.findViewById(R.id.SimpleDraweeView);
-        getCache();
 
         if (!TextUtils.isEmpty(uid)) {
+            getCache(uid);
             getIndex(uid);
+        } else {
+            getCache("");
+            getIndex("");
         }
 
         String jieduan = (String) SpUtil.get(getActivity(), "jieduan", "");
@@ -128,10 +135,16 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
         sb_nofade.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (sb_nofade.isChecked()) {
-                    lifePeriodStart();
+                if (TextUtils.isEmpty(uid)) {
+                    startActivity(new Intent(getContext(), LoginActivity.class));
+                    EasyToast.showShort(getContext(), "请先登录");
+                    sb_nofade.setChecked(false);
                 } else {
-                    lifePeriodEnd();
+                    if (sb_nofade.isChecked()) {
+                        lifePeriodStart();
+                    } else {
+                        lifePeriodEnd();
+                    }
                 }
             }
         });
@@ -206,24 +219,30 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
     }
 
 
-    private void getCache() {
+    private void getCache(final String uid) {
         String index = (String) SpUtil.get(getActivity(), "index", "");
         if (!TextUtils.isEmpty(index)) {
             try {
                 NewsIndexBean newsIndexBean = new Gson().fromJson(index, NewsIndexBean.class);
                 //头部展示数据处理
-                tv_name.setText(newsIndexBean.getYun().getName());
-                tv_now_days.setText(String.valueOf(newsIndexBean.getYun().getNow_days()));
-                tv_stu_title.setText("(" + newsIndexBean.getYun().getStu_title() + ")");
-                tv_yun_lv.setText("怀孕几率" + String.valueOf(newsIndexBean.getYun().getYun_lv()));
-
-                simpleDraweeView.setImageURI(UrlUtils.URL+newsIndexBean.getTopimg());
-
-                if ("1".equals(newsIndexBean.getYun().getIs_yuejing())) {
-                    sb_nofade.setChecked(true);
-                } else {
+                if (TextUtils.isEmpty(uid)) {
+                    tv_name.setText("");
+                    tv_now_days.setText("");
+                    tv_stu_title.setText("");
+                    tv_yun_lv.setText("");
                     sb_nofade.setChecked(false);
+                } else {
+                    tv_name.setText(newsIndexBean.getYun().getName());
+                    tv_now_days.setText("第" + String.valueOf(newsIndexBean.getYun().getNow_days()) + "天");
+                    tv_stu_title.setText("(" + newsIndexBean.getYun().getStu_title() + ")");
+                    tv_yun_lv.setText("怀孕几率" + String.valueOf(newsIndexBean.getYun().getYun_lv()));
+                    if ("1".equals(newsIndexBean.getYun().getIs_yuejing())) {
+                        sb_nofade.setChecked(true);
+                    } else {
+                        sb_nofade.setChecked(false);
+                    }
                 }
+                simpleDraweeView.setImageURI(UrlUtils.URL + newsIndexBean.getTopimg());
 
                 //新闻分类处理
                 List<NewsIndexBean.CateBean> cate = newsIndexBean.getCate();
@@ -244,7 +263,6 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
                 newsIndexBean = null;
             } catch (Exception e) {
                 e.printStackTrace();
-                Toast.makeText(getActivity(), getString(R.string.Abnormalserver), Toast.LENGTH_SHORT).show();
             }
         } else {
 
@@ -255,7 +273,7 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
     /**
      * 首页信息获取
      */
-    private void getIndex(String uid) {
+    private void getIndex(final String uid) {
         HashMap<String, String> params = new HashMap<>(1);
         params.put("key", UrlUtils.KEY);
         params.put("uid", uid);
@@ -271,18 +289,26 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
                 try {
                     NewsIndexBean newsIndexBean = new Gson().fromJson(decode, NewsIndexBean.class);
                     //头部展示数据处理
-                    tv_name.setText(newsIndexBean.getYun().getName());
-                    tv_now_days.setText(String.valueOf(newsIndexBean.getYun().getNow_days()));
-                    tv_stu_title.setText("(" + newsIndexBean.getYun().getStu_title() + ")");
-                    tv_yun_lv.setText("怀孕几率" + String.valueOf(newsIndexBean.getYun().getYun_lv()));
 
-                    simpleDraweeView.setImageURI(UrlUtils.URL+newsIndexBean.getTopimg());
-
-                    if ("1".equals(newsIndexBean.getYun().getIs_yuejing())) {
-                        sb_nofade.setChecked(true);
-                    } else {
+                    if (TextUtils.isEmpty(uid)) {
+                        tv_name.setText("");
+                        tv_now_days.setText("");
+                        tv_stu_title.setText("");
+                        tv_yun_lv.setText("");
                         sb_nofade.setChecked(false);
+                    } else {
+                        tv_name.setText(newsIndexBean.getYun().getName());
+                        tv_now_days.setText("第" + String.valueOf(newsIndexBean.getYun().getNow_days()) + "天");
+                        tv_stu_title.setText("(" + newsIndexBean.getYun().getStu_title() + ")");
+                        tv_yun_lv.setText("怀孕几率" + String.valueOf(newsIndexBean.getYun().getYun_lv()));
+                        if ("1".equals(newsIndexBean.getYun().getIs_yuejing())) {
+                            sb_nofade.setChecked(true);
+                        } else {
+                            sb_nofade.setChecked(false);
+                        }
                     }
+
+                    simpleDraweeView.setImageURI(UrlUtils.URL + newsIndexBean.getTopimg());
 
                     //新闻分类处理
                     List<NewsIndexBean.CateBean> cate = newsIndexBean.getCate();
@@ -324,13 +350,6 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.sb_nofade:
 
-
-                break;
-            default:
-                break;
-        }
     }
 }

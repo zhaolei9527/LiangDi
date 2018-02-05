@@ -329,9 +329,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                             public void onSuccess() {
                                 if (ChatClient.getInstance().isLoggedInBefore()) {
                                     //已经登录，可以直接进入
-                                    Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
-                                    dialog.dismiss();
-                                    gotoMain();
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
+                                            dialog.dismiss();
+                                            gotoMain();
+                                        }
+                                    });
                                 } else {
                                     //未登录，需要登录后，再进入
                                     ChatClient.getInstance().login(finalLoginBean.getRes().getId(), finalLoginBean.getRes().getId()
@@ -361,6 +366,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                                                     });
 
                                                 }
+
                                                 @Override
                                                 public void onProgress(int i, String s) {
 
@@ -368,13 +374,18 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                                             });
                                 }
                             }
+
                             @Override
                             public void onError(int i, String s) {
                                 if (ChatClient.getInstance().isLoggedInBefore()) {
-                                    Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
-                                    dialog.dismiss();
-                                    //已经登录，可以直接进入
-                                    gotoMain();
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
+                                            dialog.dismiss();
+                                            gotoMain();
+                                        }
+                                    });
                                 } else {
                                     //未登录，需要登录后，再进入
                                     ChatClient.getInstance().login(finalLoginBean.getRes().getId(), finalLoginBean.getRes().getId()

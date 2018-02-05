@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -48,6 +49,7 @@ public class MainActivity extends BaseActivity {
     private BottomTabBar BottomTabBar;
     private ImageView img_zixun;
     private Dialog dialog;
+    private String uid;
 
     @Override
     protected int setthislayout() {
@@ -56,10 +58,19 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initview() {
+
+        uid = (String) SpUtil.get(context, "uid", "");
+
         img_zixun = (ImageView) findViewById(R.id.img_zixun);
         img_zixun.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (TextUtils.isEmpty(uid)) {
+                    startActivity(new Intent(context, LoginActivity.class));
+                    EasyToast.showShort(context, "请先登录");
+                    return;
+                }
+
                 if (Utils.isConnected(context)) {
                     if (ChatClient.getInstance().isLoggedInBefore()) {
                         //已经登录，可以直接进入会话界面
@@ -111,7 +122,6 @@ public class MainActivity extends BaseActivity {
             }
         });
 
-
         BottomTabBar = (BottomTabBar) findViewById(R.id.BottomTabBar);
         BottomTabBar.initFragmentorViewPager(getSupportFragmentManager())
                 .addReplaceLayout(R.id.Vp_context)
@@ -126,7 +136,19 @@ public class MainActivity extends BaseActivity {
                 .setOnTabChangeListener(new BottomTabBar.OnTabChangeListener() {
                     @Override
                     public void onTabChange(int i, View view) {
-
+                        switch (i) {
+                            case 1:
+                            case 3:
+                                if (TextUtils.isEmpty(uid)) {
+                                    EasyToast.showShort(context, "请先登录");
+                                    finish();
+                                    startActivity(new Intent(context, MainActivity.class));
+                                    startActivity(new Intent(context, LoginActivity.class));
+                                }
+                                break;
+                            default:
+                                break;
+                        }
                     }
                 })
                 .commit();
@@ -172,6 +194,13 @@ public class MainActivity extends BaseActivity {
 
     private void getupdata() {
         getVersion();
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        uid = (String) SpUtil.get(context, "uid", "");
     }
 
     /**

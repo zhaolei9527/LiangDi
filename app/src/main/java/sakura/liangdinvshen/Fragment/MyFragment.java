@@ -93,6 +93,7 @@ public class MyFragment extends Fragment implements View.OnClickListener {
     private TextView mTvQiandao;
     private Dialog dialog;
     private RelativeLayout rl_fuwuwangdian;
+    private String uid;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -214,6 +215,10 @@ public class MyFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
+        uid = (String) SpUtil.get(getActivity(), "uid", "");
+        if (TextUtils.isEmpty(uid)) {
+            return;
+        }
         userInfo();
     }
 

@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import me.fangx.haorefresh.LoadMoreListener;
+import sakura.liangdinvshen.Activity.LoginActivity;
 import sakura.liangdinvshen.Activity.PriceDetailsActivity;
 import sakura.liangdinvshen.Activity.ShopCarActivity;
 import sakura.liangdinvshen.Adapter.ShopListAdapter;
@@ -31,6 +32,7 @@ import sakura.liangdinvshen.App;
 import sakura.liangdinvshen.Bean.CountCartBean;
 import sakura.liangdinvshen.Bean.GoodsListBean;
 import sakura.liangdinvshen.R;
+import sakura.liangdinvshen.Utils.EasyToast;
 import sakura.liangdinvshen.Utils.SpUtil;
 import sakura.liangdinvshen.Utils.UrlUtils;
 import sakura.liangdinvshen.Utils.Utils;
@@ -52,6 +54,7 @@ public class ShopFragment extends Fragment implements View.OnClickListener {
     private ShopListAdapter adapter;
     private SakuraLinearLayoutManager line;
     private TextView tv_countCart;
+    private String uid;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -72,6 +75,10 @@ public class ShopFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
+        uid = (String) SpUtil.get(getActivity(), "uid", "");
+        if (TextUtils.isEmpty(uid)) {
+            return;
+        }
         countCart();
     }
 
@@ -84,6 +91,7 @@ public class ShopFragment extends Fragment implements View.OnClickListener {
     }
 
     private void initView(View view) {
+        uid = (String) SpUtil.get(getActivity(), "uid", "");
         tv_countCart = (TextView) view.findViewById(R.id.tv_countCart);
         mRlShoppingcart = (RelativeLayout) view.findViewById(R.id.rl_shoppingcart);
         mRcShopPrice = (LiangDiRecycleView) view.findViewById(R.id.rc_shopPrice);
@@ -135,6 +143,11 @@ public class ShopFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.rl_shoppingcart:
+                if (TextUtils.isEmpty(uid)) {
+                    EasyToast.showShort(getContext(), "请先登录");
+                    startActivity(new Intent(getContext(), LoginActivity.class));
+                    return;
+                }
                 startActivity(new Intent(getContext(), ShopCarActivity.class));
                 break;
             default:
@@ -142,6 +155,7 @@ public class ShopFragment extends Fragment implements View.OnClickListener {
                 break;
         }
     }
+
 
     /**
      * 商品列表获取
@@ -167,7 +181,7 @@ public class ShopFragment extends Fragment implements View.OnClickListener {
                             mRcShopPrice.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                    if (position != 0) {
+                                    if (position != 0 && position != adapter.getDatas().size()) {
                                         Intent intent = new Intent(getContext(), PriceDetailsActivity.class);
                                         intent.putExtra("id", adapter.getDatas().get(position).getId());
                                         intent.putExtra("CountCart", tv_countCart.getText().toString());

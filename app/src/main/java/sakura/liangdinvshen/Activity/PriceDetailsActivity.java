@@ -90,6 +90,7 @@ public class PriceDetailsActivity extends BaseActivity implements View.OnClickLi
     private GoodsDetailBean goodsDetailBean;
     private ImageView mimgPingjiaHuifu;
     private TextView mtvPingjiaHuifu;
+    private String uid;
 
     @Override
     protected void onDestroy() {
@@ -136,6 +137,7 @@ public class PriceDetailsActivity extends BaseActivity implements View.OnClickLi
         if (!TextUtils.isEmpty(countCart)) {
             mtvCountCart.setText(countCart);
         }
+        uid = (String) SpUtil.get(context, "uid", "");
     }
 
     @Override
@@ -211,6 +213,12 @@ public class PriceDetailsActivity extends BaseActivity implements View.OnClickLi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ll_kefu:
+                if (TextUtils.isEmpty(uid)) {
+                    EasyToast.showShort(context, "请先登录");
+                    startActivity(new Intent(context, LoginActivity.class));
+                    return;
+                }
+
                 if (Utils.isConnected(context)) {
                     if (ChatClient.getInstance().isLoggedInBefore()) {
                         //已经登录，可以直接进入会话界面
@@ -308,6 +316,14 @@ public class PriceDetailsActivity extends BaseActivity implements View.OnClickLi
                 }
                 break;
             case R.id.shopnow:
+                if (TextUtils.isEmpty(uid)) {
+                    EasyToast.showShort(context, "请先登录");
+                    startActivity(new Intent(context, LoginActivity.class));
+                    return;
+                }
+
+
+
                 StringBuilder stringBuilder = new StringBuilder();
                 stringBuilder.append(String.valueOf(goodsDetailBean.getGoods().getId()));
                 stringBuilder.append("," + goodsDetailBean.getGoods().getImg().get(0));
@@ -322,6 +338,9 @@ public class PriceDetailsActivity extends BaseActivity implements View.OnClickLi
                 startActivity(OrderActivityintent);
                 break;
             case R.id.btn_allpingjia:
+
+
+
                 Intent intent = new Intent(context, EvaluationActivity.class);
                 intent.putExtra("id", getIntent().getStringExtra("id"));
                 startActivity(intent);
@@ -330,6 +349,15 @@ public class PriceDetailsActivity extends BaseActivity implements View.OnClickLi
                 finish();
                 break;
             case R.id.ll_shoucang:
+
+                if (TextUtils.isEmpty(uid)) {
+                    EasyToast.showShort(context, "请先登录");
+                    startActivity(new Intent(context, LoginActivity.class));
+                    return;
+                }
+
+
+
                 if ("0".equals(String.valueOf(goodsDetailBean.getIs_cang()))) {
                     goodsCang();
                     mImgShouCang.setBackground(getResources().getDrawable(R.mipmap.new_sc2));
@@ -343,6 +371,16 @@ public class PriceDetailsActivity extends BaseActivity implements View.OnClickLi
                 }
                 break;
             case R.id.tv_addshop:
+
+                if (TextUtils.isEmpty(uid)) {
+                    EasyToast.showShort(context, "请先登录");
+                    startActivity(new Intent(context, LoginActivity.class));
+                    return;
+                }
+
+
+
+
                 String kucun = goodsDetailBean.getGoods().getKucun();
                 int kucuni = Integer.parseInt(kucun);
                 if (kucuni > 1) {
@@ -354,6 +392,13 @@ public class PriceDetailsActivity extends BaseActivity implements View.OnClickLi
                 }
                 break;
             case R.id.rl_shoppingcart:
+
+                if (TextUtils.isEmpty(uid)) {
+                    EasyToast.showShort(context, "请先登录");
+                    startActivity(new Intent(context, LoginActivity.class));
+                    return;
+                }
+
                 startActivity(new Intent(context, ShopCarActivity.class));
                 break;
             default:
@@ -364,6 +409,10 @@ public class PriceDetailsActivity extends BaseActivity implements View.OnClickLi
     @Override
     public void onResume() {
         super.onResume();
+        uid = (String) SpUtil.get(context, "uid", "");
+        if (TextUtils.isEmpty(uid)) {
+            return;
+        }
         countCart();
     }
 
