@@ -6,5 +6,13 @@
     {
         "merged": "C:\\Users\\Administrator\\Downloads\\LiangDiNvShen\\vitamio\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\init_layout.xml",
         "source": "C:\\Users\\Administrator\\Downloads\\LiangDiNvShen\\vitamio\\build\\intermediates\\bundles\\debug\\res\\layout\\init_layout.xml"
+    },
+    {
+        "merged": "D:\\Sakura\\Android\\LiangDiNvShen\\vitamio\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\mediacontroller.xml",
+        "source": "D:\\Sakura\\Android\\LiangDiNvShen\\vitamio\\build\\intermediates\\bundles\\debug\\res\\layout\\mediacontroller.xml"
+    },
+    {
+        "merged": "D:\\Sakura\\Android\\LiangDiNvShen\\vitamio\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\init_layout.xml",
+        "source": "D:\\Sakura\\Android\\LiangDiNvShen\\vitamio\\build\\intermediates\\bundles\\debug\\res\\layout\\init_layout.xml"
     }
 ]

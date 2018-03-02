@@ -522,6 +522,9 @@ public class CalendarsAdapter extends RecyclerView.Adapter<CalendarsAdapter.View
                     StuBean stuBean = new Gson().fromJson(result, StuBean.class);
                     if (!"1".equals(String.valueOf(stuBean.getStu()))) {
                         EasyToast.showShort(context, "操作失败");
+                    } else {
+                        EventBus.getDefault().post(
+                                new BankEvent("message", "sync"));
                     }
                     stuBean = null;
                     result = null;
@@ -555,6 +558,9 @@ public class CalendarsAdapter extends RecyclerView.Adapter<CalendarsAdapter.View
                     StuBean stuBean = new Gson().fromJson(result, StuBean.class);
                     if (!"1".equals(String.valueOf(stuBean.getStu()))) {
                         EasyToast.showShort(context, "操作失败");
+                    } else {
+                        EventBus.getDefault().post(
+                                new BankEvent("message", "sync"));
                     }
                     stuBean = null;
                     result = null;
@@ -589,6 +595,9 @@ public class CalendarsAdapter extends RecyclerView.Adapter<CalendarsAdapter.View
                     StuBean stuBean = new Gson().fromJson(result, StuBean.class);
                     if (!"1".equals(String.valueOf(stuBean.getStu()))) {
                         EasyToast.showShort(context, "操作失败");
+                    } else {
+                        EventBus.getDefault().post(
+                                new BankEvent("message", "sync"));
                     }
                     stuBean = null;
                     result = null;

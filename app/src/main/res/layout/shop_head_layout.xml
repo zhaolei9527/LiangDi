@@ -10,7 +10,7 @@
         android:id="@+id/SimpleDraweeView"
         android:layout_width="match_parent"
         android:layout_height="@dimen/y115"
-        android:layout_centerVertical="true"
+        fresco:actualImageScaleType="fitXY"
         fresco:placeholderImage="@drawable/imgloading" />
 
 </LinearLayout>

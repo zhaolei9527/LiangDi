@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.android.volley.VolleyError;
 import com.bigkoo.pickerview.TimePickerView;
 import com.google.gson.Gson;
@@ -24,16 +23,18 @@ import com.ldf.calendar.component.CalendarViewAdapter;
 import com.ldf.calendar.interf.OnSelectDateListener;
 import com.ldf.calendar.model.CalendarDate;
 import com.ldf.calendar.view.MonthPager;
-
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-
 import sakura.liangdinvshen.Activity.MainActivity;
 import sakura.liangdinvshen.Adapter.CalendarsAdapter;
 import sakura.liangdinvshen.App;
+import sakura.liangdinvshen.Bean.BankEvent;
 import sakura.liangdinvshen.Bean.LifeUserSlqBean;
 import sakura.liangdinvshen.R;
 import sakura.liangdinvshen.Utils.DateUtils;
@@ -116,9 +117,7 @@ public class RecordFragment extends Fragment {
                 .setBackgroundId(0x00FFFFFF) //设置外部遮罩颜色
                 .setDecorView(null)
                 .build();
-
     }
-
 
     private void initView(View view) {
         markData = new HashMap<>();
@@ -151,6 +150,11 @@ public class RecordFragment extends Fragment {
                 pvTime.show();
             }
         });
+
+        if (!EventBus.getDefault().isRegistered(RecordFragment.this)) {
+            EventBus.getDefault().register(RecordFragment.this);
+        }
+
     }
 
     public void getData() {
@@ -222,7 +226,6 @@ public class RecordFragment extends Fragment {
         };
     }
 
-
     private void refreshClickDate(CalendarDate date) {
         currentDate = date;
         tvYear.setText(date.getYear() + "年");
@@ -290,6 +293,8 @@ public class RecordFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        //反注册EventBus
+        EventBus.getDefault().unregister(RecordFragment.this);
         App.getQueues().cancelAll("life/user_slq");
     }
 
@@ -301,6 +306,7 @@ public class RecordFragment extends Fragment {
         params.put("key", UrlUtils.KEY);
         params.put("uid", String.valueOf(SpUtil.get(context, "uid", "")));
         params.put("time", date.getYear() + "-" + date.getMonth());
+        Log.e("RegisterActivity", params.toString());
         VolleyRequest.RequestPost(context, UrlUtils.BASE_URL + "life/user_slq", "life/user_slq", params, new VolleyInterface(context) {
             @Override
             public void onMySuccess(String result) {
@@ -325,5 +331,42 @@ public class RecordFragment extends Fragment {
         });
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventMainThread(BankEvent event) {
+        if ("sync".equals(event.getmType())) {
+            HashMap<String, String> params = new HashMap<>(3);
+            params.put("key", UrlUtils.KEY);
+            params.put("uid", String.valueOf(SpUtil.get(context, "uid", "")));
+            params.put("time", date.getYear() + "-" + date.getMonth());
+            Log.e("RegisterActivity", params.toString());
+            VolleyRequest.RequestPost(context, UrlUtils.BASE_URL + "life/user_slq", "life/user_slq", params, new VolleyInterface(context) {
+                @Override
+                public void onMySuccess(String result) {
+                    Log.e("RegisterActivity", result);
+                    try {
+                        LifeUserSlqBean lifeUserSlqBean = new Gson().fromJson(result, LifeUserSlqBean.class);
+                        if ("1".equals(String.valueOf(lifeUserSlqBean.getStu()))) {
+                            SpUtil.putAndApply(getActivity(), date.getYear() + "-" + date.getMonth(), result);
 
+                            for (int i = 0; i < lifeUserSlqBean.getData().size(); i++) {
+                                markData.put(lifeUserSlqBean.getData().get(i).getTime(), lifeUserSlqBean.getData().get(i).getStu());
+                            }
+
+                            calendarAdapter.setMarkData(markData);
+                            calendarAdapter.notifyMonthDataChanged(date);
+                        }
+                        lifeUserSlqBean = null;
+                        result = null;
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onMyError(VolleyError error) {
+                    error.printStackTrace();
+                }
+            });
+        }
+    }
 }

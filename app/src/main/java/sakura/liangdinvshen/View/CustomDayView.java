@@ -29,6 +29,7 @@ public class CustomDayView extends DayView {
     private View todayBackground;
     private final CalendarDate today = new CalendarDate();
     private final RelativeLayout rl_bg;
+    private final ImageView imgAiai;
 
     /**
      * 构造器
@@ -43,6 +44,7 @@ public class CustomDayView extends DayView {
         selectedBackground = findViewById(R.id.selected_background);
         todayBackground = findViewById(R.id.today_background);
         rl_bg = (RelativeLayout) findViewById(R.id.rl_bg);
+        imgAiai = (ImageView) findViewById(R.id.img_aiai);
     }
 
     @Override
@@ -62,15 +64,50 @@ public class CustomDayView extends DayView {
         }
         if (Utils.loadMarkData().containsKey(Year + "-" + Month + "-" + Day)) {
             String s = Utils.loadMarkData().get(Year + "-" + Month + "-" + Day);
+            /**
+             * 月经期
+             * 排卵期
+             * 实际经期
+             * 爱爱
+             * 月经期爱爱
+             * 排卵期爱爱
+             * 实际经期爱爱
+             */
             if ("月经期".equals(s)) {
                 rl_bg.setBackgroundColor(getResources().getColor(R.color.yuejing));
+                imgAiai.setVisibility(GONE);
+
             } else if ("排卵期".equals(s)) {
                 rl_bg.setBackgroundColor(getResources().getColor(R.color.pairuan));
-            } else {
+                imgAiai.setVisibility(GONE);
+
+            } else if ("实际经期".equals(s)) {
+                rl_bg.setBackgroundColor(getResources().getColor(R.color.textAccent));
+                imgAiai.setVisibility(GONE);
+
+            } else if ("安全期爱爱".equals(s)) {
+                imgAiai.setVisibility(VISIBLE);
+            } else if ("月经期爱爱".equals(s)) {
+                rl_bg.setBackgroundColor(getResources().getColor(R.color.yuejing));
+
+                imgAiai.setVisibility(VISIBLE);
+            } else if ("排卵期爱爱".equals(s)) {
+                rl_bg.setBackgroundColor(getResources().getColor(R.color.pairuan));
+
+                imgAiai.setVisibility(VISIBLE);
+            } else if ("实际经期爱爱".equals(s)) {
+
+                rl_bg.setBackgroundColor(getResources().getColor(R.color.textAccent));
+
+                imgAiai.setVisibility(VISIBLE);
+            } else if ("安全期".equals(s)) {
                 rl_bg.setBackgroundColor(getResources().getColor(R.color.white));
+                imgAiai.setVisibility(GONE);
             }
+
         } else {
             rl_bg.setBackgroundColor(getResources().getColor(R.color.white));
+            imgAiai.setVisibility(GONE);
         }
     }
 

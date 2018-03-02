@@ -41,4 +41,13 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/img_aiai"
+        android:layout_width="@dimen/x13"
+        android:layout_height="@dimen/x13"
+        android:layout_alignParentBottom="true"
+        android:background="@mipmap/isaiai"
+        android:layout_margin="@dimen/x2" />
+
 </RelativeLayout>

@@ -1,5 +1,9 @@
 [
     {
+        "merged": "D:\\Sakura\\Android\\LiangDiNvShen\\vitamio\\build\\intermediates\\res\\merged\\androidTest\\debug\\raw\\libarm.so",
+        "source": "D:\\Sakura\\Android\\LiangDiNvShen\\vitamio\\build\\intermediates\\bundles\\debug\\res\\raw\\libarm.so"
+    },
+    {
         "merged": "C:\\Users\\Administrator\\Downloads\\LiangDiNvShen\\vitamio\\build\\intermediates\\res\\merged\\androidTest\\debug\\raw\\libarm.so",
         "source": "C:\\Users\\Administrator\\Downloads\\LiangDiNvShen\\vitamio\\build\\intermediates\\bundles\\debug\\res\\raw\\libarm.so"
     }
